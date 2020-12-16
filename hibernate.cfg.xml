@@ -4,9 +4,10 @@
 	<session-factory>
 		<!-- set up connection info -->
 		<property name="hibernate.connection.driver.class">org.postgresql.Driver</property>
-		<property name="hibernate.connection.url">jdbc:postgresql://revature-training.cvnf11wpw1g5.us-east-2.rds.amazonaws.com/spmdb</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://usff2011.cfykopjwfe5g.us-east-2.rds.amazonaws.com:5432/postgres?currentSchema=battlesquids</property>
 		<property name="hibernate.connection.username">postgres</property>
-		<property name="hibernate.connection.password">revature1234</property>
+		<property name="hibernate.connection.password">password</property>
+		
 		
 		<!-- hibernate setup -->
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -18,13 +19,7 @@
 		<!-- gi<property name="hibernate.enable_lazy_load_no_trans">true</property> -->
 		
 		<!-- tell hibernate where to find our mappings -->
-		<mapping class="com.revature.beans.Draft"></mapping>
-		<mapping class="com.revature.beans.DraftFeedback"></mapping>
-		<mapping class="com.revature.beans.Person"></mapping>
-		<mapping class="com.revature.beans.Pitch"></mapping>
-		<mapping class="com.revature.beans.PitchFeedback"></mapping>
-		<mapping class="com.revature.beans.PitchInfoRequest"></mapping>
-		<mapping class="com.revature.beans.Attachment"></mapping>
-		<mapping class="com.revature.beans.GenreCommittee"></mapping>
+		<!--  <mapping class="com.revature.beans.Draft"></mapping>
+		-->
 	</session-factory>
 </hibernate-configuration>
