@@ -6,7 +6,7 @@ public class Board {
 	private Integer id;
 	private Person owner;
 	private Integer gameId;
-	private Tile[] tiles;
+	private Tile[][] tiles;
 	
 	public Board()
 	{
@@ -40,11 +40,11 @@ public class Board {
 		this.gameId = gameId;
 	}
 
-	public Tile[] getTiles() {
+	public Tile[][] getTiles() {
 		return tiles;
 	}
 
-	public void setTiles(Tile[] tiles) {
+	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
 	}
 
