@@ -1,19 +1,15 @@
 package com.revature.beans;
 
-import java.util.Arrays;
-
-public class Board {
+public class Spectator {
 	private Integer id;
-	private Person owner;
 	private Integer gameId;
-	private Tile[] tiles;
+	private Person person;
 	
-	public Board()
+	public Spectator()
 	{
 		id = -1;
-		owner = new Person();
 		gameId = -1;
-		tiles = null;
+		person = new Person();
 	}
 
 	public Integer getId() {
@@ -24,14 +20,6 @@ public class Board {
 		this.id = id;
 	}
 
-	public Person getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Person owner) {
-		this.owner = owner;
-	}
-
 	public Integer getGameId() {
 		return gameId;
 	}
@@ -40,12 +28,12 @@ public class Board {
 		this.gameId = gameId;
 	}
 
-	public Tile[] getTiles() {
-		return tiles;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setTiles(Tile[] tiles) {
-		this.tiles = tiles;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	@Override
@@ -54,8 +42,7 @@ public class Board {
 		int result = 1;
 		result = prime * result + ((gameId == null) ? 0 : gameId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + Arrays.hashCode(tiles);
+		result = prime * result + ((person == null) ? 0 : person.hashCode());
 		return result;
 	}
 
@@ -67,7 +54,7 @@ public class Board {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Board other = (Board) obj;
+		Spectator other = (Spectator) obj;
 		if (gameId == null) {
 			if (other.gameId != null)
 				return false;
@@ -78,20 +65,17 @@ public class Board {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (owner == null) {
-			if (other.owner != null)
+		if (person == null) {
+			if (other.person != null)
 				return false;
-		} else if (!owner.equals(other.owner))
-			return false;
-		if (!Arrays.equals(tiles, other.tiles))
+		} else if (!person.equals(other.person))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", owner=" + owner + ", gameId=" + gameId + ", tiles=" + Arrays.toString(tiles)
-				+ "]";
+		return "Spectator [id=" + id + ", gameId=" + gameId + ", person=" + person + "]";
 	}
 	
 	

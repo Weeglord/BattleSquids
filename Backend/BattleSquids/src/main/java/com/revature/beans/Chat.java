@@ -1,19 +1,17 @@
 package com.revature.beans;
 
-import java.util.Arrays;
-
-public class Board {
+public class Chat {
 	private Integer id;
-	private Person owner;
 	private Integer gameId;
-	private Tile[] tiles;
+	private Person sender;
+	private String message;
 	
-	public Board()
+	public Chat()
 	{
 		id = -1;
-		owner = new Person();
 		gameId = -1;
-		tiles = null;
+		sender = new Person();
+		message = "";
 	}
 
 	public Integer getId() {
@@ -24,14 +22,6 @@ public class Board {
 		this.id = id;
 	}
 
-	public Person getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Person owner) {
-		this.owner = owner;
-	}
-
 	public Integer getGameId() {
 		return gameId;
 	}
@@ -40,12 +30,20 @@ public class Board {
 		this.gameId = gameId;
 	}
 
-	public Tile[] getTiles() {
-		return tiles;
+	public Person getSender() {
+		return sender;
 	}
 
-	public void setTiles(Tile[] tiles) {
-		this.tiles = tiles;
+	public void setSender(Person sender) {
+		this.sender = sender;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Override
@@ -54,8 +52,8 @@ public class Board {
 		int result = 1;
 		result = prime * result + ((gameId == null) ? 0 : gameId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + Arrays.hashCode(tiles);
+		result = prime * result + ((message == null) ? 0 : message.hashCode());
+		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
 		return result;
 	}
 
@@ -67,7 +65,7 @@ public class Board {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Board other = (Board) obj;
+		Chat other = (Chat) obj;
 		if (gameId == null) {
 			if (other.gameId != null)
 				return false;
@@ -78,20 +76,22 @@ public class Board {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (owner == null) {
-			if (other.owner != null)
+		if (message == null) {
+			if (other.message != null)
 				return false;
-		} else if (!owner.equals(other.owner))
+		} else if (!message.equals(other.message))
 			return false;
-		if (!Arrays.equals(tiles, other.tiles))
+		if (sender == null) {
+			if (other.sender != null)
+				return false;
+		} else if (!sender.equals(other.sender))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", owner=" + owner + ", gameId=" + gameId + ", tiles=" + Arrays.toString(tiles)
-				+ "]";
+		return "Chat [id=" + id + ", gameId=" + gameId + ", sender=" + sender + ", message=" + message + "]";
 	}
 	
 	

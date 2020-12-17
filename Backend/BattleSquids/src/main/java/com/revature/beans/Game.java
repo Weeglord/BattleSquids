@@ -6,6 +6,8 @@ public class Game {
 	private Person player2;
 	private Integer activePlayerId;
 	private GameStatus status;
+	private Board board1;
+	private Board board2;
 	
 	public Game()
 	{
@@ -14,6 +16,8 @@ public class Game {
 		player2 = new Person();
 		activePlayerId = -1;
 		status = new GameStatus();
+		board1 = new Board();
+		board2 = new Board();
 	}
 
 	public Integer getId() {
@@ -56,11 +60,29 @@ public class Game {
 		this.status = status;
 	}
 
+	public Board getBoard1() {
+		return board1;
+	}
+
+	public void setBoard1(Board board1) {
+		this.board1 = board1;
+	}
+
+	public Board getBoard2() {
+		return board2;
+	}
+
+	public void setBoard2(Board board2) {
+		this.board2 = board2;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((activePlayerId == null) ? 0 : activePlayerId.hashCode());
+		result = prime * result + ((board1 == null) ? 0 : board1.hashCode());
+		result = prime * result + ((board2 == null) ? 0 : board2.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((player1 == null) ? 0 : player1.hashCode());
 		result = prime * result + ((player2 == null) ? 0 : player2.hashCode());
@@ -81,6 +103,16 @@ public class Game {
 			if (other.activePlayerId != null)
 				return false;
 		} else if (!activePlayerId.equals(other.activePlayerId))
+			return false;
+		if (board1 == null) {
+			if (other.board1 != null)
+				return false;
+		} else if (!board1.equals(other.board1))
+			return false;
+		if (board2 == null) {
+			if (other.board2 != null)
+				return false;
+		} else if (!board2.equals(other.board2))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -108,7 +140,7 @@ public class Game {
 	@Override
 	public String toString() {
 		return "Game [id=" + id + ", player1=" + player1 + ", player2=" + player2 + ", activePlayerId=" + activePlayerId
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", board1=" + board1 + ", board2=" + board2 + "]";
 	}
 	
 	

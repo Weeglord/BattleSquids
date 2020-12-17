@@ -4,12 +4,14 @@ public class Tile {
 	private Integer id;
 	private Integer BoardId;
 	private TileStatus status;
+	private Squid calamari;
 	
 	public Tile()
 	{
 		id = -1;
 		BoardId = -1;
 		status = new TileStatus();
+		calamari = new Squid();
 	}
 
 	public Integer getId() {
@@ -18,6 +20,14 @@ public class Tile {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Squid getCalamari() {
+		return calamari;
+	}
+
+	public void setCalamari(Squid calamari) {
+		this.calamari = calamari;
 	}
 
 	public Integer getBoardId() {
@@ -41,6 +51,7 @@ public class Tile {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((BoardId == null) ? 0 : BoardId.hashCode());
+		result = prime * result + ((calamari == null) ? 0 : calamari.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
@@ -60,6 +71,11 @@ public class Tile {
 				return false;
 		} else if (!BoardId.equals(other.BoardId))
 			return false;
+		if (calamari == null) {
+			if (other.calamari != null)
+				return false;
+		} else if (!calamari.equals(other.calamari))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -75,7 +91,7 @@ public class Tile {
 
 	@Override
 	public String toString() {
-		return "Tile [id=" + id + ", BoardId=" + BoardId + ", status=" + status + "]";
+		return "Tile [id=" + id + ", BoardId=" + BoardId + ", status=" + status + ", calamari=" + calamari + "]";
 	}
 	
 	
