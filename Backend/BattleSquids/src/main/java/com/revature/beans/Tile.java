@@ -1,11 +1,32 @@
 package com.revature.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Tile {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name="board_id")
 	private Integer BoardId;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="tile_status_id")
 	private TileStatus status;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="squid_id")
 	private Squid calamari;
+	@Column(name="x_pos")
 	private Integer x;
+	@Column(name="y_pos")
 	private Integer y;
 	
 	public Tile()
@@ -14,6 +35,8 @@ public class Tile {
 		BoardId = -1;
 		status = new TileStatus();
 		calamari = new Squid();
+		x=-1;
+		y=-1;
 	}
 
 	public Integer getId() {
