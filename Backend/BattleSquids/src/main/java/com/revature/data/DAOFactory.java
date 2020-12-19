@@ -5,8 +5,8 @@ public class DAOFactory {
 
 	private static DAOFactory self = null;
 	
+	private static PersonDAO personDAO = null;
 	private static TileDAO tileDAO = null;
-	
 	private static TileStatusDAO tStatDAO = null;
 	
 	private DAOFactory()
@@ -20,6 +20,13 @@ public class DAOFactory {
 			self = new DAOFactory();
 		}
 		return self;
+	}
+	
+	public static PersonDAO getPersonDAO() {
+		if (personDAO == null) {
+			personDAO = new PersonHibernate();
+		}
+		return personDAO;
 	}
 	
 	public static TileDAO getTileDAO()
