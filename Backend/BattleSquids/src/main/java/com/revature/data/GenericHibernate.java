@@ -6,17 +6,24 @@ import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.mapping.Map;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
+
+import javax.persistence.criteria.Root;
+
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 
 import com.revature.utils.HibernateUtil;
 
@@ -108,5 +115,21 @@ public abstract class GenericHibernate<T> implements GenericDAO<T>{
 		} finally {
 			s.close();
 		}
+	}
+	
+	public Set<T> getSetOfManyToOneRelations(String foreignKey, Integer id){
+		try(Session s = hu.getSession()){
+			CriteriaBuilder cb = s.getCriteriaBuilder();
+			CriteriaQuery<T> cq = cb.createQuery(this.type);
+			Root<T> root = cq.from(this.type);
+			Predicate predicate = cb.equal(root.get(foreignKey), id);
+			cq.select(root).where(predicate);
+			
+			List<T> resultList = s.createQuery(cq).getResultList();
+			return new HashSet<T>(resultList);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -1,19 +1,39 @@
 package com.revature.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Invite {
-	//id sender reciever game type status
+	//id sender receiver game type status
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
+	@ManyToOne @JoinColumn(name="sender_id")
 	private Person sender;
-	private Person reciever;
+	@ManyToOne @JoinColumn(name="receiver_id")
+	private Person receiver;
+	
+	@ManyToOne @JoinColumn(name="game_id")
 	private Integer gameId;
+	
+	@ManyToOne @JoinColumn(name="invite_type_id")
 	private InviteType type;
+	
+	@ManyToOne @JoinColumn(name="invite_status_id")
 	private InviteStatus status;
 	
 	public Invite()
 	{
 		id = -1;
 		sender = new Person();
-		reciever = new Person();
+		receiver = new Person();
 		gameId = -1;
 		type = new InviteType();
 		status = new InviteStatus();
@@ -35,12 +55,12 @@ public class Invite {
 		this.sender = sender;
 	}
 
-	public Person getReciever() {
-		return reciever;
+	public Person getReceiver() {
+		return receiver;
 	}
 
-	public void setReciever(Person reciever) {
-		this.reciever = reciever;
+	public void setReceiver(Person receiver) {
+		this.receiver = receiver;
 	}
 
 	public Integer getGameId() {
@@ -73,7 +93,7 @@ public class Invite {
 		int result = 1;
 		result = prime * result + ((gameId == null) ? 0 : gameId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((reciever == null) ? 0 : reciever.hashCode());
+		result = prime * result + ((receiver == null) ? 0 : receiver.hashCode());
 		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -99,10 +119,10 @@ public class Invite {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (reciever == null) {
-			if (other.reciever != null)
+		if (receiver == null) {
+			if (other.receiver != null)
 				return false;
-		} else if (!reciever.equals(other.reciever))
+		} else if (!receiver.equals(other.receiver))
 			return false;
 		if (sender == null) {
 			if (other.sender != null)
@@ -124,7 +144,7 @@ public class Invite {
 
 	@Override
 	public String toString() {
-		return "Invite [id=" + id + ", sender=" + sender + ", reciever=" + reciever + ", gameId=" + gameId + ", type="
+		return "Invite [id=" + id + ", sender=" + sender + ", receiver=" + receiver + ", gameId=" + gameId + ", type="
 				+ type + ", status=" + status + "]";
 	}
 	

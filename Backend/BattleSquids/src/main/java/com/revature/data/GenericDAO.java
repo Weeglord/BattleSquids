@@ -3,6 +3,7 @@ package com.revature.data;
 import java.util.Set;
 
 public interface GenericDAO<T> {
+	//create:
 	Integer add(T t);
 	
 	//read:
