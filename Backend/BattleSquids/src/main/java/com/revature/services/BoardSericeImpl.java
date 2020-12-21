@@ -11,15 +11,37 @@ import com.revature.data.DAOFactory;
 
 public class BoardSericeImpl implements BoardService {
 	BoardDAO dao = DAOFactory.getBoardDAO();
-
+	
 	@Override
 	public Integer addBoard(Board b) {
+		Tile[][] tiles = b.getTiles();
+		for(int i = 0; i < tiles.length; i++)
+		{
+			for(int j = 0; j < tiles[i].length; j++)
+			{
+				DAOFactory.getTileDAO().add(tiles[i][j]);
+			}
+		}
 		return dao.add(b);
 	}
 
 	@Override
 	public Set<Board> getAllBoard() {
-		return dao.getAll();
+		Set<Board> all = dao.getAll();
+		for(Board b: all)
+		{
+			List<Tile> allTiles = new ArrayList<>();
+			allTiles.addAll(DAOFactory.getTileDAO().getByBoardId(b.getId()));
+			
+			Tile[][] tiles = new Tile[10][10];
+			
+			for(Tile t : allTiles)
+			{
+				tiles[t.getX()][t.getY()] = t;
+			}
+			b.setTiles(tiles);
+		}
+		return all;
 	}
 
 	@Override
@@ -36,6 +58,7 @@ public class BoardSericeImpl implements BoardService {
 			{
 				tiles[t.getX()][t.getY()] = t;
 			}
+			boa.setTiles(tiles);
 		}
 		return boa;
 	}
