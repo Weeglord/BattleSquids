@@ -47,8 +47,8 @@ public class BoardDAOTest {
 		g.setActivePlayerId(p1.getId());
 		status = new GameStatus();
 		status.setName("temp");
-		status.setId(DAOFactory.getgameStatusDAO().add(status));
-		g.setStatus(DAOFactory.getgameStatusDAO().getById(status.getId()));
+		status.setId(DAOFactory.getGameStatusDAO().add(status));
+		g.setStatus(DAOFactory.getGameStatusDAO().getById(status.getId()));
 		
 		dao = DAOFactory.getBoardDAO();
 		g.setId(DAOFactory.getGameDAO().add(g));
@@ -76,7 +76,7 @@ public class BoardDAOTest {
 		DAOFactory.getGameDAO().delete(g);
 		DAOFactory.getPersonDAO().delete(p2);
 		DAOFactory.getPersonDAO().delete(p1);
-		DAOFactory.getgameStatusDAO().delete(status);
+		DAOFactory.getGameStatusDAO().delete(status);
 	}
 
 	@Test
