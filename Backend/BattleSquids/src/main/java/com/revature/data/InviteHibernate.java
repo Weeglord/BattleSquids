@@ -42,6 +42,7 @@ public class InviteHibernate extends GenericHibernate<Invite> implements InviteD
 	@Override
 	public Integer addInvite(Invite i) throws SameSenderAndReceiverException, InviteToFullGameException {
 		if(i.getSender().getId() == i.getReceiver().getId()) {
+//		if(i.getSenderId() == i.getReceiverId()) {			
 			throw new SameSenderAndReceiverException();
 		}else{
 			return this.add(i);

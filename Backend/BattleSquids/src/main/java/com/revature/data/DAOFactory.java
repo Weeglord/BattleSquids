@@ -10,19 +10,17 @@ public class DAOFactory {
 	private static TileDAO tileDAO = null;
 	private static TileStatusDAO tStatDAO = null;
 	
-<<<<<<< HEAD
 	private static InviteDAO inviteDAO = null;
 	
 	private static InviteStatusDAO inviteStatusDAO = null;
 	
 	private static InviteTypeDAO inviteTypeDAO = null;
 	
-=======
 	private static ChatDAO chatDAO = null;
 	
 	private static GameDAO gameDAO= null;
 	
-	private static GameStatusDAO gamestatusDAO= null;
+	private static GameStatusDAO gameStatusDAO= null;
 
 	private static BoardDAO boardDAO = null;
 	
@@ -30,7 +28,6 @@ public class DAOFactory {
 	
 	private static SquidDAO squidDAO = null;
 
->>>>>>> a005c8bb68f82ac753cddc26eb4313f713fbf741
 	private DAOFactory()
 	{
 	}
@@ -68,7 +65,6 @@ public class DAOFactory {
 		}
 		return tStatDAO;
 	}
-<<<<<<< HEAD
 
 	public static InviteDAO getInviteDAO() {
 		if(inviteDAO == null)
@@ -79,7 +75,7 @@ public class DAOFactory {
 	}
 	
 	public static InviteStatusDAO getInviteStatusDAO() {
-		if(inviteDAO == null)
+		if(inviteStatusDAO == null)
 		{
 			inviteStatusDAO = new InviteStatusHibernate();
 		}
@@ -87,12 +83,12 @@ public class DAOFactory {
 	}
 	
 	public static InviteTypeDAO getInviteTypeDAO() {
-		if(inviteDAO == null)
+		if(inviteTypeDAO == null)
 		{
 			inviteTypeDAO = new InviteTypeHibernate();
 		}
 		return inviteTypeDAO;
-=======
+	}
 	
 	public static ChatDAO getchatDAO()
 	{
@@ -111,12 +107,12 @@ public class DAOFactory {
 		return gameDAO;
 	}
 	
-	public static GameStatusDAO getgameStatusDAO() {
-		if(gamestatusDAO==null) 
+	public static GameStatusDAO getGameStatusDAO() {
+		if(gameStatusDAO==null) 
 		{
-			gamestatusDAO= new GameStatusHibernate();
+			gameStatusDAO= new GameStatusHibernate();
 		}
-		return gamestatusDAO;
+		return gameStatusDAO;
 	}
 	
 	public static BoardDAO getBoardDAO()
@@ -144,6 +140,5 @@ public class DAOFactory {
 			squidDAO = new SquidHibernate();
 		}
 		return squidDAO;
->>>>>>> a005c8bb68f82ac753cddc26eb4313f713fbf741
 	}
 }

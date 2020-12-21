@@ -9,16 +9,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import com.revature.data.DAOFactory;
+import com.revature.data.GameDAO;
+import com.revature.data.GameStatusDAO;
 import com.revature.data.InviteDAO;
+import com.revature.data.InviteStatusDAO;
+import com.revature.data.InviteTypeDAO;
+import com.revature.data.PersonDAO;
 
 import exceptions.InviteToFullGameException;
 import exceptions.SameSenderAndReceiverException;
 
+import com.revature.beans.Game;
+import com.revature.beans.GameStatus;
 import com.revature.beans.Invite;
 import com.revature.beans.InviteStatus;
 import com.revature.beans.InviteType;
@@ -31,8 +39,15 @@ import org.junit.jupiter.api.Order;
 @TestMethodOrder(OrderAnnotation.class)
 public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 	private static InviteDAO inviteDao;
+	private static PersonDAO personDao;
+	private static InviteStatusDAO inviteStatusDao;
+	private static InviteTypeDAO inviteTypeDao;
+	private static GameDAO gameDao;
+	private static GameStatusDAO gameStatusDao;
 	private static Person sender;
 	private static Person receiver;
+	private static Game game;
+	private static GameStatus gameStatus;
 	private static Invite invite;
 	private static Invite updatedInvite;
 	private static InviteType inviteType;
@@ -40,34 +55,65 @@ public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 	private static Integer inviteId;
 	
 	@BeforeAll
-	static void initializeSubjects() throws Exception {
+	public static void initializeSubjects() throws Exception {
 		inviteDao = DAOFactory.getInviteDAO();
+		personDao = DAOFactory.getPersonDAO();
+		inviteTypeDao = DAOFactory.getInviteTypeDAO();
+		inviteStatusDao = DAOFactory.getInviteStatusDAO();
+		gameDao = DAOFactory.getGameDAO();
+		gameStatusDao = DAOFactory.getGameStatusDAO();
+		
 		sender = new Person();
-		sender.setId(1);	
+		sender.setUsername("Sender");
+		sender.setId(personDao.add(sender));
 		
 		receiver = new Person();
-		receiver.setId(2);
+		receiver.setUsername("Receiver");
+		receiver.setId(personDao.add(receiver));
 		
-//		game = new Game();
-//		game.setId(1);
+		gameStatus = new GameStatus();
+		gameStatus.setName("initiated");
+		gameStatus.setId(gameStatusDao.add(gameStatus));
+		
+		game = new Game();
+		game.setPlayer1(sender);
+		game.setPlayer2(null);
+		game.setActivePlayerId(sender.getId());
+		game.setStatus(gameStatus);
+		game.setId(gameDao.add(game));
 		
 		//assuming invite types are "play" and "spectate"
 		inviteType = new InviteType();
-		inviteType.setId(1);
+		inviteType.setName("play");
+		inviteType.setId(inviteTypeDao.add(inviteType));
 		
 		//assuming invite statuses are "sent", "received", "accepted", "rejected"
 		inviteStatus = new InviteStatus();
-		inviteStatus.setId(1);
+		inviteStatus.setName("sent");
+		inviteStatus.setId(inviteStatusDao.add(inviteStatus));
 		
 		invite = new Invite();
 		invite.setSender(sender);
 		invite.setReceiver(receiver);
-		invite.setGameId(1);
+		invite.setGame(game);
+		invite.setStatus(inviteStatus);
+		invite.setType(inviteType);
 		
 		inviteId = -1;
 		
 		updatedInvite = invite;
 		updatedInvite.setId(-2);
+	}
+	
+	@AfterAll
+	public static void cleanUp() {
+//		inviteDao.delete(invite);
+		inviteStatusDao.delete(inviteStatus);
+		inviteTypeDao.delete(inviteType);
+		gameDao.delete(game);
+		gameStatusDao.delete(gameStatus);
+		personDao.delete(receiver);
+		personDao.delete(sender);
 	}
 	
 	//@Override
@@ -103,12 +149,12 @@ public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 		//setSample();
 		//super.testAdd();
 		try {
-			inviteId = inviteDao.addInvite(invite);
+			invite.setId(inviteDao.addInvite(invite));
 		} catch (SameSenderAndReceiverException | InviteToFullGameException e) {
 			e.printStackTrace();
 		}
-		assertNotNull(inviteId);
-		assertNotEquals(inviteId, -1);
+		assertNotNull(invite.getId());
+		assertNotEquals(invite.getId(), -1);
 //		setSampleId(newId);
 	}
 	
@@ -116,8 +162,7 @@ public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 	//@Override
 	@Test
 	void testGetById() {
-		System.out.println("id: " + inviteId);
-		invite = inviteDao.getById(inviteId);
+		invite = inviteDao.getById(invite.getId());
 		assertNotNull(invite);
 	}
 	
@@ -127,17 +172,23 @@ public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 	void testGetAll() {
 		//super.testGetAll();
 		Set<Invite> all = inviteDao.getAll();
+		System.out.println(invite);
+		System.out.println(all);
 		assertTrue(all.contains(invite));
 	}
 	
 	@Order(5)
-	//@Override
+//	@Override
 	@Test
 	void testUpdate() {
-		//super.testUpdate();
-		inviteDao.update(updatedInvite);
-		updatedInvite = inviteDao.getById(inviteId);
-		assertNotEquals(invite, updatedInvite);
+//		super.testUpdate();
+		InviteStatus accepted = new InviteStatus();
+		accepted.setName("accepted");
+		accepted.setId(inviteStatusDao.add(accepted));
+		
+		invite.setStatus(accepted);
+		inviteDao.update(invite);
+		assertNotEquals(invite.getStatus(), inviteStatus); //where inviteStatus was "sent"
 	}
 	
 	@Order(6)

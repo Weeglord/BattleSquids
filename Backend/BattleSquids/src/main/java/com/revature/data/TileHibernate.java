@@ -15,10 +15,7 @@ public class TileHibernate extends GenericHibernate<Tile> implements TileDAO{
 	public TileHibernate() {
 		super(Tile.class);
 	}
-<<<<<<< HEAD
 	
-=======
-
 	@Override
 	public Tile getByXY(Integer boardId, Integer x, Integer y) {
 		Tile t = null;
@@ -124,5 +121,4 @@ public class TileHibernate extends GenericHibernate<Tile> implements TileDAO{
 		return squidTiles;
 	}
 
->>>>>>> a005c8bb68f82ac753cddc26eb4313f713fbf741
 }
