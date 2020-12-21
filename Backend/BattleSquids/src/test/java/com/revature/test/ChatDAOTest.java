@@ -22,7 +22,7 @@ public class ChatDAOTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		chatdao = DAOFactory.getchatDAO();
+		chatdao = DAOFactory.getChatDAO();
 		chat = new Chat();
 		chat.setId(-1);
 		chat.setGameId(gamedao.add(game));
