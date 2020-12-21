@@ -18,6 +18,7 @@ public class PersonHibernate extends GenericHibernate<Person> implements PersonD
 			s.beginTransaction();
 			String hql = "FROM Person where username = :username";
 			Query<Person> q = s.createQuery(hql, Person.class);
+			q.setParameter("username", username);
 			p = q.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();

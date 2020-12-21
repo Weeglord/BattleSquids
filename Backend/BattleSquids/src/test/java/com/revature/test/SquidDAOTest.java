@@ -51,8 +51,7 @@ public class SquidDAOTest {
 		dao.update(b);
 		
 		Squid c = dao.getById(b.getId());
-		
-		assertNotEquals(b,c);
+		assertEquals(c.getName(),"squid2");
 		
 		dao.delete(c);
 	}
