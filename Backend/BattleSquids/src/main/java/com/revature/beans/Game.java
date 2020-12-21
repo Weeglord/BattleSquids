@@ -37,6 +37,9 @@ public class Game {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="game_status_id")
 
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="game_status_id")
+
 	private GameStatus status;
 	@Transient
 	private Board board1;

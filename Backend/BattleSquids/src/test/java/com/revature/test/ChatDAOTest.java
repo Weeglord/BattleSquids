@@ -32,7 +32,7 @@ public class ChatDAOTest {
 		person1= new Person();
 		persondao= DAOFactory.getPersonDAO();
 		gamedao=DAOFactory.getGameDAO();
-		gamestatusdao= DAOFactory.getgameStatusDAO();
+		gamestatusdao= DAOFactory.getGameStatusDAO();
 		gamestatus= new GameStatus();
 		gamestatus.setName("running");
 		gamestatus.setId(gamestatusdao.add(gamestatus));
@@ -46,7 +46,7 @@ public class ChatDAOTest {
 		person2.setUsername("person2");
 		person2.setId(persondao.add(person2));
 		
-		chatdao = DAOFactory.getchatDAO();
+		chatdao = DAOFactory.getChatDAO();
 		game= new Game();
 		chat= new Chat();
 		//gamedao= new GameDAO();
@@ -59,6 +59,7 @@ public class ChatDAOTest {
 		game.setBoard1(null);
 		game.setBoard2(null);	
 		game.setId(gamedao.add(game));
+		chatdao = DAOFactory.getChatDAO();
 		chat = new Chat();
 		chat.setId(-1);
 		chat.setGameId(game.getId());

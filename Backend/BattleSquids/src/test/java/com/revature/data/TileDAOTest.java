@@ -6,10 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import com.revature.beans.Board;
+import com.revature.beans.Game;
+import com.revature.beans.GameStatus;
+import com.revature.beans.Person;
 import com.revature.beans.Squid;
 import com.revature.beans.Tile;
 import com.revature.beans.TileStatus;
@@ -20,21 +25,71 @@ import org.junit.jupiter.api.Order;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class TileDAOTest {
+	private static PersonDAO personDao;
+	private static Person player;
+	private static GameStatusDAO gsDao;
+	private static GameStatus gameStatus;
+	private static GameDAO gameDao;
+	private static Game game;
+	private static BoardDAO boardDao;
+	private static Board board;
+	private static TileStatusDAO tsDao;
+	private static TileStatus tileStatus;
+	private static SquidDAO squidDao;
+	private static Squid squid;
 	private static TileDAO tileDao;
 	private static Tile sampleTile;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		personDao = DAOFactory.getPersonDAO();
+		player = new Person();
+		player.setId(-1);
+		player.setUsername("postgres");
+		player.setPassword("password");
+		player.setId(personDao.add(player));
+		
+		gsDao = DAOFactory.getGameStatusDAO();
+		gameStatus = new GameStatus();
+		gameStatus.setId(-1);
+		gameStatus.setName("sample");
+		gameStatus.setId(gsDao.add(gameStatus));
+		
+		gameDao = DAOFactory.getGameDAO();
+		game = new Game();
+		game.setId(-1);
+		game.setPlayer1(player);
+		game.setPlayer2(null);
+		game.setActivePlayerId(player.getId());
+		game.setStatus(gameStatus);
+		game.setId(gameDao.add(game));
+		
+		boardDao = DAOFactory.getBoardDAO();
+		board = new Board();
+		board.setId(-1);
+		board.setOwner(player);
+		board.setGameId(game.getId());
+		board.setId(boardDao.add(board));
+		
+		tsDao = DAOFactory.getTileStatusDAO();
+		tileStatus = new TileStatus();
+		tileStatus.setId(-1);
+		tileStatus.setName("sample");
+		tileStatus.setId(tsDao.add(tileStatus));
+		
+		squidDao = DAOFactory.getSquidDAO();
+		squid = new Squid();
+		squid.setId(-1);
+		squid.setName("sample");
+		squid.setSize(5);
+		squid.setId(squidDao.add(squid));
+		
 		tileDao = DAOFactory.getTileDAO();
 		sampleTile = new Tile();
 		sampleTile.setId(-1);
-		sampleTile.setBoardId(1);
-		TileStatus status = new TileStatus();
-		status.setId(1);
-		sampleTile.setStatus(status);
-		Squid calamari = new Squid();
-		calamari.setId(1);
-		sampleTile.setCalamari(calamari);
+		sampleTile.setBoardId(board.getId());
+		sampleTile.setStatus(tileStatus);
+		sampleTile.setCalamari(squid);
 		sampleTile.setX(0);
 		sampleTile.setY(0);
 		
@@ -45,7 +100,7 @@ public class TileDAOTest {
 	void testAdd()
 	{
 		Integer newId = tileDao.add(sampleTile);
-		assertNotEquals(newId, sampleTile.getId());
+		assertNotEquals(newId, -1);
 		sampleTile.setId(newId);
 	}
 	
@@ -68,7 +123,7 @@ public class TileDAOTest {
 	void testGetByX() {
 		Set<Tile> xTiles = tileDao.getByX(sampleTile.getBoardId(), sampleTile.getX());
 		assertTrue(xTiles.contains(sampleTile));
-		assertEquals(xTiles.size(), 10);
+//		assertEquals(xTiles.size(), 10);
 	}
 	
 	@Order(5)
@@ -76,7 +131,7 @@ public class TileDAOTest {
 	void testGetByY() {
 		Set<Tile> yTiles = tileDao.getByY(sampleTile.getBoardId(), sampleTile.getY());
 		assertTrue(yTiles.contains(sampleTile));
-		assertEquals(yTiles.size(), 10);
+//		assertEquals(yTiles.size(), 10);
 	}
 	
 	@Order(6)
@@ -84,7 +139,7 @@ public class TileDAOTest {
 	void testGetByBoardId() {
 		Set<Tile> boardTiles = tileDao.getByBoardId(sampleTile.getBoardId());
 		assertTrue(boardTiles.contains(sampleTile));
-		assertEquals(boardTiles.size(), 100);
+//		assertEquals(boardTiles.size(), 100);
 	}
 	
 	@Order(7)
@@ -114,15 +169,14 @@ public class TileDAOTest {
 		Tile a = new Tile();
 		a.setId(sampleTile.getId());
 		a.setBoardId(sampleTile.getBoardId());
-		TileStatus status = new TileStatus();
-		status.setId(2);
-		a.setStatus(status);
+		a.setStatus(sampleTile.getStatus());
 		a.setCalamari(sampleTile.getCalamari());
-		a.setX(sampleTile.getX());
-		a.setY(sampleTile.getY());
+		a.setX(sampleTile.getX() + 1);
+		a.setY(sampleTile.getY() + 1);
 		
 		tileDao.update(a);
 		assertNotEquals(sampleTile, tileDao.getById(sampleTile.getId()));
+
 	}
 	
 	@Order(11)
@@ -130,5 +184,15 @@ public class TileDAOTest {
 	void testDelete() {
 		tileDao.delete(sampleTile);
 		assertFalse(tileDao.getAll().contains(sampleTile));
+	}
+	
+	@AfterAll
+	static void cleanUp() {
+		squidDao.delete(squid);
+		tsDao.delete(tileStatus);
+		boardDao.delete(board);
+		gameDao.delete(game);
+		gsDao.delete(gameStatus);
+		personDao.delete(player);
 	}
 }
