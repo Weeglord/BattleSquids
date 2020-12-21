@@ -9,6 +9,12 @@ public class DAOFactory {
 	private static TileDAO tileDAO = null;
 	private static TileStatusDAO tStatDAO = null;
 	
+	private static BoardDAO boardDAO = null;
+	
+	private static MatchHistoryDAO matchDAO = null;
+	
+	private static SquidDAO squidDAO = null;
+	
 	private DAOFactory()
 	{
 	}
@@ -45,5 +51,32 @@ public class DAOFactory {
 			tStatDAO = new TileStatusHibernate();
 		}
 		return tStatDAO;
+	}
+	
+	public static BoardDAO getBoardDAO()
+	{
+		if(boardDAO == null)
+		{
+			boardDAO = new BoardHibernate();
+		}
+		return boardDAO;
+	}
+	
+	public static MatchHistoryDAO getMatchHistoryDAO()
+	{
+		if(matchDAO == null)
+		{
+			matchDAO = new MatchHistoryHibernate();
+		}
+		return matchDAO;
+	}
+	
+	public static SquidDAO getSquidDAO()
+	{
+		if(squidDAO == null)
+		{
+			squidDAO = new SquidHibernate();
+		}
+		return squidDAO;
 	}
 }

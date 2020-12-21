@@ -22,6 +22,8 @@
 		<mapping class="com.revature.beans.Person"></mapping>
 		<mapping class="com.revature.beans.Tile"></mapping>
 		<mapping class="com.revature.beans.TileStatus"></mapping>
-
+		<mapping class="com.revature.beans.Board"></mapping>
+		<mapping class="com.revature.beans.MatchHistory"></mapping>
+		<mapping class="com.revature.beans.Squid"></mapping>
 	</session-factory>
 </hibernate-configuration>

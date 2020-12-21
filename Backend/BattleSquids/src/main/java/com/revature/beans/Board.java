@@ -1,11 +1,31 @@
 package com.revature.beans;
 
+
 import java.util.Arrays;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table
 public class Board {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="player_id")
 	private Person owner;
+	@Column(name = "game_id")
 	private Integer gameId;
+	@Transient
 	private Tile[][] tiles;
 	
 	public Board()
