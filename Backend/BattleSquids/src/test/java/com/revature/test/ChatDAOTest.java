@@ -131,7 +131,7 @@ public class ChatDAOTest {
 
 	@AfterAll
 	public static void shutdown()
-	{
+	{ 
 		chatdao.delete(chat);
 		gamedao.delete(game);
 		gamestatusdao.delete(gamestatus);
