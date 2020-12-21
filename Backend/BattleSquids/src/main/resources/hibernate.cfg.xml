@@ -25,5 +25,11 @@
 		<mapping class="com.revature.beans.Board"></mapping>
 		<mapping class="com.revature.beans.MatchHistory"></mapping>
 		<mapping class="com.revature.beans.Squid"></mapping>
+		<mapping class="com.revature.beans.Game"></mapping>
+		
+		<mapping class="com.revature.beans.GameStatus"></mapping>
+		
+		
+		<mapping class="com.revature.beans.Chat"></mapping>
 	</session-factory>
 </hibernate-configuration>

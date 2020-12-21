@@ -1,4 +1,4 @@
-package com.revature.beans;
+ package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Chat {
 	@Column(name="game_id")
 	private Integer gameId;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="sender_id")
 	private Person sender;
 	private String message;
