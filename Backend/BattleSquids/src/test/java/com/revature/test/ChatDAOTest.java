@@ -1,6 +1,8 @@
 package com.revature.test;
 
+import com.revature.beans.Board;
 import com.revature.beans.Chat;
+
 import com.revature.beans.Game;
 import com.revature.beans.GameStatus;
 import com.revature.beans.Person;
@@ -10,11 +12,22 @@ import com.revature.data.GameDAO;
 import com.revature.data.GameStatusDAO;
 import com.revature.data.PersonDAO;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+
+@TestMethodOrder(OrderAnnotation.class)
 public class ChatDAOTest {
 	
 	private static ChatDAO chatdao;
@@ -69,13 +82,56 @@ public class ChatDAOTest {
 		
 	}
 	
-
+	@Order(1)
 	@Test
-	void testAdd() {
-		System.out.println(chat+"   "+game);
+	public void testAdd() {
+	//	System.out.println(chat+"   "+game);
 		Integer newId = chatdao.add(chat);
+	
 		assertNotEquals(newId, -1);
-	//	chat.setId(newId);
+		chat.setId(newId);
+		
+		
+	}
+	
+	@Order(2)
+	@Test
+	public void getallchat() {
+		//chat.setMessage(message);
+		//chat.setId(chatdao.add(chat));
+		Set<Chat> chats= chatdao.getAll();
+	//	System.out.println(chats+" "+chat);
+		assertTrue(chats.contains(chat));
+		
+		
+	} 
+	@Order(3)
+	@Test
+	public void getchatgetid() {
+		
+		Chat c=chatdao.getById(chat.getId());
+		System.out.println(c+"  "+chat);
+		assertTrue(c.getId()!= -1);
+		
+		
+	} 
+	@Order(4)
+	@Test
+	public void testUpdate()
+	{
+	//	chat.setId(chatdao.add(chat));
+		chat.setMessage("mess");
+		chatdao.update(chat);
+		
+		assertEquals(chat.getMessage(),"mess");
+		
+	}
+	
+
+
+	@AfterAll
+	public static void shutdown()
+	{
 		chatdao.delete(chat);
 		gamedao.delete(game);
 		gamestatusdao.delete(gamestatus);
@@ -83,8 +139,6 @@ public class ChatDAOTest {
 		persondao.delete(person1);
 		persondao.delete(person2);
 	
-		
-		
 	}
 
 }
