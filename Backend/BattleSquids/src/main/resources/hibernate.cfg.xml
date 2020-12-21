@@ -20,5 +20,10 @@
 		
 		<!-- tell hibernate where to find our mappings -->
 		<mapping class="com.revature.beans.TileStatus"></mapping>
+		<mapping class="com.revature.beans.Invite"></mapping>
+		<mapping class="com.revature.beans.InviteStatus"></mapping>
+		<mapping class="com.revature.beans.InviteType"></mapping>
+		<mapping class="com.revature.beans.Person"></mapping>
+		<mapping class="com.revature.beans.Board"></mapping>
 	</session-factory>
 </hibernate-configuration>

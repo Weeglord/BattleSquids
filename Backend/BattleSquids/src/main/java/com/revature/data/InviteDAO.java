@@ -4,10 +4,11 @@ import java.util.Set;
 
 import com.revature.beans.Invite;
 
+import exceptions.InviteToFullGameException;
 import exceptions.SameSenderAndReceiverException;
 
 public interface InviteDAO extends GenericDAO<Invite> {
-	Integer addInvite(Invite i) throws SameSenderAndReceiverException;
+	Integer addInvite(Invite i) throws SameSenderAndReceiverException, InviteToFullGameException;
 	
 	Set<Invite> getAllInvitesReceivedByPersonWithId(Integer id);
 

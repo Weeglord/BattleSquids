@@ -12,9 +12,9 @@ public class DAOFactory {
 	
 	private static InviteDAO inviteDAO = null;
 	
-	private static InviteDAO inviteStatusDAO = null;
+	private static InviteStatusDAO inviteStatusDAO = null;
 	
-	private static InviteDAO inviteTypeDAO = null;
+	private static InviteTypeDAO inviteTypeDAO = null;
 	
 	private DAOFactory()
 	{

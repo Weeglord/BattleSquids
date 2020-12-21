@@ -1,5 +1,6 @@
 package com.revature.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="invite")
 public class Invite {
 	//id sender receiver game type status
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class Invite {
 	@ManyToOne @JoinColumn(name="receiver_id")
 	private Person receiver;
 	
-	@ManyToOne @JoinColumn(name="game_id")
+	@Column(name="game_id")
 	private Integer gameId;
 	
 	@ManyToOne @JoinColumn(name="invite_type_id")

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.revature.data.GenericDAO;
@@ -25,7 +26,7 @@ public abstract class GenericDAOTest<T> {
 	protected T updatedSample;
 	abstract void setUpdatedSample();
 	
-	@BeforeAll
+	@BeforeEach
 	public void initialize(){
 		setDao();
 		setSample();
@@ -41,6 +42,7 @@ public abstract class GenericDAOTest<T> {
 	
 	@Test
 	void testGetById() {
+		System.out.println(this.sampleId);
 		T t = dao.getById(this.sampleId);
 		assertEquals(t, sample);
 	}
