@@ -90,7 +90,7 @@ public class DAOFactory {
 		return inviteTypeDAO;
 	}
 	
-	public static ChatDAO getchatDAO()
+	public static ChatDAO getChatDAO()
 	{
 		if(chatDAO == null)
 		{

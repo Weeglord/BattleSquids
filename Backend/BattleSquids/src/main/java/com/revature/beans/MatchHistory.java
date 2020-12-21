@@ -102,12 +102,12 @@ public class MatchHistory {
 		if (begin == null) {
 			if (other.begin != null)
 				return false;
-		} else if (!begin.equals(other.begin))
+		} else if (!begin.toString().equals(other.begin.toString()))
 			return false;
 		if (end == null) {
 			if (other.end != null)
 				return false;
-		} else if (!end.equals(other.end))
+		} else if (!end.toString().equals(other.end.toString()))
 			return false;
 		if (id == null) {
 			if (other.id != null)

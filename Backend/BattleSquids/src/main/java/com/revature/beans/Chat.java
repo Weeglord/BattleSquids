@@ -23,7 +23,7 @@ public class Chat {
 	@Column(name="game_id")
 	private Integer gameId;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="sender_id")
 	private Person sender;
 	private String message;

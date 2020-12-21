@@ -189,6 +189,7 @@ public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 		invite.setStatus(accepted);
 		inviteDao.update(invite);
 		assertNotEquals(invite.getStatus(), inviteStatus); //where inviteStatus was "sent"
+		inviteStatusDao.delete(accepted);
 	}
 	
 	@Order(6)
