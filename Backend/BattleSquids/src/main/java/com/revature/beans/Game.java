@@ -33,10 +33,11 @@ public class Game {
 	@Column(name="active_player_id")
 	private Integer activePlayerId;
 
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="game_status_id")
 	private GameStatus status;
-	@Transient
+	@Transient	
 	private Board board1;
 	@Transient
 	private Board board2;
