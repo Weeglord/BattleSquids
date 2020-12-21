@@ -2,9 +2,12 @@ package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -18,21 +21,24 @@ public class Game {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name="player_1_id")
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="player_1_id")
 	private Person player1;
-
-	@Column(name="player_2_id")
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="player_2_id")
 	private Person player2;
 	
 
 	@Column(name="active_player_id")
 	private Integer activePlayerId;
 
-	@Column(name="game_status_id")
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="game_status_id")
 	private GameStatus status;
 	@Transient
 	private Board board1;
-	
+	@Transient
 	private Board board2;
 	
 	public Game()

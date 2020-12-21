@@ -59,7 +59,7 @@ public class DAOFactory {
 		return tStatDAO;
 	}
 	
-	public static ChatDAO getchatDAO()
+	public static ChatDAO getChatDAO()
 	{
 		if(chatDAO == null)
 		{
@@ -76,7 +76,7 @@ public class DAOFactory {
 		return gameDAO;
 	}
 	
-	public static GameStatusDAO getgameStatusDAO() {
+	public static GameStatusDAO getGameStatusDAO() {
 		if(gamestatusDAO==null) 
 		{
 			gamestatusDAO= new GameStatusHibernate();

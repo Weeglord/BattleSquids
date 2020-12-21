@@ -20,7 +20,7 @@ public class GameStatusDAOTest {
 	@Test
 	public void testAddGetByIdDelete()
 	{
-		GameStatusDAO dao=DAOFactory.getgameStatusDAO();
+		GameStatusDAO dao=DAOFactory.getGameStatusDAO();
 		GameStatus stat=new GameStatus();
 		stat.setName("Win");
 		stat.setId(dao.add(stat));
@@ -36,7 +36,7 @@ public class GameStatusDAOTest {
 	@Test
 	public void testUpdate()
 	{
-GameStatusDAO dao = DAOFactory.getgameStatusDAO();
+GameStatusDAO dao = DAOFactory.getGameStatusDAO();
 		
 		GameStatus stat = new GameStatus();
 		
@@ -58,7 +58,7 @@ GameStatusDAO dao = DAOFactory.getgameStatusDAO();
 	@Test
 	public void testGetall()
 	{
-		GameStatusDAO dao = DAOFactory.getgameStatusDAO();
+		GameStatusDAO dao = DAOFactory.getGameStatusDAO();
 		
 		GameStatus stat = new GameStatus();
 		
