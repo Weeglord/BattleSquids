@@ -1,4 +1,4 @@
-package com.revature.test;
+package com.revature.data;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

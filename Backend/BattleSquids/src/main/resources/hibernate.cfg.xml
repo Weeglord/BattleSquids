@@ -19,11 +19,19 @@
 		<!-- gi<property name="hibernate.enable_lazy_load_no_trans">true</property> -->
 		
 		<!-- tell hibernate where to find our mappings -->
+		<mapping class="com.revature.beans.Person"></mapping>
+		<mapping class="com.revature.beans.Tile"></mapping>
 		<mapping class="com.revature.beans.TileStatus"></mapping>
+<<<<<<< HEAD
 		<mapping class="com.revature.beans.Invite"></mapping>
 		<mapping class="com.revature.beans.InviteStatus"></mapping>
 		<mapping class="com.revature.beans.InviteType"></mapping>
 		<mapping class="com.revature.beans.Person"></mapping>
 		<mapping class="com.revature.beans.Board"></mapping>
+=======
+		<mapping class="com.revature.beans.Board"></mapping>
+		<mapping class="com.revature.beans.MatchHistory"></mapping>
+		<mapping class="com.revature.beans.Squid"></mapping>
+>>>>>>> a005c8bb68f82ac753cddc26eb4313f713fbf741
 	</session-factory>
 </hibernate-configuration>
