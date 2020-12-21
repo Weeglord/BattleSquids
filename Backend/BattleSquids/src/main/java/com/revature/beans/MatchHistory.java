@@ -2,11 +2,31 @@ package com.revature.beans;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "match_history")
 public class MatchHistory {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name = "time_start")
 	private Timestamp begin;
+	@Column(name = "time_end")
 	private Timestamp end;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="winner_id")
 	private Person winner;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="loser_id")
 	private Person loser;
 	
 	public MatchHistory()
@@ -82,12 +102,12 @@ public class MatchHistory {
 		if (begin == null) {
 			if (other.begin != null)
 				return false;
-		} else if (!begin.equals(other.begin))
+		} else if (!begin.toString().equals(other.begin.toString()))
 			return false;
 		if (end == null) {
 			if (other.end != null)
 				return false;
-		} else if (!end.equals(other.end))
+		} else if (!end.toString().equals(other.end.toString()))
 			return false;
 		if (id == null) {
 			if (other.id != null)
