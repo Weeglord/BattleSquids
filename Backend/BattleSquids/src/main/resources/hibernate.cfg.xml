@@ -20,5 +20,8 @@
 		
 		<!-- tell hibernate where to find our mappings -->
 		<mapping class="com.revature.beans.TileStatus"></mapping>
+		<mapping class="com.revature.beans.Board"></mapping>
+		<mapping class="com.revature.beans.MatchHistory"></mapping>
+		<mapping class="com.revature.beans.Squid"></mapping>
 	</session-factory>
 </hibernate-configuration>
