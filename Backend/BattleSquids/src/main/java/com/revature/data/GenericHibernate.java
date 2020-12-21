@@ -25,6 +25,17 @@ public abstract class GenericHibernate<T> implements GenericDAO<T>{
 	//add:
 	@Override
 	public Integer add(T t) {
+//		Integer id = null;
+//		try (Session s = hu.getSession()) {
+//			s.beginTransaction();
+//			id = (Integer) s.save(t);
+//			if (id != null) s.getTransaction().commit();
+//			else s.getTransaction().rollback();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return id;
+		
 		Session s = hu.getSession();
 		Transaction tx = null;
 		Integer id = null;
@@ -45,6 +56,14 @@ public abstract class GenericHibernate<T> implements GenericDAO<T>{
 	
 	@Override
 	public T getById(Integer id) {
+//		T t = null;
+//		try (Session s = hu.getSession()) {
+//			t = s.get(this.type, id);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return t;
+		
 		Session s = hu.getSession();
 		
 		try {
@@ -72,7 +91,7 @@ public abstract class GenericHibernate<T> implements GenericDAO<T>{
 		return new HashSet<T>(tList);
 	}
 	
-	public void update(T t) {
+	public void update(T t) {		
 		Session s = hu.getSession();
 		Transaction tx = null;
 		try {
