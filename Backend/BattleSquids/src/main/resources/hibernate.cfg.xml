@@ -28,5 +28,6 @@
 		<mapping class="com.revature.beans.GameStatus"></mapping>
 		<mapping class="com.revature.beans.Game"></mapping>
 		<mapping class="com.revature.beans.Chat"></mapping>
+
 	</session-factory>
 </hibernate-configuration>

@@ -32,7 +32,7 @@ class PersonDAOTest {
 	@Test
 	void testAdd() {
 		Integer newId = personDao.add(samplePerson);
-		assertNotEquals(newId, samplePerson.getId());
+		assertNotEquals(newId,-1);
 		samplePerson.setId(newId);
 	}
 	

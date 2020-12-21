@@ -6,33 +6,92 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.revature.beans.Board;
+import com.revature.beans.Game;
+import com.revature.beans.GameStatus;
 import com.revature.beans.Person;
 import com.revature.data.BoardDAO;
 import com.revature.data.DAOFactory;
 
 public class BoardDAOTest {
+	private static Board a;
+	private static Board b;
+	private static Person p1;
+	private static Person p2;
+	private static Game g;
+	private static BoardDAO dao;
+	private static GameStatus status;
+	
+	@BeforeAll
+	public static void init()
+	{
+		p1 = new Person();
+		p2 = new Person();
+		
+		p1.setUsername("man");
+		p2.setPassword("notman");
+		p1.setId(DAOFactory.getPersonDAO().add(p1));
+		p2.setId(DAOFactory.getPersonDAO().add(p2));
+		
+		g = new Game();
+		g.setBoard1(null);
+		g.setBoard2(null);
+		g.setPlayer1(p1);
+		g.setPlayer2(p2);
+		g.setActivePlayerId(p1.getId());
+		status = new GameStatus();
+		status.setName("temp");
+		status.setId(DAOFactory.getgameStatusDAO().add(status));
+		g.setStatus(DAOFactory.getgameStatusDAO().getById(status.getId()));
+		
+		dao = DAOFactory.getBoardDAO();
+		g.setId(DAOFactory.getGameDAO().add(g));
+		
+		
+	}
+	
+	@BeforeEach
+	public void setup()
+	{
+		a = new Board();
+		a.setOwner(p1);
+		a.setGameId(g.getId());
+		
+		b = new Board();
+		b.setOwner(p2);
+		b.setGameId(g.getId());
+		
+		
+	}
+
+	@AfterAll
+	public static void shutdown()
+	{
+		DAOFactory.getGameDAO().delete(g);
+		DAOFactory.getPersonDAO().delete(p2);
+		DAOFactory.getPersonDAO().delete(p1);
+		DAOFactory.getgameStatusDAO().delete(status);
+	}
 
 	@Test
 	public void testAddGetByIdDelete()
 	{
-		BoardDAO dao = DAOFactory.getBoardDAO();
+
+		a.setId(dao.add(a));
 		
-		Board b = new Board();
-		b.setGameId(1);
-		b.setOwner(new Person());
+		assertTrue(a.getId() != -1);
 		
-		b.setId(dao.add(b));
+		Board c = dao.getById(a.getId());
 		
-		assertTrue(b.getId() != -1);
+		assertEquals(c,a);
 		
-		Board c = dao.getById(b.getId());
-		
-		assertEquals(c,b);
-		
-		dao.delete(b);
+		dao.delete(a);
 		
 		assertTrue(dao.getById(c.getId()) == null);
 		
@@ -41,21 +100,17 @@ public class BoardDAOTest {
 	@Test
 	public void testUpdate()
 	{
-		BoardDAO dao = DAOFactory.getBoardDAO();
+
+		a.setId(dao.add(a));
 		
-		Board b = new Board();
-		b.setGameId(1);
-		b.setOwner(new Person());
+		a.setOwner(p2);
 		
-		b.setId(dao.add(b));
 		
-		b.setGameId(2);
+		dao.update(a);
 		
-		dao.update(b);
+		Board c = dao.getById(a.getId());
 		
-		Board c = dao.getById(b.getId());
-		
-		assertNotEquals(b,c);
+		assertEquals(c.getOwner(), p2);
 		
 		dao.delete(c);
 	}
@@ -63,11 +118,7 @@ public class BoardDAOTest {
 	@Test
 	public void testGetAll()
 	{
-		BoardDAO dao = DAOFactory.getBoardDAO();
-		
-		Board b = new Board();
-		b.setGameId(1);
-		b.setOwner(new Person());
+
 		
 		b.setId(dao.add(b));
 		

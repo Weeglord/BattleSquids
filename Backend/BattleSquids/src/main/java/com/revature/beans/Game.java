@@ -24,7 +24,7 @@ public class Game {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="player_1_id")
 	private Person player1;
-	
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="player_2_id")
 	private Person player2;
