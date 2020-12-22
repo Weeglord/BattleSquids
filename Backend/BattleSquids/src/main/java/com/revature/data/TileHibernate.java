@@ -71,14 +71,14 @@ public class TileHibernate extends GenericHibernate<Tile> implements TileDAO {
 		return yTiles;
 	}
 	@Override
-	public Set<Tile> getByBoardId(Integer id) {
+	public Set<Tile> getByBoardId(Integer boardId) {
 		Set<Tile> boardTiles = new HashSet<>();
 		
 		try (Session s = hu.getSession()) {
 			s.beginTransaction();
 			String hql = "FROM Tile WHERE board_id = :board_id";
 			Query<Tile> q = s.createQuery(hql, Tile.class);
-			q.setParameter("board_id", id);
+			q.setParameter("board_id", boardId);
 			if (q.getResultList() != null) boardTiles = new HashSet<Tile>(q.getResultList());
 		} catch (Exception e) {
 			e.printStackTrace();
