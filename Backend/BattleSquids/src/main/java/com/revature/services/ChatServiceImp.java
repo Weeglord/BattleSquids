@@ -18,12 +18,9 @@ public class ChatServiceImp implements ChatService {
 	}
 
 	@Override
-	public Set<Chat> getallChat() {
+	public Set<Chat> getAllChat() {
 		
 		Set<Chat> chats= dao.getAll();
-		for(Chat c: chats) {
-			chats.add(c);
-		}
 		return chats;
 		
 	}

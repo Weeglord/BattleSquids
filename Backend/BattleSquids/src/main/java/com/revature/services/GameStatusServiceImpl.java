@@ -17,25 +17,25 @@ public class GameStatusServiceImpl implements GameStatusService{
 	}
 
 	@Override
-	public Set<GameStatus> getallGameStatus() {
+	public Set<GameStatus> getAllGameStatus() {
 		// TODO Auto-generated method stub
 		return dao.getAll();
 	}
 
 	@Override
-	public GameStatus getgamestatusbyid(Integer id) {
+	public GameStatus getGameStatusById(Integer id) {
 		// TODO Auto-generated method stub
 		return dao.getById(id);
 	}
 
 	@Override
-	public void updategamestatus(GameStatus gs) {
+	public void updateGameStatus(GameStatus gs) {
 		// TODO Auto-generated method stub
 		dao.update(gs);
 	}
 
 	@Override
-	public void deletegamestatus(GameStatus gs) {
+	public void deleteGameStatus(GameStatus gs) {
 		// TODO Auto-generated method stub
 		dao.delete(gs);
 	}

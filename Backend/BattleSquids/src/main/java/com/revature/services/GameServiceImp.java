@@ -18,18 +18,14 @@ public class GameServiceImp implements GameService{
 	}
 
 	@Override
-	public Set<Game> getallgames() {
+	public Set<Game> getAllGames() {
 		
 		Set<Game> games= dao.getAll();
-		for(Game game: games) {
-			games.add(game);
-		//	return games;
-		}
 		return games;
 	}
 
 	@Override
-	public Game getgamebyid(Integer id) {
+	public Game getGameById(Integer id) {
 	return dao.getById(id);
 	}
 
@@ -40,7 +36,7 @@ public class GameServiceImp implements GameService{
 	}
 
 	@Override
-	public void deletegame(Game g) {
+	public void deleteGame(Game g) {
 		// TODO Auto-generated method stub
 		dao.delete(g);
 	}
