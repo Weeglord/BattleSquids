@@ -10,7 +10,7 @@ public interface TileDAO extends GenericDAO<Tile> {
 	public Tile getByXY(Integer boardId, Integer x, Integer y);
 	public Set<Tile> getByX(Integer boardId, Integer x);
 	public Set<Tile> getByY(Integer boardId, Integer y);
-	public Set<Tile> getByBoardId(Integer id);
+	public Set<Tile> getByBoardId(Integer boardId);
 	public Set<Tile> getByStatus(Integer boardId, TileStatus status);
 	public Set<Tile> getBySquid(Integer boardId, Squid squid);
 }
