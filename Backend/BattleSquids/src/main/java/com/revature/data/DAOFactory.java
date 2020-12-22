@@ -9,6 +9,12 @@ public class DAOFactory {
 	private static TileDAO tileDAO = null;
 	private static TileStatusDAO tStatDAO = null;
 	
+	private static InviteDAO inviteDAO = null;
+	
+	private static InviteStatusDAO inviteStatusDAO = null;
+	
+	private static InviteTypeDAO inviteTypeDAO = null;
+	
 	private static ChatDAO chatDAO = null;
 	
 	private static GameDAO gameDAO= null;
@@ -39,6 +45,30 @@ public class DAOFactory {
 			personDAO = new PersonHibernate();
 		}
 		return personDAO;
+	}
+	
+	public static InviteDAO getInviteDAO() {
+		if(inviteDAO == null)
+		{
+			inviteDAO = new InviteHibernate();
+		}
+		return inviteDAO;
+	}
+	
+	public static InviteStatusDAO getInviteStatusDAO() {
+		if(inviteStatusDAO == null)
+		{
+			inviteStatusDAO = new InviteStatusHibernate();
+		}
+		return inviteStatusDAO;
+	}
+	
+	public static InviteTypeDAO getInviteTypeDAO() {
+		if(inviteTypeDAO == null)
+		{
+			inviteTypeDAO = new InviteTypeHibernate();
+		}
+		return inviteTypeDAO;
 	}
 	
 	public static TileDAO getTileDAO()
