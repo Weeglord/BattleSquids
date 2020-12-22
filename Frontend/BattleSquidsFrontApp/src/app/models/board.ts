@@ -1,5 +1,5 @@
 import {Person} from "./person"
-import {Tile} from "./Tile"
+import {Tile} from "./tile"
 
 export class Board
 {
@@ -13,7 +13,7 @@ export class Board
         this.id = -1;
         this.owner = new Person();
         this.gameId = -1;
-        this.tiles = null;
+        this.tiles = [];
     }
 
 }

@@ -66,10 +66,20 @@
 	  		<groupId>org.hibernate</groupId>
   			<version>5.4.25.Final</version>
 	  	</dependency>
+	  	<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-core</artifactId>
+		</dependency>
 	  	<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
 		</dependency>
 	  	<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 		<dependency>
