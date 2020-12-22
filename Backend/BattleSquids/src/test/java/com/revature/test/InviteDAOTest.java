@@ -175,12 +175,55 @@ public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 	void testGetAll() {
 		//super.testGetAll();
 		Set<Invite> all = inviteDao.getAll();
-		System.out.println(invite);
-		System.out.println(all);
 		assertTrue(all.contains(invite));
 	}
 	
 	@Order(5)
+	//@Override
+	@Test
+	void testGetAllInvitesReceivedByPersonWithId() {
+		//super.testGetAll();
+		Set<Invite> allFromReceiver = inviteDao.getAllInvitesReceivedByPersonWithId(receiver.getId());
+		assertTrue(allFromReceiver.contains(invite));
+	}
+	
+	@Order(6)
+	//@Override
+	@Test
+	void testGetAllInvitesForGameWithId() {
+		//super.testGetAll();
+		Set<Invite> all = inviteDao.getAllInvitesForGameWithId(game.getId());
+		assertTrue(all.contains(invite));
+	}
+	
+	@Order(7)
+	//@Override
+	@Test
+	void testGetAllInvitesWithTypeId() {
+		//super.testGetAll();
+		Set<Invite> all = inviteDao.getAllInvitesWithTypeId(inviteType.getId());
+		assertTrue(all.contains(invite));
+	}
+	
+	@Order(8)
+	//@Override
+	@Test
+	void testGetAllInvitesWithStatusId() {
+		//super.testGetAll();
+		Set<Invite> all = inviteDao.getAllInvitesWithStatusId(inviteStatus.getId());
+		assertTrue(all.contains(invite));
+	}
+	
+	@Order(9)
+	//@Override
+	@Test
+	void testGetAllInvitesSentByPersonWithId() {
+		//super.testGetAll();
+		Set<Invite> all = inviteDao.getAllInvitesSentByPersonWithId(sender.getId());
+		assertTrue(all.contains(invite));
+	}
+	
+	@Order(10)
 //	@Override
 	@Test
 	void testUpdate() {
@@ -190,7 +233,7 @@ public class InviteDAOTest /* extends GenericDAOTest<Invite>*/{
 		assertNotEquals(invite.getStatus(), inviteStatus); //where inviteStatus was "sent"
 	}
 	
-	@Order(6)
+	@Order(11)
 	//@Override
 	@Test
 	void testDelete() {

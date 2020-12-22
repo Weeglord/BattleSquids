@@ -13,28 +13,28 @@ public class InviteHibernate extends GenericHibernate<Invite> implements InviteD
 	
 	@Override
 	public Set<Invite> getAllInvitesSentByPersonWithId(Integer id){
-		return this.getSetOfManyToOneRelations("receiver_id", id);
+		return this.getSetOfManyToOneRelations("sender", id);
 	}
 	
 	@Override
 	public Set<Invite> getAllInvitesReceivedByPersonWithId(Integer id){
 		//simplest approach would be to iterate through result of this.getAll() 
-		return this.getSetOfManyToOneRelations("receiver_id", id);
+		return this.getSetOfManyToOneRelations("receiver", id);
 	}
 	
 	@Override
 	public Set<Invite> getAllInvitesForGameWithId(Integer id){
-		return this.getSetOfManyToOneRelations("game_id", id);
+		return this.getSetOfManyToOneRelations("game", id);
 	}
 	
 	@Override
 	public Set<Invite> getAllInvitesWithTypeId(Integer id){
-		return this.getSetOfManyToOneRelations("invite_type_id", id);
+		return this.getSetOfManyToOneRelations("type", id);
 	}
 	
 	@Override
 	public Set<Invite> getAllInvitesWithStatusId(Integer id){
-		return this.getSetOfManyToOneRelations("invite_status_id", id);
+		return this.getSetOfManyToOneRelations("status", id);
 	}
 
 	@Override

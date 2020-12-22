@@ -124,12 +124,12 @@ public abstract class GenericHibernate<T> implements GenericDAO<T>{
 		}
 	}
 	
-	public Set<T> getSetOfManyToOneRelations(String foreignKey, Integer id){
+	public Set<T> getSetOfManyToOneRelations(String foreignAttr, Integer id){
 		try(Session s = hu.getSession()){
 			CriteriaBuilder cb = s.getCriteriaBuilder();
 			CriteriaQuery<T> cq = cb.createQuery(this.type);
 			Root<T> root = cq.from(this.type);
-			Predicate predicate = cb.equal(root.get(foreignKey), id);
+			Predicate predicate = cb.equal(root.get(foreignAttr), id);
 			cq.select(root).where(predicate);
 			
 			List<T> resultList = s.createQuery(cq).getResultList();
