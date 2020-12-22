@@ -1,5 +1,5 @@
 import {Person} from "./person"
-import {tile} from "./Tile"
+import {Tile} from "./Tile"
 
 export class Board
 {
