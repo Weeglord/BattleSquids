@@ -28,6 +28,8 @@
 		<mapping class="com.revature.beans.GameStatus"></mapping>
 		<mapping class="com.revature.beans.Game"></mapping>
 		<mapping class="com.revature.beans.Chat"></mapping>
-
+		<mapping class="com.revature.beans.Invite"></mapping>
+		<mapping class="com.revature.beans.InviteType"></mapping>
+		<mapping class="com.revature.beans.InviteStatus"></mapping>
 	</session-factory>
 </hibernate-configuration>
