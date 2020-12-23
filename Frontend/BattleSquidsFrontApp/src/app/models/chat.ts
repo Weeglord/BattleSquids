@@ -5,7 +5,7 @@ export class Chat{
     id: number;
     gameId: number;
     sender: Person;
-    message: String;
+    message: string;
 
     constructor(){
         this.id= -1;
