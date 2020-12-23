@@ -14,25 +14,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.TileStatus;
-import com.revature.services.TileStatusService;
-
+import com.revature.beans.MatchHistory;
+import com.revature.services.MatchHistoryService;
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/tile/status")
-public class TileStatusController {
-	private TileStatusService serv;
+@RequestMapping(path="/matchhistory")
+public class MatchHistoryController {
+private MatchHistoryService serv;
 	
 	@Autowired
-	public TileStatusController(TileStatusService t)
+	public MatchHistoryController(MatchHistoryService t)
 	{
 		serv = t;
 	}
 	
 	@GetMapping(path="/{id}")
-	public ResponseEntity<TileStatus> getTileStatusById(HttpSession session, @PathVariable("id") Integer id)
+	public ResponseEntity<MatchHistory> getMatchHistoryById(HttpSession session, @PathVariable("id") Integer id)
 	{
-		TileStatus result = serv.getTileStatusById(id);
+		MatchHistory result = serv.getMatchHistoryById(id);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -41,9 +40,9 @@ public class TileStatusController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Integer> addTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Integer> addMatchHistory(HttpSession session, @RequestBody MatchHistory MatchHistory)
 	{
-		Integer result = serv.addTileStatus(tilestatus);
+		Integer result = serv.addMatchHistory(MatchHistory);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -52,16 +51,16 @@ public class TileStatusController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Void> updateTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Void> updateMatchHistory(HttpSession session, @RequestBody MatchHistory MatchHistory)
 	{
-		serv.updateTileStatus(tilestatus);
+		serv.updateMatchHistory(MatchHistory);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<Void> deleteTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Void> deleteMatchHistory(HttpSession session, @RequestBody MatchHistory MatchHistory)
 	{
-		serv.deleteTileStatus(tilestatus);
+		serv.deleteMatchHistory(MatchHistory);
 		return ResponseEntity.ok().build();
 	}
 }
