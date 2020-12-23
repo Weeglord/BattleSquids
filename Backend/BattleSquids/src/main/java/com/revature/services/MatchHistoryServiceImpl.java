@@ -2,12 +2,21 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.MatchHistory;
-import com.revature.data.DAOFactory;
 import com.revature.data.MatchHistoryDAO;
 
+@Service
 public class MatchHistoryServiceImpl implements MatchHistoryService {
-	MatchHistoryDAO dao = DAOFactory.getMatchHistoryDAO();
+	private MatchHistoryDAO dao;
+
+	
+	@Autowired
+	public MatchHistoryServiceImpl(MatchHistoryDAO dao) {
+		this.dao = dao;
+	}
 
 	@Override
 	public Integer addMatchHistory(MatchHistory b) {

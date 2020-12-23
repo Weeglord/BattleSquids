@@ -3,9 +3,9 @@ package com.revature.controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,25 +14,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.Game;
+import com.revature.beans.Person;
 import com.revature.beans.TileStatus;
+import com.revature.services.GameService;
 import com.revature.services.TileStatusService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/tile/status")
-public class TileStatusController {
-	private TileStatusService serv;
+@RequestMapping(path="/game")
+public class GameController {
+	private GameService serv;
 	
 	@Autowired
-	public TileStatusController(TileStatusService t)
+	public GameController(GameService t)
 	{
 		serv = t;
 	}
+	@PostMapping
+	public ResponseEntity<Integer> addGame(HttpSession session, @RequestBody Game game)
+	{
+		Integer result = serv.addGame(game);
+		if (result == null)
+		{
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok(result);
+	}
+	
 	
 	@GetMapping(path="/{id}")
-	public ResponseEntity<TileStatus> getTileStatusById(HttpSession session, @PathVariable("id") Integer id)
+	public ResponseEntity<Game> getGameById(HttpSession session, @PathVariable("id") Integer id)
 	{
-		TileStatus result = serv.getTileStatusById(id);
+		System.out.println("Reached");
+		Game result = serv.getGameById(id);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -40,28 +55,15 @@ public class TileStatusController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PostMapping
-	public ResponseEntity<Integer> addTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
-	{
-		Integer result = serv.addTileStatus(tilestatus);
-		if (result == null)
-		{
-			return ResponseEntity.badRequest().build();
+	@PutMapping(path="/{id}")
+	public ResponseEntity<Void> updateGame(HttpSession session, @PathVariable("id") Integer id, 
+			@RequestBody Game game) {
+		Game games = (Game) session.getAttribute("game");
+		if (games != null && games.getId().equals(id)) {
+			serv.updateGame(game);
+			return ResponseEntity.ok().build();
 		}
-		return ResponseEntity.ok(result);
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
-	
-	@PutMapping
-	public ResponseEntity<Void> updateTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
-	{
-		serv.updateTileStatus(tilestatus);
-		return ResponseEntity.ok().build();
-	}
-	
-	@DeleteMapping
-	public ResponseEntity<Void> deleteTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
-	{
-		serv.deleteTileStatus(tilestatus);
-		return ResponseEntity.ok().build();
-	}
+
 }

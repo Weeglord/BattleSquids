@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.TileStatus;
-import com.revature.services.TileStatusService;
+import com.revature.beans.Squid;
+import com.revature.services.SquidService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/tile/status")
-public class TileStatusController {
-	private TileStatusService serv;
+@RequestMapping(path="/squid")
+public class SquidController {
+private SquidService serv;
 	
 	@Autowired
-	public TileStatusController(TileStatusService t)
+	public SquidController(SquidService t)
 	{
 		serv = t;
 	}
 	
 	@GetMapping(path="/{id}")
-	public ResponseEntity<TileStatus> getTileStatusById(HttpSession session, @PathVariable("id") Integer id)
+	public ResponseEntity<Squid> getSquidById(HttpSession session, @PathVariable("id") Integer id)
 	{
-		TileStatus result = serv.getTileStatusById(id);
+		Squid result = serv.getSquidById(id);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -41,9 +41,9 @@ public class TileStatusController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Integer> addTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Integer> addSquid(HttpSession session, @RequestBody Squid Squid)
 	{
-		Integer result = serv.addTileStatus(tilestatus);
+		Integer result = serv.addSquid(Squid);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -52,16 +52,16 @@ public class TileStatusController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Void> updateTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Void> updateSquid(HttpSession session, @RequestBody Squid Squid)
 	{
-		serv.updateTileStatus(tilestatus);
+		serv.updateSquid(Squid);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<Void> deleteTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Void> deleteSquid(HttpSession session, @RequestBody Squid Squid)
 	{
-		serv.deleteTileStatus(tilestatus);
+		serv.deleteSquid(Squid);
 		return ResponseEntity.ok().build();
 	}
 }
