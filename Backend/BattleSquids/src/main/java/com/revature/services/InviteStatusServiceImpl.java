@@ -2,10 +2,13 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.InviteStatus;
 import com.revature.data.DAOFactory;
 import com.revature.data.InviteStatusDAO;
 
+@Service
 public class InviteStatusServiceImpl implements InviteStatusService {
 	InviteStatusDAO dao = DAOFactory.getInviteStatusDAO();
 	
