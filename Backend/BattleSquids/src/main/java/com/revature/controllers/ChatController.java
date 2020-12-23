@@ -67,7 +67,7 @@ public class ChatController {
 	}
 	
 	 @DeleteMapping(value = "/{id}")
-	    public ResponseEntity<Void> deletechat(@PathVariable Integer id) {
+	    public ResponseEntity<Void> deleteChat(@PathVariable Integer id) {
 
 	    Chat gs= serv.getChatbyId(id);
 	    if(gs != null) {

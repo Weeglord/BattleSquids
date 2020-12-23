@@ -51,7 +51,7 @@ public class GameStatusController {
 	@PutMapping(path="/{id}")
 	public ResponseEntity<Void> updateGameStatus(HttpSession session, @PathVariable("id") Integer id, 
 			@RequestBody GameStatus gamestatus) {
-		GameStatus Gamestat = (GameStatus) session.getAttribute("game");
+		GameStatus Gamestat =	serv.getGameStatusById(id);
 		if (Gamestat != null && Gamestat.getId().equals(id)) {
 			serv.updateGameStatus(gamestatus);
 			return ResponseEntity.ok().build();
