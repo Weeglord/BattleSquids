@@ -4,28 +4,23 @@ import { UrlService } from './url.service'
 import { Person } from '../models/person'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class PersonService {
   private loggedUser!: Person;
   private usersUrl: string;
-  private formHeaders = new HttpHeaders({'Cookie':this.cookieService.get('JSESSIONID'),
-    'Content-Type': 'application/x-www-form-urlencoded'});
-  private regHeaders = new HttpHeaders({'Cookie':this.cookieService.get('JSESSIONID'),
-    'Content-Type':'application/json'})
 
-  constructor(private http: HttpClient, private urlService: UrlService, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private urlService: UrlService) {
     this.usersUrl = this.urlService.getUrl() + '/users';
   }
 
   loginUser(username: string, password: string): Observable<Person> {
+    console.log(this.usersUrl);
     if (username && password) {
       const queryParams = `?user=${username}&pass=${password}`;
       return this.http.put(this.usersUrl + queryParams,
-        {headers: this.formHeaders, withCredentials:true}).pipe(
+        {withCredentials:true}).pipe(
           map(resp => resp as Person)
       );
     } else {
@@ -37,16 +32,19 @@ export class PersonService {
   }
 
   logoutUser(): Observable<object> {
-    return this.http.delete(this.usersUrl, {headers:this.regHeaders, withCredentials:true}).pipe();
+    return this.http.delete(this.usersUrl, {withCredentials:true}).pipe();
   }
 
   updateUser(updatedUser: Person): Observable<object> {
     this.loggedUser = updatedUser;
     return this.http.put(this.usersUrl + this.loggedUser.id, updatedUser, 
-      {headers:this.regHeaders, withCredentials:true}).pipe();
+      {withCredentials:true}).pipe();
   }
 
   getLoggedUser(): Person {
     return this.loggedUser;
+  }
+
+  registerUser(newUser: Person) {
   }
 }
