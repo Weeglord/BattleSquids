@@ -2,12 +2,22 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.Squid;
 import com.revature.data.DAOFactory;
 import com.revature.data.SquidDAO;
 
+@Service
 public class SquidServiceImpl implements SquidService {
 	SquidDAO dao = DAOFactory.getSquidDAO();
+	
+	
+	@Autowired
+	public SquidServiceImpl(SquidDAO dao) {
+		this.dao = dao;
+	}
 
 	@Override
 	public Integer addSquid(Squid b) {

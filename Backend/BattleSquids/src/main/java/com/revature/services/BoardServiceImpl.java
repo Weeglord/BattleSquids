@@ -4,13 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.Board;
 import com.revature.beans.Tile;
 import com.revature.data.BoardDAO;
 import com.revature.data.DAOFactory;
 
-public class BoardSericeImpl implements BoardService {
-	BoardDAO dao = DAOFactory.getBoardDAO();
+@Service
+public class BoardServiceImpl implements BoardService {
+	private BoardDAO dao;
+	
+	@Autowired
+	public BoardServiceImpl(BoardDAO d)
+	{
+		dao = d;
+	}
 	
 	@Override
 	public Integer addBoard(Board b) {
