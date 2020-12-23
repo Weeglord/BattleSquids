@@ -13,11 +13,11 @@ import com.revature.data.BoardDAO;
 import com.revature.data.DAOFactory;
 
 @Service
-public class BoardSericeImpl implements BoardService {
+public class BoardServiceImpl implements BoardService {
 	private BoardDAO dao;
 	
 	@Autowired
-	public BoardSericeImpl(BoardDAO d)
+	public BoardServiceImpl(BoardDAO d)
 	{
 		dao = d;
 	}
