@@ -2,13 +2,21 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.GameStatus;
 import com.revature.data.DAOFactory;
 import com.revature.data.GameStatusDAO;
 
+@Service
 public class GameStatusServiceImpl implements GameStatusService{
-		
-	GameStatusDAO dao=DAOFactory.getGameStatusDAO();
+	private GameStatusDAO dao;
+
+	@Autowired
+	public GameStatusServiceImpl(GameStatusDAO g) {
+		dao=g;
+	}
 		
 	@Override
 	public Integer addGameStatus(GameStatus gs) {
