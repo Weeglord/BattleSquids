@@ -32,7 +32,6 @@ public class TileStatusController {
 	@GetMapping(path="/{id}")
 	public ResponseEntity<TileStatus> getTileStatusById(HttpSession session, @PathVariable("id") Integer id)
 	{
-		System.out.println("reached");
 		TileStatus result = serv.getTileStatusById(id);
 		if (result == null)
 		{
