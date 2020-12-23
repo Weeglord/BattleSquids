@@ -5,11 +5,13 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Squid;
 import com.revature.beans.Tile;
 import com.revature.beans.TileStatus;
 
+@Repository
 public class TileHibernate extends GenericHibernate<Tile> implements TileDAO {
 
 	public TileHibernate() {
