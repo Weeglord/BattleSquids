@@ -11,6 +11,7 @@ describe('TilestatusService', () => {
   let service: TilestatusService;
 
   beforeEach(() => {
+    /*
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -21,6 +22,8 @@ describe('TilestatusService', () => {
       ],
     }).compileComponents();
     service = TestBed.inject(TilestatusService);
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+    */
   });
 
   
@@ -40,12 +43,13 @@ describe('TilestatusService', () => {
 
   });
 
-  it('should get a status', async () => {
+  it('should get a status', (done) => {
     let result = service.getTileStatusById(1).subscribe((resp: any) => {
       result = resp;
+      expect(result).toBeTruthy();
+      console.log(result);
+      done();
     });
-    expect(result).toBeTruthy();
-    console.log(result);
   });
   */
 });
