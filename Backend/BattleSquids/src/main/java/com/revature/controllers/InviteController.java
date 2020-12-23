@@ -41,7 +41,7 @@ public class InviteController {
 	}
 	
 	@GetMapping(path="?game_id={game_id}")
-	public ResponseEntity<Set<Invite>> getInviteById(HttpSession session, @RequestParam("game_id") Integer gameId){
+	public ResponseEntity<Set<Invite>> getAllInvitesForGameWithId(HttpSession session, @RequestParam("game_id") Integer gameId){
 		Set<Invite> invites = inviteService.getAllInvitesForGameWithId(gameId);
 		if (invites == null) {
 			return ResponseEntity.badRequest().build();
@@ -50,8 +50,8 @@ public class InviteController {
 	}
 	
 	@GetMapping(path="?sender_id={sender_id}")
-	public ResponseEntity<Set<Invite>> getInviteById(HttpSession session, @RequestParam("sender_id") Integer senderId){
-		Set<Invite> invites = inviteService.getAllInvitesForGameWithId(senderId);
+	public ResponseEntity<Set<Invite>> getAllInvitesFromSenderWithId(HttpSession session, @RequestParam("sender_id") Integer senderId){
+		Set<Invite> invites = inviteService.getAllInvitesSentByPersonWithId(senderId);
 		if (invites == null) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -59,8 +59,8 @@ public class InviteController {
 	}
 	
 	@GetMapping(path="?receiver_id={receiver_id}")
-	public ResponseEntity<Set<Invite>> getInviteById(HttpSession session, @RequestParam("receiver_id") Integer receiverId){
-		Set<Invite> invites = inviteService.getAllInvitesForGameWithId(receiverId);
+	public ResponseEntity<Set<Invite>> getAllInvitesForReceiverWithId(HttpSession session, @RequestParam("receiver_id") Integer receiverId){
+		Set<Invite> invites = inviteService.getAllInvitesReceivedByPersonWithId(receiverId);
 		if (invites == null) {
 			return ResponseEntity.badRequest().build();
 		}

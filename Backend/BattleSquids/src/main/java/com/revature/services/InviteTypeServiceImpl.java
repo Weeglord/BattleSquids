@@ -2,10 +2,13 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.InviteType;
 import com.revature.data.DAOFactory;
 import com.revature.data.InviteTypeDAO;
 
+@Service
 public class InviteTypeServiceImpl implements InviteTypeService{
 	InviteTypeDAO dao = DAOFactory.getInviteTypeDAO();
 	
