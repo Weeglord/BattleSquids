@@ -11,14 +11,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 import { PersonService } from './services/person.service'
 import { TileService } from './services/tile.service';
-import { UrlService } from './services/url.service'
+import { UrlService } from './services/url.service';
+import { GamescreenComponent } from './gamescreen/gamescreen.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     TestconnectionComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    GamescreenComponent
   ],
   imports: [
     BrowserModule,

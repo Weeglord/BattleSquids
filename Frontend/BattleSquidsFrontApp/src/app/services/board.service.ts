@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UrlService } from '../url.service';
+import { UrlService } from './url.service';
 import { Observable } from 'rxjs';
 import { Board } from '../models/board'
 import { map } from 'rxjs/operators';
