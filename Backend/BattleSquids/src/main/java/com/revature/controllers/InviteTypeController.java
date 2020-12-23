@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.InviteStatus;
 import com.revature.beans.InviteType;
 import com.revature.services.InviteTypeService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/invite_statuses")
+@RequestMapping(path="/invite_types")
 public class InviteTypeController {
 	private InviteTypeService service;
 	
@@ -52,14 +51,14 @@ public class InviteTypeController {
 		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Integer> addInviteType(HttpSession session, @RequestBody InviteType inviteType){
-		Integer newId = service.addInviteType(inviteType);
-		if (newId == null) {
-			return ResponseEntity.badRequest().build();
-		}
-		return ResponseEntity.ok(newId);
-	}
+//	@PostMapping
+//	public ResponseEntity<Integer> addInviteType(HttpSession session, @RequestBody InviteType inviteType){
+//		Integer newId = service.addInviteType(inviteType);
+//		if (newId == null) {
+//			return ResponseEntity.badRequest().build();
+//		}
+//		return ResponseEntity.ok(newId);
+//	}
 	
 	@DeleteMapping
 	public ResponseEntity<Void> deleteInviteType(HttpSession session, @PathVariable("id") Integer id){

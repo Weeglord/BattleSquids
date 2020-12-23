@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.Invite;
 import com.revature.beans.InviteStatus;
 import com.revature.services.InviteStatusService;
 

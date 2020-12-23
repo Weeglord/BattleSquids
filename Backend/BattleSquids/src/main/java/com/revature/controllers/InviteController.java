@@ -22,7 +22,7 @@ import com.revature.beans.Invite;
 import com.revature.services.InviteService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
+//@CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
 @RequestMapping(path="/invites")
 public class InviteController {
 	private InviteService inviteService;
