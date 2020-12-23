@@ -2,10 +2,13 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.Person;
 import com.revature.data.DAOFactory;
 import com.revature.data.PersonDAO;
 
+@Service
 public class PersonServiceImpl implements PersonService {
 	private PersonDAO personDao;
 	
