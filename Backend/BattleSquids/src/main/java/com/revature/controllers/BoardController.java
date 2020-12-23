@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.TileStatus;
-import com.revature.services.TileStatusService;
+import com.revature.beans.Board;
+import com.revature.services.BoardService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/tile/status")
-public class TileStatusController {
-	private TileStatusService serv;
+@RequestMapping(path="/board")
+public class BoardController {
+private BoardService serv;
 	
 	@Autowired
-	public TileStatusController(TileStatusService t)
+	public BoardController(BoardService t)
 	{
 		serv = t;
 	}
 	
 	@GetMapping(path="/{id}")
-	public ResponseEntity<TileStatus> getTileStatusById(HttpSession session, @PathVariable("id") Integer id)
+	public ResponseEntity<Board> getBoardById(HttpSession session, @PathVariable("id") Integer id)
 	{
-		TileStatus result = serv.getTileStatusById(id);
+		Board result = serv.getBoardById(id);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -41,9 +41,9 @@ public class TileStatusController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Integer> addTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Integer> addBoard(HttpSession session, @RequestBody Board Board)
 	{
-		Integer result = serv.addTileStatus(tilestatus);
+		Integer result = serv.addBoard(Board);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -52,16 +52,16 @@ public class TileStatusController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Void> updateTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Void> updateBoard(HttpSession session, @RequestBody Board Board)
 	{
-		serv.updateTileStatus(tilestatus);
+		serv.updateBoard(Board);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<Void> deleteTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	public ResponseEntity<Void> deleteBoard(HttpSession session, @RequestBody Board Board)
 	{
-		serv.deleteTileStatus(tilestatus);
+		serv.deleteBoard(Board);
 		return ResponseEntity.ok().build();
 	}
 }
