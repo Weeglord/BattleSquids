@@ -27,7 +27,7 @@ export class TilestatusService {
 
    getTileStatusById(id: number): Observable<TileStatus>
    {
-     return this.http.get(this.url + id).pipe(map(resp => resp as TileStatus));
+     return this.http.get(this.url + "/" + id).pipe(map(resp => resp as TileStatus));
    }
 
    updateTileStatus(tilestatus: TileStatus): Observable<object>
@@ -35,9 +35,9 @@ export class TilestatusService {
      return this.http.put(this.url, tilestatus).pipe();
    }
 
-   deleteTileStatus(tilestatus: TileStatus): Observable<object>
+   deleteTileStatus(id: number): Observable<object>
    {
-     return this.http.delete(this.url).pipe();
+     return this.http.delete(this.url + "/" + id).pipe();
    }
 
 }
