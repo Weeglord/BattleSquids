@@ -3,16 +3,19 @@ package com.revature.controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Game;
+import com.revature.beans.Person;
 import com.revature.beans.TileStatus;
 import com.revature.services.GameService;
 import com.revature.services.TileStatusService;
@@ -50,6 +53,17 @@ public class GameController {
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(result);
+	}
+	
+	@PutMapping(path="/{id}")
+	public ResponseEntity<Void> updateGame(HttpSession session, @PathVariable("id") Integer id, 
+			@RequestBody Game game) {
+		Game games = (Game) session.getAttribute("game");
+		if (games != null && games.getId().equals(id)) {
+			serv.updateGame(game);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 }
