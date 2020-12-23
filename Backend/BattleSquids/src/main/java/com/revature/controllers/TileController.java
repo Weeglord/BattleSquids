@@ -52,8 +52,8 @@ public class TileController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping(path="/{board}")
-	public ResponseEntity<Tile> getTileByXY(HttpSession session, @PathVariable("board") Integer boardId,
+	@GetMapping(path="/xy")
+	public ResponseEntity<Tile> getTileByXY(HttpSession session, @RequestParam("board") Integer boardId,
 			@RequestParam("x") Integer xPos, @RequestParam("y") Integer yPos) {
 		Tile result = tileServ.getTileByXY(boardId, xPos, yPos);
 		if (result == null) {
@@ -62,8 +62,8 @@ public class TileController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping(path="/{board}")
-	public ResponseEntity<Set<Tile>> getTileByX(HttpSession session, @PathVariable("board") Integer boardId,
+	@GetMapping(path="/x")
+	public ResponseEntity<Set<Tile>> getTileByX(HttpSession session, @RequestParam("board") Integer boardId,
 			@RequestParam("x") Integer xPos) {
 		Set<Tile> result = tileServ.getTileByX(boardId, xPos);
 		if (result == null) {
@@ -72,8 +72,8 @@ public class TileController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping(path="/{board}")
-	public ResponseEntity<Set<Tile>> getTileByY(HttpSession session, @PathVariable("board") Integer boardId,
+	@GetMapping(path="/y")
+	public ResponseEntity<Set<Tile>> getTileByY(HttpSession session, @RequestParam("board") Integer boardId,
 			@RequestParam("y") Integer yPos) {
 		Set<Tile> result = tileServ.getTileByY(boardId, yPos);
 		if (result == null) {
@@ -82,8 +82,8 @@ public class TileController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping(path="/{board}")
-	public ResponseEntity<Set<Tile>> getTileByBoardId(HttpSession session, @PathVariable("board") Integer boardId) {
+	@GetMapping(path="/board")
+	public ResponseEntity<Set<Tile>> getTileByBoardId(HttpSession session, @RequestParam("board") Integer boardId) {
 		Set<Tile> result = tileServ.getTileByBoardId(boardId);
 		if (result == null) {
 			return ResponseEntity.badRequest().build();
@@ -91,8 +91,8 @@ public class TileController {
 		return ResponseEntity.ok(result);
 	}
 
-	@GetMapping("/{board}")
-	public ResponseEntity<Set<Tile>> getTileByStatus(HttpSession session, @PathVariable("board") Integer boardId,
+	@GetMapping(path="/status")
+	public ResponseEntity<Set<Tile>> getTileByStatus(HttpSession session, @RequestParam("board") Integer boardId,
 			@RequestParam("status") TileStatus status) {
 		Set<Tile> result = tileServ.getTileByStatus(boardId, status);
 		if (result == null) {
@@ -101,8 +101,8 @@ public class TileController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping("/{board}")
-	public ResponseEntity<Set<Tile>> getTileBySquid(HttpSession session, @PathVariable("board") Integer boardId,
+	@GetMapping(path="/squid")
+	public ResponseEntity<Set<Tile>> getTileBySquid(HttpSession session, @RequestParam("board") Integer boardId,
 			@RequestParam("squid") Squid squid) {
 		Set<Tile> result = tileServ.getTileBySquid(boardId, squid);
 		if (result == null) {
@@ -123,9 +123,14 @@ public class TileController {
 		return ResponseEntity.badRequest().build();
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<Void> deleteTile(HttpSession session, @RequestBody Tile tile) {
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<Void> deleteTile(HttpSession session, @PathVariable("id") Integer id) {
+		Tile tile = tileServ.getTileById(id);
+		if (tile == null) {
+			return ResponseEntity.badRequest().build();
+		}
 		tileServ.deleteTile(tile);
+		if (tileServ.getTileById(id) != null) return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
 		return ResponseEntity.ok().build();
 	}
 	
