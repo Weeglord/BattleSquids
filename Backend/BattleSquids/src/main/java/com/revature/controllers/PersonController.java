@@ -30,14 +30,6 @@ public class PersonController {
 		personServ = p;
 	}
 	
-	@GetMapping
-	public ResponseEntity<Person> checkLogin(HttpSession session) {
-		Person loggedPerson = (Person) session.getAttribute("user");
-		if (loggedPerson == null)
-			return ResponseEntity.badRequest().build();
-		return ResponseEntity.ok(loggedPerson);
-	}
-	
 	@PutMapping
 	public ResponseEntity<Person> logIn(HttpSession session, @RequestParam("user") String username,
 			@RequestParam("pass") String password) {
@@ -67,8 +59,7 @@ public class PersonController {
 	@PutMapping(path="/{id}")
 	public ResponseEntity<Void> updateUser(HttpSession session, @PathVariable("id") Integer id, 
 			@RequestBody Person person) {
-		Person loggedPerson = (Person) session.getAttribute("user");
-		if (loggedPerson != null && loggedPerson.getId().equals(id)) {
+		if (person != null && person.getId().equals(id)) {
 			personServ.updatePerson(person);
 			return ResponseEntity.ok().build();
 		}
