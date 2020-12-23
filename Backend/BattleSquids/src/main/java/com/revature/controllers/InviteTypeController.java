@@ -20,7 +20,7 @@ import com.revature.services.InviteTypeService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/invite_types")
+@RequestMapping(path="/inviteTypes")
 public class InviteTypeController {
 	private InviteTypeService service;
 	
@@ -38,7 +38,7 @@ public class InviteTypeController {
 		return ResponseEntity.ok(invite);
 	}
 	
-	@PutMapping
+	@PutMapping(path="/{id}")
 	public ResponseEntity<Void> updateInviteType(HttpSession session, @PathVariable("id") Integer id, @RequestBody InviteType inviteType){
 		InviteType typeToUpdate = service.getInviteTypeById(id);
 		if (typeToUpdate == null) {

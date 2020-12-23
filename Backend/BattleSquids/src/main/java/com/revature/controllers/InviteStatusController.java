@@ -20,7 +20,7 @@ import com.revature.services.InviteStatusService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/invite_statuses")
+@RequestMapping(path="/inviteStatuses")
 public class InviteStatusController {
 	private InviteStatusService service;
 	
@@ -38,7 +38,7 @@ public class InviteStatusController {
 		return ResponseEntity.ok(invite);
 	}
 	
-	@PutMapping
+	@PutMapping(path="/{id}")
 	public ResponseEntity<Void> updateInviteStatus(HttpSession session, @PathVariable("id") Integer id, @RequestBody InviteStatus inviteStatus){
 		InviteStatus statusToUpdate = service.getInviteStatusById(id);
 		if (statusToUpdate == null) {

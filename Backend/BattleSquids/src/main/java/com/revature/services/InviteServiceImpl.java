@@ -2,6 +2,7 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.Invite;
@@ -11,7 +12,12 @@ import com.revature.data.InviteDAO;
 @Service
 public class InviteServiceImpl implements InviteService {
 
-	InviteDAO dao = DAOFactory.getInviteDAO();
+	InviteDAO dao;// = DAOFactory.getInviteDAO();
+	
+	@Autowired
+	public InviteServiceImpl(InviteDAO dao) {
+		this.dao = dao;
+	}
 	
 	@Override
 	public Integer addInvite(Invite i) {
