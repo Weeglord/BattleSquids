@@ -2,20 +2,21 @@ package com.revature.services;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.Squid;
 import com.revature.beans.Tile;
 import com.revature.beans.TileStatus;
-import com.revature.data.DAOFactory;
 import com.revature.data.TileDAO;
 
 @Service
 public class TileServiceImpl implements TileService {
 	private TileDAO tileDao;
 	
-	public TileServiceImpl() {
-		tileDao = DAOFactory.getTileDAO();
+	@Autowired
+	public TileServiceImpl(TileDAO t) {
+		tileDao = t;
 	}
 
 	@Override

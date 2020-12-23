@@ -25,14 +25,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Integer addBoard(Board b) {
 		Tile[][] tiles = b.getTiles();
+		Integer boardId = dao.add(b);
 		for(int i = 0; i < tiles.length; i++)
 		{
 			for(int j = 0; j < tiles[i].length; j++)
 			{
+				tiles[i][j].setBoardId(boardId);
 				DAOFactory.getTileDAO().add(tiles[i][j]);
 			}
 		}
-		return dao.add(b);
+		return boardId;
 	}
 
 	@Override
