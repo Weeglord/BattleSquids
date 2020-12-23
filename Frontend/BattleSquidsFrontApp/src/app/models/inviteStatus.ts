@@ -1,6 +1,6 @@
 export class InviteStatus {
     id: number;
-    name: String;
+    name: string;
 
     constructor(){
         this.id = -1;
