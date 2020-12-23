@@ -12,27 +12,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.Chat;
+import com.revature.beans.Game;
 import com.revature.beans.TileStatus;
-import com.revature.services.ChatService;
+import com.revature.services.GameService;
+import com.revature.services.TileStatusService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
-@RequestMapping(path="/chat")
-public class ChatController {
-	
-	private ChatService serv;
+@RequestMapping(path="/game")
+public class GameController {
+	private GameService serv;
 	
 	@Autowired
-	public ChatController(ChatService s) {
-		serv=s;
-	} 
-	
-	@GetMapping(path="/{game_id}")
-	public ResponseEntity<Chat> getGameChat(HttpSession session, @PathVariable("game_id") Integer id)
+	public GameController(GameService t)
 	{
-		System.out.println("Reached");
-		Chat result = serv.getChatbyId(id);
+		serv = t;
+	}
+	@PostMapping
+	public ResponseEntity<Integer> addGame(HttpSession session, @RequestBody Game game)
+	{
+		Integer result = serv.addGame(game);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
@@ -40,10 +39,12 @@ public class ChatController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PostMapping
-	public ResponseEntity<Integer> addChat(HttpSession session, @RequestBody Chat chat)
+	
+	@GetMapping(path="/{id}")
+	public ResponseEntity<Game> getGameById(HttpSession session, @PathVariable("id") Integer id)
 	{
-		Integer result = serv.addChat(chat);
+		System.out.println("Reached");
+		Game result = serv.getGameById(id);
 		if (result == null)
 		{
 			return ResponseEntity.badRequest().build();
