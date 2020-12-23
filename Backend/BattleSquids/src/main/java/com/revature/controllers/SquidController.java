@@ -58,10 +58,15 @@ private SquidService serv;
 		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<Void> deleteSquid(HttpSession session, @RequestBody Squid Squid)
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<Void> deleteSquid(HttpSession session, @PathVariable("id") Integer id)
 	{
-		serv.deleteSquid(Squid);
-		return ResponseEntity.ok().build();
+		Squid Squid = serv.getSquidById(id);
+		if (Squid != null)
+		{
+			serv.deleteSquid(Squid);			
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.badRequest().build();
 	}
 }

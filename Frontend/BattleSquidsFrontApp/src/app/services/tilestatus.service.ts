@@ -32,7 +32,12 @@ export class TilestatusService {
 
    updateTileStatus(tilestatus: TileStatus): Observable<object>
    {
-     return this.http.put(this.url, tilestatus)
+     return this.http.put(this.url, tilestatus).pipe();
+   }
+
+   deleteTileStatus(tilestatus: TileStatus): Observable<object>
+   {
+     return this.http.delete(this.url).pipe();
    }
 
 }

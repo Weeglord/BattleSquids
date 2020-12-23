@@ -57,10 +57,15 @@ private MatchHistoryService serv;
 		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<Void> deleteMatchHistory(HttpSession session, @RequestBody MatchHistory MatchHistory)
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<Void> deleteMatchHistory(HttpSession session, @PathVariable("id") Integer id)
 	{
-		serv.deleteMatchHistory(MatchHistory);
-		return ResponseEntity.ok().build();
+		MatchHistory MatchHistory = serv.getMatchHistoryById(id);
+		if (MatchHistory != null)
+		{
+			serv.deleteMatchHistory(MatchHistory);			
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.badRequest().build();
 	}
 }

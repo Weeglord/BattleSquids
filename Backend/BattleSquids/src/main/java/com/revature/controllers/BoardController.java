@@ -58,10 +58,15 @@ private BoardService serv;
 		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<Void> deleteBoard(HttpSession session, @RequestBody Board Board)
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<Void> deleteBoard(HttpSession session, @PathVariable("id") Integer id)
 	{
-		serv.deleteBoard(Board);
-		return ResponseEntity.ok().build();
+		Board Board = serv.getBoardById(id);
+		if (Board != null)
+		{
+			serv.deleteBoard(Board);			
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.badRequest().build();
 	}
 }
