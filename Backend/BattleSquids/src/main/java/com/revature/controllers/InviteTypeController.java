@@ -3,6 +3,7 @@ package com.revature.controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.InviteStatus;
 import com.revature.beans.InviteType;
 import com.revature.services.InviteTypeService;
 
@@ -38,14 +40,21 @@ public class InviteTypeController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Void> updateInviteType(HttpSession session, @PathVariable("id") Integer id, @RequestBody InviteType InviteType){
-		service.updateInviteType(InviteType); //nothing to return... how to handle failed update?
-		return ResponseEntity.ok().build();
+	public ResponseEntity<Void> updateInviteType(HttpSession session, @PathVariable("id") Integer id, @RequestBody InviteType inviteType){
+		InviteType typeToUpdate = service.getInviteTypeById(id);
+		if (typeToUpdate == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		service.updateInviteType(inviteType);
+		InviteType updatedType = service.getInviteTypeById(id);
+		if (!updatedType.equals(typeToUpdate)) return ResponseEntity.ok().build();
+		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 	}
 	
 	@PostMapping
-	public ResponseEntity<Integer> addInviteType(HttpSession session, @RequestBody InviteType InviteType){
-		Integer newId = service.addInviteType(InviteType);
+	public ResponseEntity<Integer> addInviteType(HttpSession session, @RequestBody InviteType inviteType){
+		Integer newId = service.addInviteType(inviteType);
 		if (newId == null) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -53,8 +62,13 @@ public class InviteTypeController {
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<Void> deleteInviteType(HttpSession session, @RequestBody InviteType InviteType){
-		service.deleteInviteType(InviteType); //how to handle failed delete?
+	public ResponseEntity<Void> deleteInviteType(HttpSession session, @PathVariable("id") Integer id){
+		InviteType typeToDelete = service.getInviteTypeById(id);
+		if (typeToDelete == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		service.deleteInviteType(typeToDelete);
+		if (service.getInviteTypeById(id) != null) return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
 		return ResponseEntity.ok().build();
 	}
 }

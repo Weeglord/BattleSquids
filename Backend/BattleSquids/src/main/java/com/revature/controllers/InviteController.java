@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,15 +69,21 @@ public class InviteController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Void> updateInvite(HttpSession session, @PathVariable("id") Integer id, @RequestBody Invite Invite){
-		//save an invite in session?
-		inviteService.updateInvite(Invite); //nothing to return... how to handle failed update?
-		return ResponseEntity.ok().build();
+	public ResponseEntity<Void> updateInvite(HttpSession session, @PathVariable("id") Integer id, @RequestBody Invite invite){
+		Invite inviteToUpdate = inviteService.getInviteById(id);
+		if (inviteToUpdate == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		inviteService.updateInvite(invite);
+		Invite updatedInvite = inviteService.getInviteById(id);
+		if (!updatedInvite.equals(invite)) return ResponseEntity.ok().build();
+		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 	}
 	
 	@PostMapping
-	public ResponseEntity<Integer> addInvite(HttpSession session, @RequestBody Invite Invite){
-		Integer newId = inviteService.addInvite(Invite);
+	public ResponseEntity<Integer> addInvite(HttpSession session, @RequestBody Invite invite){
+		Integer newId = inviteService.addInvite(invite);
 		if (newId == null) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -86,8 +93,13 @@ public class InviteController {
 	
 	
 	@DeleteMapping
-	public ResponseEntity<Void> deleteInvite(HttpSession session, @RequestBody Invite Invite){
-		inviteService.deleteInvite(Invite); //how to handle failed delete?
+	public ResponseEntity<Void> deleteInvite(HttpSession session, @PathVariable("id") Integer id){
+		Invite inviteToDelete = inviteService.getInviteById(id);
+		if (inviteToDelete == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		inviteService.deleteInvite(inviteToDelete);
+		if (inviteService.getInviteById(id) != null) return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
 		return ResponseEntity.ok().build();
 	}
 }
