@@ -2,9 +2,11 @@ package com.revature.data;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Person;
 
+@Repository
 public class PersonHibernate extends GenericHibernate<Person> implements PersonDAO {
 
 	public PersonHibernate() {
