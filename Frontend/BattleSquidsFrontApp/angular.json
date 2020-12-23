@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "BattleSquidsFrontApp"
+  "defaultProject": "BattleSquidsFrontApp",
+  "cli": {
+    "analytics": false
+  }
 }

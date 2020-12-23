@@ -58,10 +58,15 @@ public class TileStatusController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<Void> deleteTileStatus(HttpSession session, @RequestBody TileStatus tilestatus)
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<Void> deleteTileStatus(HttpSession session, @PathVariable("id") Integer id)
 	{
-		serv.deleteTileStatus(tilestatus);
-		return ResponseEntity.ok().build();
+		TileStatus tilestatus = serv.getTileStatusById(id);
+		if (tilestatus != null)
+		{
+			serv.deleteTileStatus(tilestatus);			
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.badRequest().build();
 	}
 }
