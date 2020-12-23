@@ -17,7 +17,7 @@ public class ChatController {
 	@Autowired
 	public ChatController(ChatService s) {
 		serv=s;
-	}
+	} 
 	
 	//@GetMapping
 	
