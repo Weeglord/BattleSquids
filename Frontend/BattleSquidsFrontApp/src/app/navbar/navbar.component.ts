@@ -16,8 +16,14 @@ export class NavbarComponent implements OnInit, OnChanges {
   constructor(private personService: PersonService, private router: Router) { }
 
   ngOnInit(): void {
-    this.user = '';
-    this.pass = '';
+    let alreadyLogged: Person = JSON.parse(window.sessionStorage.user);
+    if (alreadyLogged) {
+      this.user = alreadyLogged.username;
+      this.pass = alreadyLogged.password;
+    } else {
+      this.user = '';
+      this.pass = '';
+    }
     this.logIn();
   }
 
@@ -29,6 +35,7 @@ export class NavbarComponent implements OnInit, OnChanges {
     this.personService.loginUser(this.user, this.pass).subscribe(
       resp => {
         this.loggedUser = resp;
+        window.sessionStorage.user = JSON.stringify(this.loggedUser);
         this.logInEvent.emit();
       }
     );
@@ -38,6 +45,7 @@ export class NavbarComponent implements OnInit, OnChanges {
     this.personService.logoutUser().subscribe(
       resp => {
         this.loggedUser = null;
+        window.sessionStorage.user = JSON.stringify(this.loggedUser);
         this.router.navigate(['home']);
       }
     );
