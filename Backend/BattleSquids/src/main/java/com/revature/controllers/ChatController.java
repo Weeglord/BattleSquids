@@ -58,7 +58,7 @@ public class ChatController {
 	@PutMapping(path="/{id}")
 	public ResponseEntity<Void> updateChat(HttpSession session, @PathVariable("id") Integer id, 
 			@RequestBody Chat chat) {
-		Chat ch = (Chat) session.getAttribute("id");
+		Chat ch = serv.getChatbyId(id);
 		if (ch != null && ch.getId().equals(id)) {
 			serv.updateChat(chat);
 			return ResponseEntity.ok().build();
