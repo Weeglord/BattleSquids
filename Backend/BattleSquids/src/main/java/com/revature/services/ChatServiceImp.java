@@ -4,14 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.revature.beans.Chat;
 import com.revature.data.ChatDAO;
 import com.revature.data.DAOFactory;
 
+@Service
 public class ChatServiceImp implements ChatService {
-	
-	ChatDAO dao=DAOFactory.getChatDAO();
+	private ChatDAO dao;
 
+	@Autowired
+	public ChatServiceImp(ChatDAO c) {
+		dao=c;
+		
+	}
+	
 	@Override
 	public Integer addChat(Chat c) {
 		return dao.add(c);
