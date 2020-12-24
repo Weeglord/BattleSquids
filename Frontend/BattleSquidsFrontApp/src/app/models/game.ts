@@ -8,11 +8,11 @@ export class Game{
 
     id: number;
     player1: Person;
-    player2 : Person;
+    player2 : Person | null;
     activePlayerId: number;
     status: GameStatus;
-    board1: Board;
-    board2 : Board;
+    board1: Board | null;
+    board2 : Board | null;
 
 
     constructor(){

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Game } from '../models/game';
-import { UrlService } from '../url.service';
+import { UrlService } from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,7 @@ export class GameService {
 
    addGame(game: Game):  Observable<number>
    {
+     console.log(game);
      return this.http.post(this.url, game).pipe(map(resp => resp as number));
    }
 
@@ -40,3 +41,4 @@ export class GameService {
    {
      return this.http.delete(this.url + "/" + id).pipe();
    }
+}

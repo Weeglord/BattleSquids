@@ -44,7 +44,7 @@ export class PersonService {
   }
 
   getLoggedUser(): Person {
-    return window.sessionStorage.user;
+    return JSON.parse(window.sessionStorage.user);
   }
 
   registerUser(newUser: Person): Observable<Person> {

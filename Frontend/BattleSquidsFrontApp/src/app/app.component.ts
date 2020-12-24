@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { Game } from './models/game';
+import { Person } from './models/person';
+import { GameService } from './services/game.service';
+import { GamestatusService } from './services/gamestatus.service';
+import { PersonService } from './services/person.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +12,42 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'BattleSquidsFrontApp';
+  personServ: PersonService;
+  gameServ: GameService;
+  gameStatServ: GamestatusService;
+  person: Person | null;
+  game!: Game;
+  constructor(personServ: PersonService, gameServ: GameService, gameStatServ: GamestatusService) {
+    this.personServ = personServ;
+    this.gameServ = gameServ;
+    this.gameStatServ = gameStatServ;
+    this.person = null;
+  }
 
   setLogin() {
-    console.log('user logged in');
+    this.person = window.sessionStorage.user;
+  }
+
+  setLogout() 
+  {
+    this.person = null;
+  }
+
+  createGame()
+  {
+    this.game = new Game();
+    this.game.player1 = this.personServ.getLoggedUser();
+    this.game.player2 = null;
+    this.game.activePlayerId = this.game.player1.id;
+    this.game.board1 = null;
+    this.game.board2 = null;
+    this.gameStatServ.getGameStatusById(1).subscribe(
+      resp => {this.game.status = resp;
+        this.gameServ.addGame(this.game).subscribe(
+          resp => {this.game.id = resp;}
+        );
+      }
+    );
+    window.sessionStorage.game = this.game;
   }
 }
