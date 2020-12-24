@@ -23,6 +23,7 @@ export class GameService {
 
    addGame(game: Game):  Observable<number>
    {
+     console.log(game);
      return this.http.post(this.url, game).pipe(map(resp => resp as number));
    }
 

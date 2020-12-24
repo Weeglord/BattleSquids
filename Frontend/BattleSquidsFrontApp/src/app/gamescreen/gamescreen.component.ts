@@ -16,17 +16,18 @@ export class GamescreenComponent implements OnInit {
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
   constructor(personServ: PersonService, gameServ: GameService, gameStatServ: GamestatusService) {
     this.game = new Game();
-    this.game.player1 = window.sessionStorage.user;
+    this.game.player1 = personServ.getLoggedUser();
     this.game.player2 = null;
     this.game.activePlayerId = this.game.player1.id;
     this.game.board1 = null;
     this.game.board2 = null;
     gameStatServ.getGameStatusById(1).subscribe(
       resp => {this.game.status = resp;
-      gameServ.addGame(this.game)}
+        gameServ.addGame(this.game).subscribe(
+          resp => {this.game.id = resp;}
+        );
+      }
     );
-    
-
 
    }
 
