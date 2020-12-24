@@ -3,16 +3,14 @@
         <ng-container *ngIf="list.length == 0; else emptyList">
             <h2>Invites {{ pertainsToSent ? "Sent" : "Received" }}:</h2>
             <ul>
-                <ng-container *ngFor>
-                    <li>
-                        <ng-container *ngIf="pertainsToSent; else reactionList">
-                            <app-invite></app-invite>
-                        </ng-container>
-                        <ng-container #reactionList>
-                            <app-react-to-invite></app-react-to-invite>
-                        </ng-container>
-                    </li>
-                </ng-container>
+                <li *ngFor="let invite of list">
+                    <ng-container *ngIf="pertainsToSent; else reactionList">
+                        <app-invite [invite]="invite"></app-invite>
+                    </ng-container>
+                    <ng-container #reactionList>
+                        <app-react-to-invite [invite]="invite"></app-react-to-invite>
+                    </ng-container>
+                </li>
             </ul>
         </ng-container>
         <ng-template #emptyList>
