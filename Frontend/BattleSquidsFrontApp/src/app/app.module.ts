@@ -13,7 +13,9 @@ import { PersonService } from './services/person.service'
 import { TileService } from './services/tile.service';
 import { UrlService } from './services/url.service';
 import { TileComponent } from './tile/tile.component';
-import { ReactToInviteComponent } from './react-to-invite/react-to-invite.component';
+import { ReactToInviteComponent } from './invites/react-to-invite/react-to-invite.component';
+import { InviteListComponent } from './invites/invite-list/invite-list.component';
+import { InviteComponent } from './invites/invite/invite.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ReactToInviteComponent } from './react-to-invite/react-to-invite.compon
     HomeComponent,
     NavbarComponent,
     TileComponent,
-    ReactToInviteComponent
+    ReactToInviteComponent,
+    InviteListComponent,
+    InviteComponent
   ],
   imports: [
     BrowserModule,

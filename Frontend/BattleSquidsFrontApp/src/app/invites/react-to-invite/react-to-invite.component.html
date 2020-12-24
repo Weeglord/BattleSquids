@@ -1,6 +1,6 @@
 <div>
     <ng-container *ngIf="invite; else noInvite">
-        <h3>{{ invite.sender.username }} invited you to {{ }}!</h3>
+        <h3>{{ invite.sender.username }} invited you to {{ invite.type.name.toLowerCase() }}!</h3>
         <form>
             <label for="accept">Accept</label>
             <input type="radio" name="accept" id="accept" [(ngModel)="selectedStatus"] value="Accepted">

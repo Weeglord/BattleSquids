@@ -15,8 +15,7 @@ export class ReactToInviteComponent implements OnInit {
     private selectedStatus: string
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   reactToInvite(): void {
     if(this.selectedStatus == "Accepted"){
