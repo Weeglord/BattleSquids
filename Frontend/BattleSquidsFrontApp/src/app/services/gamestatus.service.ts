@@ -14,7 +14,7 @@ export class GamestatusService {
   url : string;
   
   constructor(private http: HttpClient, private urlService: UrlService) {
-    this.url = urlService.getUrl() + "/tile/status";
+    this.url = urlService.getUrl() + "/game/status";
    }
 
    getAllGameStatus(): Observable<GameStatus[]>

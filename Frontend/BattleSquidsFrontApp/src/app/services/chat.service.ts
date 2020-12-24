@@ -12,7 +12,7 @@ export class ChatService {
   url : string;
   
   constructor(private http: HttpClient, private urlService: UrlService) {
-    this.url = urlService.getUrl() + "/tile/status";
+    this.url = urlService.getUrl() + "/chat";
    }
 
    getAllChat(): Observable<Chat[]>
