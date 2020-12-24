@@ -2,6 +2,8 @@ package com.revature.data;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Repository;
+
 import com.revature.beans.Invite;
 import com.revature.exceptions.SameSenderAndReceiverException;
 
