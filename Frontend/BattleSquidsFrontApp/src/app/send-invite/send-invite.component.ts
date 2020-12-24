@@ -30,7 +30,7 @@ export class InviteComponent implements OnInit, OnDestroy {
   sendInvite(): void {
     let i: Invite = new Invite();
     i.sender = this.personService.getLoggedUser();
-    i.receiver = this.personService.getPersonByUsername(this.selectedRecipientUsername);
+    i.receiver = this.personService.getUserByUsername(this.selectedRecipientUsername);
     i.game = this.activeGame;
     
     i.type.id = this.selectedType == "Player" ? 1 : 2;
