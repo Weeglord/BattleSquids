@@ -9,10 +9,41 @@ import { Invite } from '../models/invite';
   providedIn: 'root'
 })
 export class InviteService {
+    webSocket!: WebSocket;
+    invite!: Invite;
     url: string;
 
     constructor(private http: HttpClient, private urlService: UrlService) { 
         this.url = urlService.getUrl() + "/invites";
+    }
+
+    public openInviteWebSocket() {
+        this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/inviteaction');
+
+        this.webSocket.onopen = (event) => {
+            console.log('Open: ', event);
+        };
+
+        this.webSocket.onmessage = (event) => {
+            const invite = JSON.parse(event.data);
+            console.log(invite);
+        };
+
+        this.webSocket.onclose = (event) => {
+            console.log('Close: ', event);
+        };
+    }
+
+    public sendInvite(invite: Invite) {
+        this.webSocket.send(JSON.stringify(invite));
+    }
+
+    public closeInviteWebSocket() {
+        this.webSocket.close()
+    }
+
+    public ngOnDestroy() {
+        this.webSocket.close();
     }
 
     //no reason to get all invites really; instead:
