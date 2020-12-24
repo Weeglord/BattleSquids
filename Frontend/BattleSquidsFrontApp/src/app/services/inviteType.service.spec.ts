@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UrlService } from './url.service';
+import { InviteTypeService } from './inviteType.service';
 
-describe('UrlService', () => {
-  let service: UrlService;
+describe('InviteTypeService', () => {
+  let service: InviteTypeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UrlService);
+    service = TestBed.inject(InviteTypeService);
   });
 
   it('should be created', () => {
