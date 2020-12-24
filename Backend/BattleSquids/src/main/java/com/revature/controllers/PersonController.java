@@ -65,4 +65,23 @@ public class PersonController {
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
+	
+	@GetMapping(path="/id/{id}")
+	public ResponseEntity<Person> getUserById(HttpSession session, @PathVariable("id") Integer id) {
+		Person person = personServ.getPersonById(id);
+		if (person != null) {
+			return ResponseEntity.ok(person);
+		}
+		return ResponseEntity.badRequest().build();
+	}
+	
+	@GetMapping(path="/user/{username}")
+	public ResponseEntity<Person> getUserByUsername(HttpSession session, @PathVariable("username") String username) {
+		Person person = personServ.getPersonByUsername(username);
+		if (person != null) {
+			return ResponseEntity.ok(person);
+		}
+		return ResponseEntity.badRequest().build();
+	}
+	
 }
