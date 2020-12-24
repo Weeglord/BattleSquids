@@ -5,6 +5,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.beans.Tile;
 
 public class TileWebSocketHandler extends TextWebSocketHandler {
@@ -16,7 +17,11 @@ public class TileWebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		System.out.println(message.toString());
+		String strMessage = message.getPayload();
+		System.out.println(strMessage);
+		ObjectMapper mapper = new ObjectMapper();
+		Tile t = mapper.readValue(strMessage, Tile.class);
+		System.out.println(t);
 		session.sendMessage(message);
 	}
 	
