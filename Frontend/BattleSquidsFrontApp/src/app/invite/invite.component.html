@@ -1,0 +1,19 @@
+<div>
+    <ng-container *ngIf="activeGame; else noActiveGame">
+        <form>
+            <label for="recipientUsername">Recipient Username:</label>
+            <input type="text" name="recipientUsername" id="recipientUsername" ><br>
+
+            <label for="play">Play</label>
+            <input type="radio" name="play" id="play">
+
+            <label for="spectate">Spectate</label>
+            <input type="radio" name="spectate" id="spectate">
+
+            <button type="button" name="createInvite" id="createInvite" (click)="sendInvite()">Send Invite</button>
+        </form>
+    </ng-container>
+    <ng-template>
+        No active game.
+    </ng-template>
+</div>
