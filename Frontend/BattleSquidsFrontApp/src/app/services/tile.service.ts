@@ -1,51 +1,41 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
-import { Tile } from '../models/tile'
+import { Tile } from '../models/tile';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TileService implements OnDestroy {
-  webSocket!: WebSocketSubject<any>;
+  webSocket!: WebSocket;
+  tile!: Tile;
 
   constructor() { };
-
+ 
   public openTileWebSocket() {
-    this.webSocket = webSocket('ws://localhost:8080/BattleSquids/tile');
+    this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/tileaction');
+
+    this.webSocket.onopen = (event) => {
+      console.log('Open: ', event);
+    };
+
+    this.webSocket.onmessage = (event) => {
+      const tile = JSON.parse(event.data);
+      console.log(tile);
+    };
+
+    this.webSocket.onclose = (event) => {
+      console.log('Close: ', event);
+    };
   }
 
-  public onTileUpdate() {
-    if (this.webSocket) {
-      console.log("Tile updated");
-      this.webSocket.subscribe(
-        msg => console.log('message received: ' + JSON.stringify(msg)),
-        err => console.log(err),
-        () => console.log('complete')
-      );
-    } else {
-      console.error('Did not receive anything; open a connection first');
-    }
+  public sendTile(tile: Tile) {
+    this.webSocket.send(JSON.stringify(tile));
   }
 
-  public sendTileUpdate() {
-    if (this.webSocket) {
-      this.webSocket.subscribe();
-      this.webSocket.next({message: 'Updating tile'});
-    } else {
-      console.error('Did not send anything; open a connection first');
-    }
+  public closeTileWebSocket() {
+    this.webSocket.close()
   }
 
-  public closeWebSocket() {
-    if (this.webSocket) {
-      this.webSocket.closed = true;
-      this.webSocket.complete();
-      this.webSocket.unsubscribe();
-    }
-  }
-
-  ngOnDestroy() {
-    this.webSocket.complete();
-    this.webSocket.closed = true;
+  public ngOnDestroy() {
+    this.webSocket.close();
   }
 }

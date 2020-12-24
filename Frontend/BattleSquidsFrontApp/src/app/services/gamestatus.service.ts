@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Game } from '../models/game';
 import { GameStatus } from '../models/gamestatus';
-import { UrlService } from './url.service';
+import { UrlService } from '../url.service';
 
 @Injectable({
   providedIn: 'root'

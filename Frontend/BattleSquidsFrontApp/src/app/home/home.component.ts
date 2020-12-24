@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonService } from '../services/person.service';
-
 
 @Component({
   selector: 'app-home',
@@ -8,11 +6,8 @@ import { PersonService } from '../services/person.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  personServ: PersonService;
 
-  constructor(personServ: PersonService) {
-    this.personServ = personServ;
-   }
+  constructor() { }
 
   ngOnInit(): void {
   }

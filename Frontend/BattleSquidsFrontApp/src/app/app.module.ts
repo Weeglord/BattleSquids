@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
-import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +12,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PersonService } from './services/person.service'
 import { TileService } from './services/tile.service';
 import { UrlService } from './services/url.service';
-import { GamescreenComponent } from './gamescreen/gamescreen.component'
+import { TileComponent } from './tile/tile.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +20,13 @@ import { GamescreenComponent } from './gamescreen/gamescreen.component'
     TestconnectionComponent,
     HomeComponent,
     NavbarComponent,
-    GamescreenComponent
+    TileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    CommonModule
+    FormsModule
   ],
   providers: [
     PersonService, 

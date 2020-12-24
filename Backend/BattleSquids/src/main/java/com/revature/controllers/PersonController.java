@@ -45,9 +45,9 @@ public class PersonController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> registerUser(HttpSession session, @RequestBody Person person) {
-		personServ.addPerson(person);
-		return ResponseEntity.ok().build();
+	public ResponseEntity<Person> registerUser(HttpSession session, @RequestBody Person person) {
+		person = personServ.getPersonById(personServ.addPerson(person));
+		return ResponseEntity.ok(person);
 	}
 	
 	@DeleteMapping

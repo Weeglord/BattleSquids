@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Game } from '../models/game';
-import { UrlService } from './url.service';
+import { UrlService } from '../url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,4 +40,3 @@ export class GameService {
    {
      return this.http.delete(this.url + "/" + id).pipe();
    }
-}
