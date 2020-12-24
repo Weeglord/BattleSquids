@@ -4,17 +4,17 @@ import { TileStatus } from "./tilestatus";
 export class Tile {
     id: number;
     boardId: number;
-    tileStatus: TileStatus;
+    status: TileStatus;
     calamari: Squid;
-    xPos: number;
-    yPos: number;
+    x: number;
+    y: number;
 
     constructor () {
         this.id = -1;
         this.boardId = -1;
-        this.tileStatus = new TileStatus();
+        this.status = new TileStatus();
         this.calamari = new Squid();
-        this.xPos = -1;
-        this.yPos = -1;
+        this.x = -1;
+        this.y = -1;
     }
 }

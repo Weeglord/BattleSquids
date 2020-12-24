@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.revature.beans.Invite;
 import com.revature.exceptions.SameSenderAndReceiverException;
 
+@Repository
 public class InviteHibernate extends GenericHibernate<Invite> implements InviteDAO{
 
 	public InviteHibernate() {
