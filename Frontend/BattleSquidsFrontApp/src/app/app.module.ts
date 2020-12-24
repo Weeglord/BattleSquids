@@ -11,7 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 import { PersonService } from './services/person.service'
 import { TileService } from './services/tile.service';
-import { UrlService } from './services/url.service'
+import { UrlService } from './services/url.service';
 
 @NgModule({
   declarations: [

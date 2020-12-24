@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!registration">
     <a href="home"><strong>BATTLESQUIDS</strong></a>
     <ng-container *ngIf="!loggedUser; else loggedIn">
         <form>
@@ -7,6 +7,7 @@
             <label for="pass"> Password: </label>
             <input id="pass" name="pass" type="password" [(ngModel)]="pass" />
             <button type="button" id="loginBtn" (click)="logIn()">Log In</button>
+            <button type="button" id="registrationBtn" (click)="toggleRegister()">Register</button>
         </form>
     </ng-container>
     <ng-template #loggedIn>
@@ -14,4 +15,19 @@
             <button type="button" id="loginBtn" (click)="logOut()">Log Out</button>
         </span>
     </ng-template>
+</div>
+<div *ngIf="registration">
+    <form>
+        <label for="user">Username: </label>
+        <input id="user" name="user" type="text" [(ngModel)]="regUser" />
+        <br>
+        <label for="pass">Password: </label>
+        <input id="pass" name="pass" [type]="isPassword" [(ngModel)]="regPass" />
+        <input id="togglePass" name="togglePass" type="checkbox" (click)="togglePassword()"/>
+        <label for="togglePass">&nbsp; Show Password</label>
+        <br>
+        <button type="button" id="registerBtn" (click)="registerUser()">Register</button>
+        <button type="button" id="cancelRegist" (click)="toggleRegister()">Cancel</button>
+    </form>
+    <div *ngIf="!registered">Username is taken. Try again.</div>
 </div>
