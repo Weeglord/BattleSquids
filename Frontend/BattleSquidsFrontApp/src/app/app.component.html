@@ -1,4 +1,6 @@
-<app-navbar (logInEvent)="setLogin()"></app-navbar>
+<app-navbar (logInEvent)="setLogin()" (logOutEvent)="setLogout()"></app-navbar>
 <app-tile>
 </app-tile>
+<br>
+<button *ngIf="person" routerLink = 'gamescreen'>Create new Game</button>
 <router-outlet></router-outlet>
