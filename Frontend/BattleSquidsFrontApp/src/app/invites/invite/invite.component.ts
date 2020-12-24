@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Invite } from '../models/invite';
+import { Invite } from '../../models/invite';
 
 @Component({
   selector: 'app-invite',

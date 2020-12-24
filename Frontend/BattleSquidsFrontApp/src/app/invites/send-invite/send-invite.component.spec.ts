@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InviteComponent } from './invite.component';
+import { InviteComponent } from './send-invite.component';
 
 describe('InviteComponent', () => {
   let component: InviteComponent;
