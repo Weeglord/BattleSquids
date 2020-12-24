@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.revature.beans.Squid;
 import com.revature.beans.Tile;
 import com.revature.beans.TileStatus;
+import com.revature.data.DAOFactory;
 import com.revature.data.TileDAO;
 
 @Service
@@ -17,6 +18,10 @@ public class TileServiceImpl implements TileService {
 	@Autowired
 	public TileServiceImpl(TileDAO t) {
 		tileDao = t;
+	}
+	
+	public TileServiceImpl() {
+		tileDao = DAOFactory.getTileDAO();
 	}
 
 	@Override
