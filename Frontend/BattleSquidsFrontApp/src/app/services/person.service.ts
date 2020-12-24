@@ -14,7 +14,7 @@ export class PersonService {
   private regHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   constructor(private http: HttpClient, private urlService: UrlService) {
-    this.usersUrl = this.urlService.getUrl() + '/users';
+    this.usersUrl = this.urlService.getUrl() + '/users/';
   }
 
   loginUser(username: string, password: string): Observable<Person> {
@@ -44,12 +44,24 @@ export class PersonService {
   }
 
   getLoggedUser(): Person {
-    return this.loggedUser;
+    return window.sessionStorage.user;
   }
 
-  registerUser(newUser: Person): Observable<Person>{
+  registerUser(newUser: Person): Observable<Person> {
     return this.http.post(this.usersUrl, newUser, {headers: this.regHeaders, withCredentials:true}).pipe(
       map(resp => resp as Person)
     );
+  }
+
+  getUserById(userId: number): Observable<Person> {
+    return this.http.get(this.usersUrl + '/id/' + userId, {withCredentials:true}).pipe(
+      map(resp => resp as Person)      
+    )
+  }
+
+  getUserByUsername(userUsername: string): Observable<Person> {
+    return this.http.get(this.usersUrl + '/user/' + userUsername, {withCredentials:true}).pipe(
+      map(resp => resp as Person)      
+    )
   }
 }
