@@ -7,8 +7,15 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.beans.Tile;
+import com.revature.services.TileService;
+import com.revature.services.TileServiceImpl;
 
 public class TileWebSocketHandler extends TextWebSocketHandler {
+	private TileServiceImpl tileServ;
+	
+	public TileWebSocketHandler() {
+		tileServ = new TileServiceImpl();
+	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -21,6 +28,7 @@ public class TileWebSocketHandler extends TextWebSocketHandler {
 		System.out.println(strMessage);
 		ObjectMapper mapper = new ObjectMapper();
 		Tile t = mapper.readValue(strMessage, Tile.class);
+		tileServ.updateTile(t);
 		System.out.println(t);
 		session.sendMessage(message);
 	}

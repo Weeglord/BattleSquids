@@ -64,6 +64,8 @@ export class NavbarComponent implements OnInit, OnChanges {
   }
 
   toggleRegister() {
+    this.regUser = '';
+    this.regPass = '';
     this.registration = !this.registration;
   }
 
