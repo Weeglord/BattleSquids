@@ -1,5 +1,5 @@
 <p>home works!</p>
-<div *ngIf= 'personServ'>
+<div *ngIf= 'personServ.getLoggedUser()'>
     <a href = 'gamescreen'>Create New Game</a>
 </div>
 <router-outlet></router-outlet>
