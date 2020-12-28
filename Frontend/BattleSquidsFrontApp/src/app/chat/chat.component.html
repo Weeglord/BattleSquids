@@ -1,0 +1,10 @@
+<ng-container *ngIf="person; else display">
+   <ng-container *ngIf="game; else display">
+    <p>chat works!</p>
+    <textarea placeholder="Enter the msg" id="message" [(ngModel)]="message" name="message"></textarea>
+    <button type="button" id="button" (click)="sendmessage()">Send Message</button>
+</ng-container>
+</ng-container>
+<ng-template #display>
+    Sorry, no one here.
+</ng-template>

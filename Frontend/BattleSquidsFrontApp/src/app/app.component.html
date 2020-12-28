@@ -3,4 +3,6 @@
 </app-tile>
 <br>
 <button *ngIf="person" routerLink = 'gamescreen' (click)="createGame()">Create new Game</button>
+<app-chat [person]="person"
+          [game]="game"   ></app-chat>
 <router-outlet></router-outlet>

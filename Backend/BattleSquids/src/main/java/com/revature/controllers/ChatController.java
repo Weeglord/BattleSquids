@@ -47,6 +47,8 @@ public class ChatController {
 	@PostMapping
 	public ResponseEntity<Integer> addChat(HttpSession session, @RequestBody Chat chat)
 	{
+		System.out.println("sender"+ chat);
+		
 		Integer result = serv.addChat(chat);
 		if (result == null)
 		{

@@ -13,7 +13,9 @@ import { PersonService } from './services/person.service'
 import { TileService } from './services/tile.service';
 import { UrlService } from './services/url.service';
 import { TileComponent } from './tile/tile.component';
-import { GamescreenComponent } from './gamescreen/gamescreen.component'
+import { GamescreenComponent } from './gamescreen/gamescreen.component';
+import { ChatComponent } from './chat/chat.component';
+import { GamestatusComponent } from './gamestatus/gamestatus.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { GamescreenComponent } from './gamescreen/gamescreen.component'
     HomeComponent,
     NavbarComponent,
     TileComponent,
-    GamescreenComponent
+    GamescreenComponent,
+    ChatComponent,
+    GamestatusComponent
   ],
   imports: [
     BrowserModule,

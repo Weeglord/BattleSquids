@@ -15,7 +15,7 @@ export class AppComponent {
   personServ: PersonService;
   gameServ: GameService;
   gameStatServ: GamestatusService;
-  person: Person | null;
+  person: Person |null;
   game!: Game;
   constructor(personServ: PersonService, gameServ: GameService, gameStatServ: GamestatusService) {
     this.personServ = personServ;

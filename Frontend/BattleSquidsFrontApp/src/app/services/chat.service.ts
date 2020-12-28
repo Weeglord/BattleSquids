@@ -1,15 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Chat } from '../models/chat';
-import { UrlService } from '../url.service';
+import { UrlService } from './url.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   url : string;
+  private regHeaders = new HttpHeaders({'Content-Type':'application/json'});
+
   
   constructor(private http: HttpClient, private urlService: UrlService) {
     this.url = urlService.getUrl() + "/chat";
@@ -22,8 +24,10 @@ export class ChatService {
 
    addChat(chat: Chat):  Observable<number>
    {
-     return this.http.post(this.url, chat).pipe(map(resp => resp as number));
-   }
+     console.log(chat);
+     return this.http.post(this.url, chat, {headers: this.regHeaders, withCredentials:true}).pipe(
+      map(resp => resp as number));
+     }
 
    getChatById(id: number): Observable<Chat>
    {
