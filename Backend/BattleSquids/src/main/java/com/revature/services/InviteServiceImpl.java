@@ -19,6 +19,11 @@ public class InviteServiceImpl implements InviteService {
 		this.dao = dao;
 	}
 	
+	public InviteServiceImpl()
+	{
+		this.dao = DAOFactory.getInviteDAO();
+	}
+	
 	@Override
 	public Integer addInvite(Invite i) {
 		return dao.add(i);

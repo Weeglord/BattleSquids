@@ -10,9 +10,52 @@ import { Invite } from '../models/invite';
 })
 export class InviteService {
     url: string;
+    webSocket!: WebSocket;
 
     constructor(private http: HttpClient, private urlService: UrlService) { 
         this.url = urlService.getUrl() + "/invites";
+    }
+
+
+    public openInviteWebSocket(fctn: (str: string) => any) 
+    {
+        this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/inviteaction');
+    
+        this.webSocket.onopen = (event) => {
+          console.log('Open: ', event);
+        };
+    
+        this.webSocket.onmessage = (event) => {
+          fctn(JSON.parse(event.data));
+          console.log(JSON.parse(event.data));
+        };
+    
+        this.webSocket.onclose = (event) => {
+          console.log('Close: ', event);
+        };
+    }
+
+    //true for accept, false for decline
+    public replyToInvite(accept: boolean)
+    {
+        if (accept)
+        {
+            this.webSocket.send("accepted");
+        }
+        else
+        {
+            this.webSocket.send("declined");
+        }
+    }
+
+    public closeInviteWebSocket() 
+    {
+        this.webSocket.close()
+    }
+    
+    public ngOnDestroy() 
+    {
+        this.webSocket.close();
     }
 
     //no reason to get all invites really; instead:
