@@ -2,5 +2,5 @@
 <app-tile>
 </app-tile>
 <br>
-<button *ngIf="person" routerLink = 'gamescreen' (click)="createGame()">Create new Game</button>
+<button *ngIf="person" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
 <router-outlet></router-outlet>
