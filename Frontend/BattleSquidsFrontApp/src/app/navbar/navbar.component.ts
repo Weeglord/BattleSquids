@@ -10,6 +10,7 @@ import { PersonService } from '../services/person.service'
 })
 export class NavbarComponent implements OnInit, OnChanges {
   @Output() logInEvent: EventEmitter<any> = new EventEmitter();
+  @Output() logOutEvent: EventEmitter<any> = new EventEmitter();
   loggedUser: Person | null | undefined;
   user!: string;
   pass!: string;
@@ -58,12 +59,15 @@ export class NavbarComponent implements OnInit, OnChanges {
         this.pass = '';
 
         window.sessionStorage.user = JSON.stringify(this.loggedUser);
+        this.logOutEvent.emit();
         this.router.navigate(['home']);
       }
     );
   }
 
   toggleRegister() {
+    this.regUser = '';
+    this.regPass = '';
     this.registration = !this.registration;
   }
 

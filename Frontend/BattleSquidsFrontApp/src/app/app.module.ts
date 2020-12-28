@@ -13,6 +13,7 @@ import { PersonService } from './services/person.service'
 import { TileService } from './services/tile.service';
 import { UrlService } from './services/url.service';
 import { TileComponent } from './tile/tile.component';
+import { GamescreenComponent } from './gamescreen/gamescreen.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TileComponent } from './tile/tile.component';
     TestconnectionComponent,
     HomeComponent,
     NavbarComponent,
-    TileComponent
+    TileComponent,
+    GamescreenComponent
   ],
   imports: [
     BrowserModule,
