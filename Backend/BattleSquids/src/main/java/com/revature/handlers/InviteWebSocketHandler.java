@@ -44,6 +44,17 @@ public class InviteWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		super.afterConnectionClosed(session, status);
+		//remove session from map if present
+		if (websockets.containsValue(session))
+		{
+			for (Map.Entry<Integer, WebSocketSession> entry: websockets.entrySet())
+			{
+				if(entry.getValue().equals(session))
+				{
+					websockets.remove(entry.getKey());
+				}
+			}
+		}
 	}
 	
 	private String getQueryValue(String query, String param)

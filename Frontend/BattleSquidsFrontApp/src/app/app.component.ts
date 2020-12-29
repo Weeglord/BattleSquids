@@ -4,6 +4,8 @@ import { Person } from './models/person';
 import { GameService } from './services/game.service';
 import { GamestatusService } from './services/gamestatus.service';
 import { PersonService } from './services/person.service';
+import { Invite } from './models/invite';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +19,7 @@ export class AppComponent {
   gameStatServ: GamestatusService;
   person: Person | null;
   game!: Game;
-  constructor(personServ: PersonService, gameServ: GameService, gameStatServ: GamestatusService) {
+  constructor(personServ: PersonService, gameServ: GameService, gameStatServ: GamestatusService, private router: Router) {
     this.personServ = personServ;
     this.gameServ = gameServ;
     this.gameStatServ = gameStatServ;
@@ -46,5 +48,14 @@ export class AppComponent {
     this.game.id = await this.gameServ.addGame(this.game).toPromise();
 
     window.sessionStorage.setItem("game", JSON.stringify(this.game));
+  }
+
+  async startGame(invite: any)
+  {
+    this.game = invite.game;
+    this.game.player2 = this.personServ.getLoggedUser();
+    this.gameServ.updateGame(this.game);
+    window.sessionStorage.setItem("game", JSON.stringify(this.game));
+    this.router.navigate(['gamescreen']);
   }
 }

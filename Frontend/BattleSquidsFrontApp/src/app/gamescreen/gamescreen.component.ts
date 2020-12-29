@@ -39,6 +39,11 @@ export class GamescreenComponent implements OnInit {
       let json = window.sessionStorage.getItem("game");
       json = this.remove_non_ascii(json as string) as string;
       this.game = await JSON.parse(json);
+      if(this.game?.player2)
+      {
+        this.invited = true;
+        this.started = true;
+      }
     }
     else{
       console.log("moved too fast, taking a second to retry");
@@ -104,7 +109,7 @@ export class GamescreenComponent implements OnInit {
 
   startGame()
   {
-
+    this.started = true;
   }
 
   readInvite(str: string)
@@ -116,6 +121,7 @@ export class GamescreenComponent implements OnInit {
         this.game.player2 = this.invite.receiver;
         alert("Invite Accepted!");
         this.inviteServ.closeInviteWebSocket();
+        this.startGame();
       }
     }
     else if(str == "rejected")
