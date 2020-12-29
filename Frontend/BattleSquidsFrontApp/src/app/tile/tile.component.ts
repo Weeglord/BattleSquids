@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { TileService } from '../services/tile.service'
 import { Tile } from '../models/tile'
 
@@ -8,6 +8,7 @@ import { Tile } from '../models/tile'
   styleUrls: ['./tile.component.css']
 })
 export class TileComponent implements OnInit, OnDestroy {
+  @Input() tile!: Tile;
 
   constructor(private tileServ:TileService) { }
 

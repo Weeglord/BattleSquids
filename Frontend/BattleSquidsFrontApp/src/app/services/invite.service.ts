@@ -9,13 +9,13 @@ import { Invite } from '../models/invite';
   providedIn: 'root'
 })
 export class InviteService {
-    url: string;
     webSocket!: WebSocket;
+    invite!: Invite;
+    url: string;
 
     constructor(private http: HttpClient, private urlService: UrlService) { 
         this.url = urlService.getUrl() + "/invites";
     }
-
 
     public openInviteWebSocket(fctn: (str: string) => any) 
     {
@@ -81,10 +81,10 @@ export class InviteService {
     }
 
     updateInvite(invite: Invite): Observable<object> {
-        return this.http.put(this.url, invite).pipe();
+        return this.http.put(this.url + "/" + invite.id, invite).pipe();
     }
 
-    deleteBoard(id: number): Observable<object> {
+    deleteInvite(id: number): Observable<object> {
         return this.http.delete(this.url + `/${id}`).pipe();
     }
 }
