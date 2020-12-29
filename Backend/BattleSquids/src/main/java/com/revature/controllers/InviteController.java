@@ -113,7 +113,7 @@ public class InviteController {
 	
 	
 	
-	@DeleteMapping
+	@DeleteMapping(path="/{id}")
 	public ResponseEntity<Void> deleteInvite(HttpSession session, @PathVariable("id") Integer id){
 		Invite inviteToDelete = inviteService.getInviteById(id);
 		if (inviteToDelete == null) {
