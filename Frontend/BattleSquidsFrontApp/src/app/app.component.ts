@@ -54,7 +54,7 @@ export class AppComponent {
   {
     this.game = invite.game;
     this.game.player2 = this.personServ.getLoggedUser();
-    this.gameServ.updateGame(this.game);
+    await this.gameServ.updateGame(this.game).toPromise();
     window.sessionStorage.setItem("game", JSON.stringify(this.game));
     this.router.navigate(['gamescreen']);
   }
