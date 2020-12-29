@@ -1,5 +1,8 @@
 package com.revature.handlers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -12,6 +15,7 @@ import com.revature.services.TileServiceImpl;
 
 public class TileWebSocketHandler extends TextWebSocketHandler {
 	private TileServiceImpl tileServ;
+	private final List<WebSocketSession> tileSocketSessions = new ArrayList<>();
 	
 	public TileWebSocketHandler() {
 		tileServ = new TileServiceImpl();
@@ -20,6 +24,7 @@ public class TileWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("Connection made");
+		tileSocketSessions.add(session);
 	}
 	
 	@Override
@@ -30,11 +35,14 @@ public class TileWebSocketHandler extends TextWebSocketHandler {
 		Tile t = mapper.readValue(strMessage, Tile.class);
 		tileServ.updateTile(t);
 		System.out.println(t);
-		session.sendMessage(message);
+		for (WebSocketSession tileSocketSession : tileSocketSessions) {
+			tileSocketSession.sendMessage(message);
+		}
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		super.afterConnectionClosed(session, status);
+		tileSocketSessions.remove(session);
 	}
 }
