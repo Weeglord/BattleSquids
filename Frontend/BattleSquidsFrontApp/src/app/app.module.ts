@@ -18,6 +18,7 @@ import { InviteListComponent } from './invites/invite-list/invite-list.component
 import { InviteComponent } from './invites/invite/invite.component';
 import { BoardComponent } from './board/board.component';
 import { GamescreenComponent } from './gamescreen/gamescreen.component'
+import { NotificationsComponent } from './notifications/notifications.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { GamescreenComponent } from './gamescreen/gamescreen.component'
     InviteListComponent,
     InviteComponent,
     BoardComponent,
-    GamescreenComponent
+    GamescreenComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

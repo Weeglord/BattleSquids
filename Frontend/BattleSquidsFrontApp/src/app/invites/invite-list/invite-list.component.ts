@@ -21,13 +21,13 @@ export class InviteListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.list = this.getInvites();
+    // this.list = this.getInvites();
   }
 
-  getInvites(): Invite[] {
-    let id: number = this.personService.getLoggedUser().id;
-    return this.pertainsToSent ? 
-      this.inviteService.getAllInvitesSentByUserWithId(id) : 
-      this.inviteService.getAllInvitesReceivedByUserWithId(id);
-  }
+  // getInvites(): Invite[] {
+  //   let id: number = this.personService.getLoggedUser().id;
+  //   return this.pertainsToSent ? 
+  //     this.inviteService.getAllInvitesSentByUserWithId(id) : 
+  //     this.inviteService.getAllInvitesReceivedByUserWithId(id);
+  // }
 }

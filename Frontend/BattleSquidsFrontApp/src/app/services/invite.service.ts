@@ -87,4 +87,12 @@ export class InviteService {
     // deleteBoard(id: number): Observable<object> {
     //     return this.http.delete(this.url + `/${id}`).pipe();
     // }
+
+    updateInvite(invite: Invite): Observable<object> {
+        return this.http.put(this.url + "/" + invite.id, invite).pipe();
+    }
+
+    deleteInvite(id: number): Observable<object> {
+        return this.http.delete(this.url + `/${id}`).pipe();
+    }
 }
