@@ -1,3 +1,14 @@
+<app-board [board]="game.board1" [player]="game.player1">
+
+</app-board>
+<app-board [board]="game.board2" [player]="game.player2">
+
+</app-board>
+<p>Welcome to BattleSquids!</p>
+<p>Please Enter the username of a player to invite</p>
+<input type="text" [(ngModel)] = "invitedUsername">
+<button (click)="sendInvite()">Submit</button>
+
 <p>Welcome to BattleSquids!</p>
 <p *ngIf="!invited">Please Enter the username of a player to invite</p>
 <input *ngIf="!invited" type="text" [(ngModel)] = "invitedUsername">

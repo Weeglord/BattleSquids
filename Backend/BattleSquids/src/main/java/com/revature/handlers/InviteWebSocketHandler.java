@@ -8,14 +8,14 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-
-import com.revature.services.InviteService;
-import com.revature.services.InviteServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.beans.Invite;
 
 public class InviteWebSocketHandler extends TextWebSocketHandler {
 	//mapping is personid -> session
 	public static Map<Integer, WebSocketSession> websockets = new HashMap<>();
 	private InviteService invServ = new InviteServiceImpl();
+
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -37,6 +37,9 @@ public class InviteWebSocketHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String strMessage = message.getPayload();
 		System.out.println(strMessage);
+		ObjectMapper mapper = new ObjectMapper();
+		Invite i = mapper.readValue(strMessage, Invite.class);
+		System.out.println(i);
 		//incomplete - add functionality here
 		//session.sendMessage(message);
 	}

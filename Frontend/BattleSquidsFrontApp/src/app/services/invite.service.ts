@@ -11,13 +11,13 @@ import { GamescreenComponent } from '../gamescreen/gamescreen.component';
   providedIn: 'root'
 })
 export class InviteService {
-    url: string;
     webSocket!: WebSocket;
+    invite!: Invite;
+    url: string;
 
     constructor(private http: HttpClient, private urlService: UrlService) { 
         this.url = urlService.getUrl() + "/invites";
     }
-
 
     public openInviteWebSocket(persId: number, gamseScreenComponent: GamescreenComponent) 
     {
