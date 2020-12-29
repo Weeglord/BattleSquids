@@ -10,6 +10,7 @@ import { InviteStatusService } from '../services/inviteStatus.service';
 import { InviteTypeService } from '../services/inviteType.service';
 import { catchError } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
+import { Board } from '../models/board'
 
 @Component({
   selector: 'app-gamescreen',
