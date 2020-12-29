@@ -12,4 +12,10 @@ public class ChatHibernate extends GenericHibernate<Chat> implements ChatDAO {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public Chat getChatByGameId(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

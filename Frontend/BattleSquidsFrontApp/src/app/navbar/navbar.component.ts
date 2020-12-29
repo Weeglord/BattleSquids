@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit, OnChanges {
   constructor(private personService: PersonService, private router: Router) { }
 
   ngOnInit(): void {
+    console.log(window.sessionStorage.user);
     let alreadyLogged: Person = JSON.parse(window.sessionStorage.user);
     if (alreadyLogged) {
       this.user = alreadyLogged.username;

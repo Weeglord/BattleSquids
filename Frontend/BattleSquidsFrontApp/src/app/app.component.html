@@ -1,14 +1,14 @@
 <app-navbar (logInEvent)="setLogin()" (logOutEvent)="setLogout()"></app-navbar>
 <!--<app-tile></app-tile>-->
 <br>
-<<<<<<< HEAD
+
 <button *ngIf="person" routerLink = 'gamescreen' (click)="createGame()">Create new Game</button>
-<app-chat [person]="person"
+<app-chat *ngIf="person"
+ [person]="person"
           [game]="game"   ></app-chat>
 <button *ngIf="person" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
 
-=======
 <button *ngIf="person && !game" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
 <!-- <app-notifications *ngIf="person && !game"></app-notifications> -->
->>>>>>> a8be3085223e4c8709f345b42bfb1636899cffd7
+
 <router-outlet></router-outlet>

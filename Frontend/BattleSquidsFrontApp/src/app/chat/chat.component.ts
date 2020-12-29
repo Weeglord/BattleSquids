@@ -21,18 +21,18 @@ message!: string;
 @Input() game!:Game;
 chat!: Chat;
 username!:string;
-  constructor(private chatserv:ChatService , public webservice: WebSocketService) { }
+  constructor(private chatserv:ChatService , public webSocketService: WebSocketService) { }
 
   ngOnInit(): void {
    this.person=JSON.parse(window.sessionStorage.user);
    this.game=JSON.parse(window.sessionStorage.game);
    console.log(this.game.id+ this.person.username);
-   this.webservice.openWebSOcket();
+   this.webSocketService.openWebSocket();
    // this.webservice.
   }
 
   ngOnDestroy(){
-    this.webservice.closewebsocket();
+    this.webSocketService.closewebsocket();
   }
   getmessage(){
 
@@ -58,7 +58,7 @@ this.chat.gameId=this.game.id;
     this.chatserv.addChat(this.chat).subscribe(
       resp => {
         if(resp){
-          this.webservice.sendmessage(this.chat);
+          this.webSocketService.sendmessage(this.chat);
           this.message='';
         }else{
           console.log("error");
