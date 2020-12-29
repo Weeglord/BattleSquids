@@ -3,6 +3,7 @@ import { InviteService } from '../services/invite.service';
 import { Invite } from '../models/invite'
 import { PersonService } from '../services/person.service';
 import { InviteStatusService } from '../services/inviteStatus.service';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-notifications',
@@ -20,11 +21,15 @@ export class NotificationsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  @Output() startGameEvent = new EventEmitter<Invite>();
+
   async acceptInvite(i: number)
   {
     this.invites[i].status = await this.invStatServ.getInviteStatusById(2).toPromise();
     await this.inviteServ.updateInvite(this.invites[i]).toPromise();
     this.visible = false;
+    this.startGameEvent.emit(this.invites[i]);
+    console.log("emitted");
   }
   
   async declineInvite(i: number)
