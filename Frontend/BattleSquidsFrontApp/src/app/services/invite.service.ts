@@ -80,14 +80,6 @@ export class InviteService {
         return this.http.post(this.url, invite).pipe(map(resp => resp as number));
     }
 
-    // updateInvite(invite: Invite): Observable<object> {
-    //     return this.http.put(this.url, invite).pipe();
-    // }
-
-    // deleteBoard(id: number): Observable<object> {
-    //     return this.http.delete(this.url + `/${id}`).pipe();
-    // }
-
     updateInvite(invite: Invite): Observable<object> {
         return this.http.put(this.url + "/" + invite.id, invite).pipe();
     }

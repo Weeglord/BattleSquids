@@ -19,6 +19,7 @@ import { InviteComponent } from './invites/invite/invite.component';
 import { BoardComponent } from './board/board.component';
 import { GamescreenComponent } from './gamescreen/gamescreen.component'
 import { NotificationsComponent } from './notifications/notifications.component'
+import { InviteService } from './services/invite.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
   providers: [
     PersonService, 
     TileService,
-    UrlService
+    UrlService,
+    InviteService
   ],
   bootstrap: [AppComponent]
 })
