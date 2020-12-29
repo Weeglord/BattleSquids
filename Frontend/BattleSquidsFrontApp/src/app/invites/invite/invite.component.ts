@@ -7,8 +7,9 @@ import { Invite } from '../../models/invite';
   styleUrls: ['./invite.component.css']
 })
 export class InviteComponent implements OnInit {
+  invite!: Invite;
 
-  constructor(private invite: Invite) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

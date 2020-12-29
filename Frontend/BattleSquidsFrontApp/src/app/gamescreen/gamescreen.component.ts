@@ -3,8 +3,9 @@ import { GameService } from '../services/game.service';
 import { PersonService } from '../services/person.service';
 import { Game } from '../models/game';
 import { GamestatusService } from '../services/gamestatus.service';
-import { Person } from '../models/person'
-import { Invite } from '../models/invite'
+import { Board } from '../models/board';
+import { Person } from '../models/person';
+import { Invite } from '../models/invite';
 import { InviteService } from '../services/invite.service';
 import { InviteStatusService } from '../services/inviteStatus.service';
 import { InviteTypeService } from '../services/inviteType.service';
@@ -17,11 +18,13 @@ import { of, throwError } from 'rxjs';
   styleUrls: ['./gamescreen.component.css']
 })
 export class GamescreenComponent implements OnInit {
-  game: Game;
+  game!: Game | null | undefined;
   invitedUsername: string = "";
   invite: Invite | null = null;
   invited = false;
   started = false;
+  board1!: Board | null | undefined;
+  board2!: Board | null | undefined;
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
   constructor(private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService) {

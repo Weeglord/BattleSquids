@@ -1,14 +1,16 @@
 <div>
     <h2>{{player.username}}'s Board:</h2>
     <table id="boardTable">
-        <th>
-            <td></td> <!-- Empty cell in top-left corner-->
-            <td *ngFor "let pos in sideArr;">pos</td> <!-- heading with numbers 1-10 for x-coordinates-->
-        </th>
-        <tr *ngFor="let xPos in sideArr; let i=index">
-            <td>xPos</td> <!-- first cell on the left of each row gives y-coordinate (same as xPos here)-->
-            <td *ngFor="let yPos in sidArr; let j=index">
-                <Tile [tile]=board.tiles[i][j] />
+        <tr>
+            <th></th> <!-- Empty cell in top-left corner-->
+            <th *ngFor="let pos of sideArr;">{{pos}}</th> <!-- heading with numbers 1-10 for x-coordinates-->
+        </tr>
+        <tr *ngFor="let xPos of sideArr; let i=index">
+            <td>{{xPos}}</td> <!-- first cell on the left of each row gives y-coordinate (same as xPos here)-->
+            <td *ngFor="let yPos of sideArr; let j=index">
+                <!-- {{board.tiles[i][j]}} -->
+                <!-- <Tile [tile]=board.tiles[i][j] /> -->
+                <img src="../../assets/tile_empty.png"/>
             </td> <!-- remainder of row will be 10 cells, each with a tile-->
         </tr>
     </table>

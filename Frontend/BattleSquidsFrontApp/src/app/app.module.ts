@@ -14,7 +14,7 @@ import { TileService } from './services/tile.service';
 import { UrlService } from './services/url.service';
 import { TileComponent } from './tile/tile.component';
 import { ReactToInviteComponent } from './invites/react-to-invite/react-to-invite.component';
-import { InviteListComponent } from './invites/invite-list/invite-list.component';
+// import { InviteListComponent } from './invites/invite-list/invite-list.component';
 import { InviteComponent } from './invites/invite/invite.component';
 import { BoardComponent } from './board/board.component';
 import { GamescreenComponent } from './gamescreen/gamescreen.component'
@@ -28,7 +28,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     NavbarComponent,
     TileComponent,
     ReactToInviteComponent,
-    InviteListComponent,
+    // InviteListComponent,
     InviteComponent,
     BoardComponent,
     GamescreenComponent,
