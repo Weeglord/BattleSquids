@@ -4,6 +4,8 @@ import { UrlService } from './url.service'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Invite } from '../models/invite';
+import { Game } from '../models/game';
+import { GamescreenComponent } from '../gamescreen/gamescreen.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +19,17 @@ export class InviteService {
     }
 
 
-    public openInviteWebSocket(fctn: (str: string) => any) 
+    public openInviteWebSocket(persId: number, gamseScreenComponent: GamescreenComponent) 
     {
-        this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/inviteaction');
+        this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/inviteaction?persid=' + persId);
     
         this.webSocket.onopen = (event) => {
           console.log('Open: ', event);
         };
     
         this.webSocket.onmessage = (event) => {
-          fctn(JSON.parse(event.data));
-          console.log(JSON.parse(event.data));
+          console.log(event.data);
+          gamseScreenComponent.readInvite(event.data);
         };
     
         this.webSocket.onclose = (event) => {

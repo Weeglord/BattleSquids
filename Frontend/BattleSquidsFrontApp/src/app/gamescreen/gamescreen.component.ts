@@ -63,7 +63,7 @@ export class GamescreenComponent implements OnInit {
   {
 
     let invitedPerson: Person | null = await this.personServ.getUserByUsername(this.invitedUsername).pipe(catchError(err => {console.log(err); return of(null)})).toPromise();
-    console.log(invitedPerson);
+    //console.log(invitedPerson);
     if (invitedPerson)
     {
       if (invitedPerson == this.personServ.getLoggedUser())
@@ -80,7 +80,7 @@ export class GamescreenComponent implements OnInit {
         newInvite.status = await this.inviteStatusServ.getInviteStatusById(1).toPromise();
         newInvite.type = await this.inviteTypeServ.getInviteTypeById(1).toPromise();
         newInvite.id = await this.inviteServ.addInvite(newInvite).toPromise();
-        this.inviteServ.openInviteWebSocket(this.readInvite)
+        this.inviteServ.openInviteWebSocket(this.personServ.getLoggedUser().id, this)
         alert("Invite Sent!");
         this.invited = true;
         this.invite = newInvite;
@@ -109,7 +109,20 @@ export class GamescreenComponent implements OnInit {
 
   readInvite(str: string)
   {
-    //if str accepted then startgame
+    if(str == "accepted")
+    {
+      if(this.game != null && this.invite != null)
+      {
+        this.game.player2 = this.invite.receiver;
+        alert("Invite Accepted!");
+        this.inviteServ.closeInviteWebSocket();
+      }
+    }
+    else if(str == "rejected")
+    {
+      alert("Invite Declined! Please invite someone else!")
+      this.cancelInvite();
+    }
     console.log(str);
   }
   
