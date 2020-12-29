@@ -1,0 +1,8 @@
+<p>Notifications:</p>
+<br>
+<ul *ngFor="let invite of invites; index as i">
+    <li *ngIf="invite.status.id != 3">Game Request from {{invite.sender.username}} as {{invite.type.name}}</li>
+    <button *ngIf="invite.status.id != 3" (click)="acceptInvite(i)">Accept</button>
+    <button *ngIf="invite.status.id != 3"(click)="declineInvite(i)">decline</button>
+    <br>
+</ul>
