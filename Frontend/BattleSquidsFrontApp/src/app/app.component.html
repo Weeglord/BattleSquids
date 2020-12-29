@@ -2,11 +2,9 @@
 <app-tile>
 </app-tile>
 <br>
-<<<<<<< HEAD
 <button *ngIf="person" routerLink = 'gamescreen' (click)="createGame()">Create new Game</button>
 <app-chat [person]="person"
           [game]="game"   ></app-chat>
-=======
 <button *ngIf="person" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
->>>>>>> 384ebb1f5f35038e5394f41773cb5f777b053a0d
+
 <router-outlet></router-outlet>
