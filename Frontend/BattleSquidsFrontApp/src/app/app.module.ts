@@ -13,8 +13,13 @@ import { PersonService } from './services/person.service'
 import { TileService } from './services/tile.service';
 import { UrlService } from './services/url.service';
 import { TileComponent } from './tile/tile.component';
-import { GamescreenComponent } from './gamescreen/gamescreen.component';
+import { ReactToInviteComponent } from './invites/react-to-invite/react-to-invite.component';
+// import { InviteListComponent } from './invites/invite-list/invite-list.component';
+import { InviteComponent } from './invites/invite/invite.component';
+import { BoardComponent } from './board/board.component';
+import { GamescreenComponent } from './gamescreen/gamescreen.component'
 import { NotificationsComponent } from './notifications/notifications.component'
+import { InviteService } from './services/invite.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +28,10 @@ import { NotificationsComponent } from './notifications/notifications.component'
     HomeComponent,
     NavbarComponent,
     TileComponent,
+    ReactToInviteComponent,
+    // InviteListComponent,
+    InviteComponent,
+    BoardComponent,
     GamescreenComponent,
     NotificationsComponent
   ],
@@ -35,7 +44,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
   providers: [
     PersonService, 
     TileService,
-    UrlService
+    UrlService,
+    InviteService
   ],
   bootstrap: [AppComponent]
 })
