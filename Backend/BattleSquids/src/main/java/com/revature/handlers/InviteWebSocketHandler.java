@@ -12,7 +12,7 @@ public class InviteWebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("Connection made");
+		System.out.println("Connection made invite");
 	}
 	
 	@Override
@@ -22,6 +22,7 @@ public class InviteWebSocketHandler extends TextWebSocketHandler {
 		ObjectMapper mapper = new ObjectMapper();
 		Invite i = mapper.readValue(strMessage, Invite.class);
 		System.out.println(i);
+		//incomplete - add functionality here
 		session.sendMessage(message);
 	}
 	
