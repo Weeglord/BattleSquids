@@ -4,4 +4,5 @@ import com.revature.beans.Chat;
 
 public interface ChatDAO extends GenericDAO<Chat>{
 
+	public Chat getChatByGameId(Integer id);
 }

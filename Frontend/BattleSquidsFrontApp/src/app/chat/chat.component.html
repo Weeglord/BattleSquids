@@ -1,8 +1,19 @@
+
+
+
+
 <ng-container *ngIf="person; else display">
    <ng-container *ngIf="game; else display">
-    <p>chat works!</p>
+
+    <h3>{{person}}</h3>
+<div style="display: flex;">
     <textarea placeholder="Enter the msg" id="message" [(ngModel)]="message" name="message"></textarea>
     <button type="button" id="button" (click)="sendmessage()">Send Message</button>
+    <div *ngIf ="chat">
+    <strong>{{person}}</strong>
+    <span>{{chat.message}}</span>
+    </div>    
+</div>
 </ng-container>
 </ng-container>
 <ng-template #display>

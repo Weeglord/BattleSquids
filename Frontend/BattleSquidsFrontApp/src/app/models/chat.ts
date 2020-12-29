@@ -15,4 +15,11 @@ export class Chat{
 
     }
 
+    // constructor(id:number,gameId:number,sender:Person,message:string){
+    //     this.id=id;
+    //     this.gameId=gameId;
+    //     this.sender=sender;
+    //     this.message=message;
+    // }
+
 }

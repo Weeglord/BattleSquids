@@ -43,4 +43,10 @@ export class ChatService {
    {
      return this.http.delete(this.url + "/" + id).pipe();
    }
+
+   getChatByGameId(id: number): Observable<Chat>{
+
+    //return this.http.get(this.url,id)
+
+   }
 }
