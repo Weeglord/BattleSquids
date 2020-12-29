@@ -12,40 +12,10 @@ export class InviteService {
     webSocket!: WebSocket;
     invite!: Invite;
     url: string;
-    webSocket!: WebSocket;
 
     constructor(private http: HttpClient, private urlService: UrlService) { 
         this.url = urlService.getUrl() + "/invites";
     }
-
-<<<<<<< HEAD
-    public openInviteWebSocket() {
-        this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/inviteaction');
-
-        this.webSocket.onopen = (event) => {
-            console.log('Open: ', event);
-        };
-
-        this.webSocket.onmessage = (event) => {
-            const invite = JSON.parse(event.data);
-            console.log(invite);
-        };
-
-        this.webSocket.onclose = (event) => {
-            console.log('Close: ', event);
-        };
-    }
-
-    public sendInvite(invite: Invite) {
-        this.webSocket.send(JSON.stringify(invite));
-    }
-
-    public closeInviteWebSocket() {
-        this.webSocket.close()
-    }
-
-    public ngOnDestroy() {
-=======
 
     public openInviteWebSocket(fctn: (str: string) => any) 
     {
@@ -85,7 +55,6 @@ export class InviteService {
     
     public ngOnDestroy() 
     {
->>>>>>> 384ebb1f5f35038e5394f41773cb5f777b053a0d
         this.webSocket.close();
     }
 
