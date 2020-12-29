@@ -10,9 +10,9 @@ import { Tile } from '../models/tile';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent {
-  @Input() player!: Person | null | undefined;
-  @Input() board!: Board | null | undefined;
-  // selectedTile: Tile | null | undefined;
+  @Input() player!: Person | null;
+  @Input() board!: Board | null;
+  // selectedTile: Tile | null;
   selectedXCoord: number | null | undefined; //on the player's board, for purposes of placing squids
   selectedYCoord: number | null | undefined; //on the player's board, for purposes of placing squids
   selectedSquid: Squid | null | undefined;
