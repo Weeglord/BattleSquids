@@ -18,18 +18,20 @@ import { Board } from '../models/board'
   styleUrls: ['./gamescreen.component.css']
 })
 export class GamescreenComponent implements OnInit {
-  game : Game | null = null;
+  game! : Game;
   invitedUsername: string = "";
   invite: Invite | null = null;
   invited = false;
   started = false;
-  board1!: Board | null | undefined;
-  board2!: Board | null | undefined;
+  board1: Board;
+  board2: Board;
 
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
   constructor(private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService) {
     this.fillGame();
+    this.board1 = new Board();
+    this.board2 = new Board();
    }
 
   ngOnInit(): void {
@@ -50,7 +52,6 @@ export class GamescreenComponent implements OnInit {
     }
     else{
       console.log("moved too fast, taking a second to retry");
-      this.game = null;
       setTimeout(() => {
         this.fillGame();
       }, 2000);

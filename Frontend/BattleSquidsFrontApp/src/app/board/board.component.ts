@@ -8,8 +8,8 @@ import { Person } from '../models/person';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent {
-  @Input() player!: Person | null | undefined;
-  @Input() board!: Board | null | undefined;
+  @Input() player!: Person| null;
+  @Input() board!: Board | null;
 
   sideArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 }
