@@ -17,6 +17,7 @@ import { TileComponent } from './tile/tile.component';
 import { ReactToInviteComponent } from './invites/react-to-invite/react-to-invite.component';
 import { InviteListComponent } from './invites/invite-list/invite-list.component';
 import { InviteComponent } from './invites/invite/invite.component';
+import { BoardComponent } from './board/board.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { InviteComponent } from './invites/invite/invite.component';
     TileComponent,
     ReactToInviteComponent,
     InviteListComponent,
-    InviteComponent
+    InviteComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,
