@@ -22,6 +22,7 @@ export class GamescreenComponent implements OnInit {
   invitedUsername: string = "";
   invite: Invite | null = null;
   invited = false;
+  placed = false; //squids have been placed
   started = false;
   board1!: Board | null | undefined;
   board2!: Board | null | undefined;
