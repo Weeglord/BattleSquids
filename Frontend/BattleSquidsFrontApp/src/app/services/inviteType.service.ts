@@ -12,7 +12,7 @@ export class InviteTypeService {
     url: string;
 
     constructor(private http: HttpClient, private urlService: UrlService) { 
-        this.url = urlService.getUrl() + "/InviteTypes";
+        this.url = urlService.getUrl() + "/inviteTypes";
     }
 
     getInviteTypeById(id: number): Observable<InviteType>{
