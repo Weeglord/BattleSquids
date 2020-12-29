@@ -57,15 +57,12 @@ public class GameController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PutMapping(path="/{id}")
-	public ResponseEntity<Void> updateGame(HttpSession session, @PathVariable("id") Integer id, 
-			@RequestBody Game game) {
-		Game games = (Game) session.getAttribute("game");
-		if (games != null && games.getId().equals(id)) {
-			serv.updateGame(game);
-			return ResponseEntity.ok().build();
-		}
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	@PutMapping
+	public ResponseEntity<Void> updateGame(HttpSession session,	@RequestBody Game game) {
+		//Game games = (Game) session.getAttribute("game");
+		serv.updateGame(game);
+		return ResponseEntity.ok().build();
+		//return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 	 @DeleteMapping(value = "/{id}")
 	    public ResponseEntity<Void> deleteGame(@PathVariable Integer id) {
