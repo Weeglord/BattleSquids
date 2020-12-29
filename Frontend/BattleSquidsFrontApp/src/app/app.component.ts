@@ -33,7 +33,7 @@ export class AppComponent {
     this.person = null;
   }
 
-  createGame()
+  async createGame()
   {
     this.game = new Game();
     this.game.player1 = this.personServ.getLoggedUser();
@@ -41,13 +41,10 @@ export class AppComponent {
     this.game.activePlayerId = this.game.player1.id;
     this.game.board1 = null;
     this.game.board2 = null;
-    this.gameStatServ.getGameStatusById(1).subscribe(
-      resp => {this.game.status = resp;
-        this.gameServ.addGame(this.game).subscribe(
-          resp => {this.game.id = resp;}
-        );
-      }
-    );
-    window.sessionStorage.game = this.game;
+
+    this.game.status = await this.gameStatServ.getGameStatusById(1).toPromise();
+    this.game.id = await this.gameServ.addGame(this.game).toPromise();
+
+    window.sessionStorage.setItem("game", JSON.stringify(this.game));
   }
 }

@@ -12,7 +12,7 @@ export class InviteStatusService {
     url: string;
 
     constructor(private http: HttpClient, private urlService: UrlService) { 
-        this.url = urlService.getUrl() + "/InviteStatuss";
+        this.url = urlService.getUrl() + "/inviteStatuses";
     }
 
     getInviteStatusById(id: number): Observable<InviteStatus>{
