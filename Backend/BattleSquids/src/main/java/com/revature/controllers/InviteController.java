@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import com.revature.beans.Invite;
+import com.revature.handlers.InviteWebSocketHandler;
 import com.revature.services.InviteService;
 
 @RestController
@@ -98,6 +101,37 @@ public class InviteController {
 		
 		inviteService.updateInvite(invite);
 		Invite updatedInvite = inviteService.getInviteById(id);
+		
+		//check if any websockets need to be notified of update
+		//System.out.println(InviteWebSocketHandler.websockets);
+		if(InviteWebSocketHandler.websockets.containsKey(updatedInvite.getSender().getId()))
+		{
+			WebSocketSession sesh = InviteWebSocketHandler.websockets.get(updatedInvite.getSender().getId());
+			//System.out.println("websocket found, sending message");
+			if(updatedInvite.getStatus().getId() == 2)
+			{
+				TextMessage message = new TextMessage("accepted");
+				//System.out.println(message);
+				//System.out.println(sesh);
+				try {
+					sesh.sendMessage(message);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(updatedInvite.getStatus().getId() == 3)
+			{
+				TextMessage message = new TextMessage("rejected");
+				try {
+					sesh.sendMessage(message);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		if (updatedInvite.equals(invite)) return ResponseEntity.ok().build();
 		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 	}
