@@ -81,7 +81,7 @@ export class InviteService {
     }
 
     updateInvite(invite: Invite): Observable<object> {
-        return this.http.put(this.url, invite).pipe();
+        return this.http.put(this.url + "/" + invite.id, invite).pipe();
     }
 
     deleteBoard(id: number): Observable<object> {
