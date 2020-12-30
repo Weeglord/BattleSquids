@@ -1,7 +1,17 @@
-<app-navbar (logInEvent)="setLogin()" (logOutEvent)="setLogout()"></app-navbar>
-<!--<app-tile></app-tile>-->
-<br>
-<button *ngIf="person && !game" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
-<app-notifications *ngIf="person && !game" (startGameEvent)="startGame($event)" ></app-notifications>
-<div *ngIf="person && !game" routerLink = 'gamescreen' routerLinkActive="active"></div>
-<router-outlet></router-outlet>
+<div id="loginDiv">
+    <a href='home'>
+        <img src="../../assets/battlesquids_banner.png" id="banner"/>
+    </a>
+    <div id="compDiv" layer-align="center center">
+        <br>
+        <app-navbar (logInEvent)="setLogin()" (logOutEvent)="setLogout()"></app-navbar>
+        <app-notifications *ngIf="person && !game" (startGameEvent)="startGame($event)" ></app-notifications>
+        <button *ngIf="person && !game" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
+        <br>
+        <button *ngIf="person" routerLink = 'matchhistory' routerLinkActive='active'>View Match History</button>
+    </div>
+    <router-outlet></router-outlet>
+</div>
+
+
+

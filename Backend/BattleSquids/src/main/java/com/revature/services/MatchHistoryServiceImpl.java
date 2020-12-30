@@ -6,16 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.MatchHistory;
+import com.revature.beans.Person;
+import com.revature.data.DAOFactory;
 import com.revature.data.MatchHistoryDAO;
+import com.revature.data.PersonDAO;
 
 @Service
 public class MatchHistoryServiceImpl implements MatchHistoryService {
 	private MatchHistoryDAO dao;
+	private PersonDAO pDao;
 
 	
 	@Autowired
 	public MatchHistoryServiceImpl(MatchHistoryDAO dao) {
 		this.dao = dao;
+		pDao = DAOFactory.getPersonDAO();
 	}
 
 	@Override
@@ -43,6 +48,12 @@ public class MatchHistoryServiceImpl implements MatchHistoryService {
 	public void deleteMatchHistory(MatchHistory b) {
 		dao.delete(b);
 
+	}
+
+	@Override
+	public Set<MatchHistory> getMatchHistoryByPerson(Integer id) {
+		Person p = pDao.getById(id);
+		return dao.getByPerson(p);
 	}
 
 }

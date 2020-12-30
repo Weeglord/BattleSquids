@@ -20,6 +20,8 @@ import { BoardComponent } from './board/board.component';
 import { GamescreenComponent } from './gamescreen/gamescreen.component'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { InviteService } from './services/invite.service';
+import { MatchhistoryComponent } from './matchhistory/matchhistory.component';
+import { MatchhistoryService } from './services/matchhistory.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { InviteService } from './services/invite.service';
     InviteComponent,
     BoardComponent,
     GamescreenComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    MatchhistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { InviteService } from './services/invite.service';
     PersonService, 
     TileService,
     UrlService,
-    InviteService
+    InviteService,
+    MatchhistoryService
   ],
   bootstrap: [AppComponent]
 })
