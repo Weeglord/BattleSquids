@@ -13,9 +13,10 @@ import { Tile } from '../models/tile';
 export class BoardComponent {
   @Input() player!: Person | null;
   @Input() activePlayer!: Person | null;
-  @Input() board!: Board | null;
+  // @Input() board!: Board | null;
   @Input() started: boolean = false;
   // selectedTile: Tile | null;
+  board: Board | null | undefined;
   selectedXCoord: number = 0; //on the player's board, for purposes of placing squids
   selectedYCoord: number = 0; //on the player's board, for purposes of placing squids
   selectedSquid: Squid | null | undefined;
