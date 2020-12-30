@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Tile } from '../models/tile';
 import { TileStatus } from '../models/tilestatus';
 import { Squid } from '../models/squid';
+import { BoardComponent } from '../board/board.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -58,15 +59,16 @@ export class TileService implements OnDestroy {
 
   // Websocket code
 
-  public openTileWebSocket() {
-    this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/tileaction');
+  public openTileWebSocket(board: BoardComponent, personId: number) {
+    this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/tileaction?persid=' + personId);
 
     this.webSocket.onopen = (event) => {
       console.log('Open: ', event);
     };
 
     this.webSocket.onmessage = (event) => {
-      const tile = JSON.parse(event.data);
+      let tile = JSON.parse(event.data);
+      board.updateTile(tile);
       console.log(tile);
     };
 
