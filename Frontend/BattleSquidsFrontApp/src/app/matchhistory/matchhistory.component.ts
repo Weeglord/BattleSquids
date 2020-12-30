@@ -50,4 +50,19 @@ export class MatchhistoryComponent implements OnInit {
     this.location.back();
   }
 
+  getWinOrLose(winner: string): string {
+    if (winner === this.personServ.getLoggedUser().username) {
+      return 'mh-winner';
+    } else {
+      return 'mh-loser';
+    }
+  }
+
+  getDataWithUser(user: string): string {
+    if (user === this.personServ.getLoggedUser().username) {
+      return 'mh-data mh-current-user';
+    } else {
+      return 'mh-data';
+    }
+  }
 }

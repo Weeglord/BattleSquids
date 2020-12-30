@@ -1,0 +1,11 @@
+#inviteTable {
+    width: 30%;
+    border: 1px solid black;
+    text-align: center;
+    display: block;
+    margin: auto;
+}
+
+#inviteData {
+    width: 33%;
+}
