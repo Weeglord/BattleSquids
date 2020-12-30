@@ -17,7 +17,7 @@ export class BoardComponent {
   @Input() player!: Person| null;
   @Input() board!: Board | null;
   @Input() initEvent!: Observable<void>;
-  private eventsSubscription!: Subscription;
+  //private eventsSubscription!: Subscription;
   game!: Game;
 
   sideArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -25,22 +25,32 @@ export class BoardComponent {
   constructor(private tileServ: TileService, private tileStatServ: TilestatusService, private personServ: PersonService)
   {
     tileServ.openTileWebSocket(this, personServ.getLoggedUser().id);
+    console.log(JSON.parse(window.sessionStorage.getItem("game") as string));
   }
-
+  /*
   ngOnInit(): void
   {
-    this.eventsSubscription = this.initEvent.subscribe(() => {console.log("Event receiver"); this.initBoard()});
+    this.eventsSubscription = this.initEvent.subscribe(resp => {console.log("Event receiver"); this.initBoard()});
+    console.log(this.initEvent);
   }
 
   ngOnDestroy() {
     this.eventsSubscription.unsubscribe()
   }
+  */
 
-  async initBoard()
+  async initBoard(isBoard1: boolean)
   {
     console.log("initializing board")
     this.game = JSON.parse(window.sessionStorage.getItem("game") as string);
-    //this.board = this.game
+    if(isBoard1)
+    {
+      this.board = this.game.board1;
+    }
+    else{
+      this.board = this.game.board2;
+    }
+    console.log(this.board);
   }
 
   async inkTile(x: number,y: number)
@@ -49,7 +59,7 @@ export class BoardComponent {
     if (this.board)
     {
       console.log(this.board);
-      tile = this.board.tiles[x][y];
+      tile = this.board.tiles[x-1][y-1];
       if (tile.status.id == 1)
       {
         tile.status = await this.tileStatServ.getTileStatusById(2).toPromise();

@@ -13,6 +13,7 @@ import com.revature.data.GameDAO;
 @Service
 public class GameServiceImp implements GameService{
 		private GameDAO dao;
+		private BoardService boardServ = new BoardServiceImpl(DAOFactory.getBoardDAO());
 
 		@Autowired
 	public GameServiceImp(GameDAO g) {
@@ -34,7 +35,10 @@ public class GameServiceImp implements GameService{
 
 	@Override
 	public Game getGameById(Integer id) {
-	return dao.getById(id);
+		Game result = dao.getById(id);
+		result.setBoard1(boardServ.getBoard1ByGameId(id));
+		result.setBoard2(boardServ.getBoard2ByGameId(id));
+		return result;
 	}
 
 	@Override

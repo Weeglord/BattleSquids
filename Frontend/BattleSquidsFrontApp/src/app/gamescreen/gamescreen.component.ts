@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GameService } from '../services/game.service';
 import { PersonService } from '../services/person.service';
 import { Game } from '../models/game';
@@ -16,6 +16,7 @@ import { BoardService } from '../services/board.service';
 import { TilestatusService } from '../services/tilestatus.service';
 import { SquidService } from '../services/squid.service';
 import { ThrowStmt } from '@angular/compiler';
+import { BoardComponent } from '../board/board.component';
 
 @Component({
   selector: 'app-gamescreen',
@@ -31,6 +32,8 @@ export class GamescreenComponent implements OnInit {
   board1: Board;
   board2: Board;
   initEvent: Subject<void> = new Subject<void>();
+  @ViewChild('boardcomp1') boardComponent1!: BoardComponent;
+  @ViewChild('boardcomp2') boardComponent2!: BoardComponent;
 
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
@@ -43,10 +46,13 @@ export class GamescreenComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /*
   updateBoards()
   {
+    console.log("Passing board");
     this.initEvent.next();
   }
+  */
 
   async fillGame()
   {
@@ -113,10 +119,15 @@ export class GamescreenComponent implements OnInit {
       this.board1 = this.game.board1 as Board;
       this.board2 = this.game.board2 as Board;
       window.sessionStorage.setItem("game", JSON.stringify(this.game));
-
+      //console.log("game stored in session");
+      //console.log(window.sessionStorage.getItem("game"));
     }
 
-    this.updateBoards();
+    //this.updateBoards();
+    this.boardComponent1.initBoard(true);
+    this.boardComponent2.initBoard(false);
+
+    this.startGame();
     
   }
 
@@ -189,7 +200,7 @@ export class GamescreenComponent implements OnInit {
         alert("Invite Accepted!");
         this.inviteServ.closeInviteWebSocket();
         this.createBoards();
-        this.startGame();
+        //this.startGame();
       }
     }
     else if(str == "rejected")
