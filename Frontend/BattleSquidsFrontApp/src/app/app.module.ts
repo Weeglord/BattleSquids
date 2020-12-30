@@ -20,7 +20,6 @@ import { BoardComponent } from './board/board.component';
 import { GamescreenComponent } from './gamescreen/gamescreen.component'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { InviteService } from './services/invite.service';
-import { HorizontalRotationButtonComponent } from './horizontal-rotation-button/horizontal-rotation-button.component';
 
 @NgModule({
   declarations: [
