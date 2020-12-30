@@ -20,6 +20,11 @@ export class MatchhistoryService {
     return this.http.get(this.url).pipe(map(resp => resp as MatchHistory[]));
    }
 
+   getMyMatchHistory(userId: number): Observable<MatchHistory[]>
+   {
+     return this.http.get(this.url + `/user/${userId}`).pipe(map(resp => resp as MatchHistory[]));
+   }
+
    addMatchHistory(MatchHistory: MatchHistory):  Observable<number>
    {
      return this.http.post(this.url, MatchHistory).pipe(map(resp => resp as number));
