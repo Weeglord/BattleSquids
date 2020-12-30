@@ -1,11 +1,14 @@
-<app-board *ngIf="started" [board]="game.board1" [player]="game.player1" [invitedusername]="invitedUsername">
+<div attr.style="{{visibility}}">
+    <app-board *ngIf="started" [board]="game.board1" [player]="game.player1" [invitedusername]="invitedUsername">
 
 </app-board>
 <app-board *ngIf= "started" [board]="game.board2" [player]="game.player2" [invitedPerson]="invitedPerson">
 
 </app-board>
+<button *ngIf="started" (click)="leaveGame()"> Leave game</button>
+<div *ngIf="left" routerLink='home' routerLinkActive="active"></div>
 <p>{{invitedPerson}} hello</p>
-
+</div>
 <p>Welcome to BattleSquids!</p>
 <p *ngIf="!invited">Please Enter the username of a player to invite</p>
 <input *ngIf="!invited" type="text" [(ngModel)] = "invitedUsername">

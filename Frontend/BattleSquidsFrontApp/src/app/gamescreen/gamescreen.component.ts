@@ -11,7 +11,11 @@ import { InviteTypeService } from '../services/inviteType.service';
 import { catchError } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { Board } from '../models/board'
+import { MatchhistoryService } from '../services/matchhistory.service';
+import { MatchHistory } from '../models/matchhistory';
 
+import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-gamescreen',
   templateUrl: './gamescreen.component.html',
@@ -25,10 +29,13 @@ export class GamescreenComponent implements OnInit {
   started = false;
   board1: Board;
   board2: Board;
+  left = false;
+  visibility!: string = "visibility : visible";
+  parentcomponent!: AppComponent;
 
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
-  constructor(private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService) {
+  constructor(private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService,private gameservice:GameService, private matchhistoryservice:MatchhistoryService,private router: Router) {
     this.fillGame();
     this.board1 = new Board();
     this.board2 = new Board();
@@ -57,6 +64,43 @@ export class GamescreenComponent implements OnInit {
       }, 2000);
     }
   }
+
+
+ async leaveGame(){
+    let loggedUser= JSON.parse(window.sessionStorage.user);
+    let gamestatus=this.game.status;
+    gamestatus.id=2;
+    let matchhistory: MatchHistory;
+    this.game.status=gamestatus;
+    this.gameservice.updateGame(this.game);
+    matchhistory= new MatchHistory();
+    matchhistory.id=this.game.id;
+    //console.log("logged use"+ loggedUser.username+" other player "+this.player.username);
+    matchhistory.loser=loggedUser;
+    let invitedPerson: Person = await this.personServ.getUserByUsername(this.invitedUsername).pipe(catchError(err => {console.log(err); return of(null)})).toPromise();
+    console.log(invitedPerson+"is the invite on");
+    matchhistory.winner=invitedPerson;//this.personServ.getUserByUsername(loggedUser.username).subscribe();
+   // this.matchhistory.begin=""
+   console.log(matchhistory);
+   this.matchhistoryservice.addMatchHistory(matchhistory).subscribe(
+     resp =>{
+
+      console.log("you loose");
+      
+     }
+   );
+    // this.left= ;
+    // / this.parentcomponent.remove();
+   //  this.router.navigate['app'];
+    console.log("leaving");
+     this.visibility= "display: none";
+     window.sessionStorage.removeItem("game");
+
+
+  }
+
+
+
 
   remove_non_ascii(str: string) {
   

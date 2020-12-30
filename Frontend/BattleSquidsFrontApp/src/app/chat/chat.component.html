@@ -2,7 +2,6 @@
     <h3>{{username}}</h3>
 <div style="display: flex;">
  <div style="display: flex;"  *ngIf="player.username===loggedUser.username">  
-    <button type="button" (click)="leaveGame()">Leave game</button>
     <textarea placeholder="Enter the msg" id="message" [(ngModel)]="message" name="message"></textarea>
     <button  type="button" id="button" (click)="sendmessage()">Send Message</button>
 </div>    

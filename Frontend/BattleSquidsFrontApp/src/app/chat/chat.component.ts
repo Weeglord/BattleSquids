@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
-    console.log(this.invitedUsername+"is invited opponents");
+    //console.log(this.invitedusername+"is invited opponents");
 this.loggedUser=JSON.parse(window.sessionStorage.user);
 //console.log(this.loggedUser.username+"is the logged user"+ this.player.username+" and I am");
    // this.person=JSON.parse(window.sessionStorage.user);
@@ -53,34 +53,6 @@ this.loggedUser=JSON.parse(window.sessionStorage.user);
     
   }
 
-  leaveGame(){
-    
-    let gamestatus=this.game.status;
-    gamestatus.id=2;
-
-    this.game.status=gamestatus;
-    this.gameservice.updateGame(this.game);
-    this.matchhistory= new MatchHistory();
-    this.matchhistory.id=this.game.id;
-    console.log("logged use"+ this.loggedUser.username+" other player "+this.player.username);
-    this.matchhistory.loser=this.loggedUser;
-   // this.matchhistory.winner=;
-   // this.matchhistory.begin=""
-   console.log(this.matchhistory);
-   this.matchhistoryservice.addMatchHistory(this.matchhistory).subscribe(
-     resp =>{
-
-      console.log("you loose");
-
-     }
-   );
-    
-
-    console.log("leaving");
-
-
-
-  }
 
   sendmessage(){
     
