@@ -22,7 +22,6 @@ export class GamescreenComponent implements OnInit {
   invitedUsername: string = "";
   invite: Invite | null = null;
   invited = false;
-  placed = false;
   started = false;
   board1: Board;
   board2: Board;

@@ -10,9 +10,10 @@
             <td *ngFor="let yPos of sideArr; let j=index">
                 <!-- {{board.tiles[i][j]}} -->
                 <!-- <Tile [tile]=board.tiles[i][j] /> -->
-                <img src="../../assets/tile_empty.png"/>
+                <img src="../../assets/tile_empty.png" (click)="handleTileSelection(xPos, yPos)" />
             </td> <!-- remainder of row will be 10 cells, each with a tile-->
         </tr>
     </table>
 </div>
+<!-- insert squid selection for placement here -->
 <button id="horizontalRotationButton" (click)="rotateSquidHorizontally">Rotate Horizontally</button>
