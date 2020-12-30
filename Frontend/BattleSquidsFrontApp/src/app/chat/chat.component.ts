@@ -20,12 +20,12 @@ import { WebSocketService } from '../web-socket.service';
 })
 export class ChatComponent implements OnInit, OnDestroy{
   message!: string;
-  @Input() player!:Person ;
+  @Input() player!:Person | null;
   @Input() game!:Game;
-  @Input() invitedusername : string |null;
+  @Input() invitedusername! : Person |null;
   loggedUser! : Person;
   matchhistory!: MatchHistory;
-@Input() board:Board;
+@Input() board!:Board | null;
   chat!: Chat;
   username!:string | undefined;
   msg! : string;
@@ -60,8 +60,12 @@ this.loggedUser=JSON.parse(window.sessionStorage.user);
     console.log("sender"+this.player?.username);
     this.chat=new Chat();
     this.chat.message=this.message;
-   this.username=this.player.username;
-   this.chat.sender=this.player;
+   if(this.player!=null)
+   {
+     this.username=this.player.username;
+     this.chat.sender=this.player;
+    }
+  
    //chat.gameId=63;
    console.log(this.game.id);  
    //let game=JSON.parse(window.sessionStorage.game);

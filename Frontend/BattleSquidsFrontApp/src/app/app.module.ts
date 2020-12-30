@@ -19,14 +19,11 @@ import { InviteComponent } from './invites/invite/invite.component';
 import { BoardComponent } from './board/board.component';
 import { GamescreenComponent } from './gamescreen/gamescreen.component'
 import { NotificationsComponent } from './notifications/notifications.component'
-<<<<<<< HEAD
+
 import { InviteService } from './services/invite.service';
 import { ChatComponent } from './chat/chat.component';
-=======
-import { InviteService } from './services/invite.service';
 import { MatchhistoryComponent } from './matchhistory/matchhistory.component';
 import { MatchhistoryService } from './services/matchhistory.service';
->>>>>>> cf1cd03ba742f3b0fc3d8b4296be28080ddcf60a
 
 @NgModule({
   declarations: [
@@ -41,11 +38,8 @@ import { MatchhistoryService } from './services/matchhistory.service';
     BoardComponent,
     GamescreenComponent,
     NotificationsComponent,
-<<<<<<< HEAD
-    ChatComponent
-=======
+    ChatComponent,
     MatchhistoryComponent
->>>>>>> cf1cd03ba742f3b0fc3d8b4296be28080ddcf60a
   ],
   imports: [
     BrowserModule,
