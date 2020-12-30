@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,15 @@ private MatchHistoryService serv;
 		MatchHistory result = serv.getMatchHistoryById(id);
 		if (result == null)
 		{
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping(path="/user/{id}")
+	public ResponseEntity<Set<MatchHistory>> getMatchHistoryByPerson(HttpSession session, @PathVariable("id") Integer id) {
+		Set<MatchHistory> result = serv.getMatchHistoryByPerson(id);
+		if (result == null) {
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(result);
