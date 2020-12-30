@@ -3,16 +3,21 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Chat } from '../models/chat';
-import { UrlService } from '../url.service';
+import { UrlService } from './url.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
+  webSocket!: WebSocket;
   url : string;
   
   constructor(private http: HttpClient, private urlService: UrlService) {
     this.url = urlService.getUrl() + "/chat";
+   }
+
+   public openChatWebSocket(){
+     
    }
 
    getAllChat(): Observable<Chat[]>

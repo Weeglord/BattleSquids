@@ -1,9 +1,10 @@
-<app-board *ngIf="started" [board]="game.board1" [player]="game.player1">
+<app-board *ngIf="started" [board]="game.board1" [player]="game.player1" [invitedusername]="invitedUsername">
 
 </app-board>
-<app-board *ngIf= "started" [board]="game.board2" [player]="game.player2">
+<app-board *ngIf= "started" [board]="game.board2" [player]="game.player2" [invitedPerson]="invitedPerson">
 
 </app-board>
+<p>{{invitedPerson}} hello</p>
 
 <p>Welcome to BattleSquids!</p>
 <p *ngIf="!invited">Please Enter the username of a player to invite</p>

@@ -25,6 +25,7 @@ export class GamescreenComponent implements OnInit {
   started = false;
   board1: Board;
   board2: Board;
+  invitedPerson!: Person;
 
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
@@ -35,6 +36,7 @@ export class GamescreenComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.invitedPerson= new Person();
   }
 
   async fillGame()
@@ -71,11 +73,11 @@ export class GamescreenComponent implements OnInit {
   async sendInvite(): Promise<void>
   {
 
-    let invitedPerson: Person | null = await this.personServ.getUserByUsername(this.invitedUsername).pipe(catchError(err => {console.log(err); return of(null)})).toPromise();
+    this.invitedPerson = await this.personServ.getUserByUsername(this.invitedUsername).pipe(catchError(err => {console.log(err); return of(null)})).toPromise();
     //console.log(invitedPerson);
-    if (invitedPerson)
+    if (this.invitedPerson)
     {
-      if (invitedPerson == this.personServ.getLoggedUser())
+      if (this.invitedPerson == this.personServ.getLoggedUser())
       {
         alert("You cannot invite yourself!");
       }
@@ -85,7 +87,7 @@ export class GamescreenComponent implements OnInit {
         newInvite.sender = this.personServ.getLoggedUser();
         newInvite.game = JSON.parse(window.sessionStorage.game);
         //console.log(JSON.parse(window.sessionStorage.game));
-        newInvite.receiver = invitedPerson;
+        newInvite.receiver = this.invitedPerson;
         newInvite.status = await this.inviteStatusServ.getInviteStatusById(1).toPromise();
         newInvite.type = await this.inviteTypeServ.getInviteTypeById(1).toPromise();
         newInvite.id = await this.inviteServ.addInvite(newInvite).toPromise();

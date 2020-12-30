@@ -7,6 +7,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
+import com.revature.handlers.ChatWebSocketHandler;
 import com.revature.handlers.InviteWebSocketHandler;
 import com.revature.handlers.TileWebSocketHandler;
 
@@ -22,6 +23,10 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(getTileWebSocketHandler(), TILE_ENDPOINT).setAllowedOrigins("http://localhost:4200");
 		registry.addHandler(getInviteWebSocketHandler(), INVITE_ENDPOINT).setAllowedOrigins("http://localhost:4200");
+
+
+		registry.addHandler(getChatWebSocketHandler(), CHAT_ENDPOINT).setAllowedOrigins("http://localhost:4200");
+
 	}
 
 	@Bean
@@ -34,4 +39,8 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 		return new InviteWebSocketHandler();
 	}
 
+	@Bean
+	public WebSocketHandler getChatWebSocketHandler() {
+		return new ChatWebSocketHandler();
+	}
 }

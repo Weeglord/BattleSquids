@@ -21,6 +21,10 @@ public class ChatServiceImp implements ChatService {
 		
 	}
 	
+	public ChatServiceImp() {
+		dao=DAOFactory.getChatDAO();
+	}
+	
 	@Override
 	public Integer addChat(Chat c) {
 		return dao.add(c);

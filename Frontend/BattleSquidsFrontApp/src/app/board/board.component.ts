@@ -7,9 +7,11 @@ import { Person } from '../models/person';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent {
+export class BoardComponent{
+ 
   @Input() player!: Person| null;
   @Input() board!: Board | null;
+  @Input() invitePerson!: Person |null;
 
   sideArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 }

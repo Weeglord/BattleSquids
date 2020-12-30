@@ -57,5 +57,6 @@ export class AppComponent {
     await this.gameServ.updateGame(this.game).toPromise();
     window.sessionStorage.setItem("game", JSON.stringify(this.game));
     this.router.navigate(['gamescreen']);
+    console.log("plyer 2"+this.game.player2);
   }
 }
