@@ -1,7 +1,20 @@
-<p>matchhistory works!</p>
-<ng-container *ngIf="">
-    <ul *ngFor="">
-        
-    </ul>
+<h2>Your Match History</h2>
+<ng-container *ngIf="history && history !== undefined">
+    <ng-container *ngIf="history.length > 0">
+        <table>
+            <tr>
+                <th>Game Start</th>
+                <th>Game Ended</th>
+                <th>Winner</th>
+                <th>Loser</th>
+            </tr>
+            <tr *ngFor="let match of history">
+                <td>{{formatDate(match.begin)}}</td>
+                <td>{{formatDate(match.end)}}</td>
+                <td>{{match.winner.username}}</td>
+                <td>{{match.loser.username}}</td>
+            </tr>
+        </table>
+    </ng-container>
 </ng-container>
 <button (click)='returnToPrevious()'>Return</button> 
