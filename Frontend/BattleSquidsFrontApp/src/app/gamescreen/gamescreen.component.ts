@@ -17,6 +17,7 @@ import { TilestatusService } from '../services/tilestatus.service';
 import { SquidService } from '../services/squid.service';
 import { ThrowStmt } from '@angular/compiler';
 import { BoardComponent } from '../board/board.component';
+import { ClientService } from '../services/client.service';
 
 @Component({
   selector: 'app-gamescreen',
@@ -37,7 +38,7 @@ export class GamescreenComponent implements OnInit {
 
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
-  constructor(private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService, private boardserv: BoardService, private tilseStatServ: TilestatusService, private squidServ: SquidService, private gameServ: GameService) {
+  constructor(private clientServ: ClientService, private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService, private boardserv: BoardService, private tilseStatServ: TilestatusService, private squidServ: SquidService, private gameServ: GameService) {
     this.fillGame();
     this.board1 = new Board();
     this.board2 = new Board();
@@ -64,7 +65,7 @@ export class GamescreenComponent implements OnInit {
       if(this.game?.player2)
       {
         this.invited = true;
-        this.started = true;
+        this.clientServ.openClientWebsocket(this, this.personServ.getLoggedUser().id);
       }
     }
     else{
@@ -72,6 +73,17 @@ export class GamescreenComponent implements OnInit {
       setTimeout(() => {
         this.fillGame();
       }, 2000);
+    }
+  }
+
+  async onMessage(message: string)
+  {
+    console.log(message);
+    if(message == "loading done")
+    {
+      this.game = await this.gameServ.getGameById(this.game.id).toPromise();
+      this.startGame();
+      this.clientServ.closeClientWebSocket();
     }
   }
 
@@ -122,12 +134,15 @@ export class GamescreenComponent implements OnInit {
       //console.log("game stored in session");
       //console.log(window.sessionStorage.getItem("game"));
     }
-
-    //this.updateBoards();
-    this.boardComponent1.initBoard(true);
-    this.boardComponent2.initBoard(false);
-
     this.startGame();
+    this.clientServ.sendMessage("loading done=" + this.game.player2?.id);
+    setTimeout(() => {
+      this.boardComponent1.initBoard(true);
+      this.boardComponent2.initBoard(false);
+      
+    }, 2000);
+    //this.updateBoards();
+
     
   }
 
@@ -199,6 +214,7 @@ export class GamescreenComponent implements OnInit {
         this.game.player2 = this.invite.receiver;
         alert("Invite Accepted!");
         this.inviteServ.closeInviteWebSocket();
+        this.clientServ.openClientWebsocket(this, this.personServ.getLoggedUser().id);
         this.createBoards();
         //this.startGame();
       }
