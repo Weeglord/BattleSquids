@@ -1,5 +1,5 @@
 <app-navbar (logInEvent)="setLogin()" (logOutEvent)="setLogout()"></app-navbar>
-<!--<app-tile></app-tile>-->
+<button *ngIf="person" routerLink = 'matchhistory' routerLinkActive='active'>View Match History</button>
 <br>
 <button *ngIf="person && !game" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
 <app-notifications *ngIf="person && !game" (startGameEvent)="startGame($event)" ></app-notifications>

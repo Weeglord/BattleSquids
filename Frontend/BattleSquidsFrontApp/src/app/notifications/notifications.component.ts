@@ -38,5 +38,6 @@ export class NotificationsComponent implements OnInit {
     this.invites[i].status = await this.invStatServ.getInviteStatusById(3).toPromise();
     console.log(this.invites[i]);
     await this.inviteServ.updateInvite(this.invites[i]).toPromise();
+    this.invites.splice(i,1);
   }
 }
