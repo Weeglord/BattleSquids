@@ -25,6 +25,7 @@ export class BoardComponent {
   sideArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   handleTileSelection(xPos: number, yPos: number): void{
+    this.selectedSquidPlacement = this.getSquidPlacementAtCoord(xPos, yPos);
     if(this.started){
       if(this.activePlayer == this.player){
         alert("Cannot modify your squid arrangement after the game has started!");
@@ -47,13 +48,46 @@ export class BoardComponent {
       }
 
       //see if squid has already been placed:
+      if(!this.selectedSquidPlacement){
+        //if the squid has not been placed, place squid:
+        let newTiles: Tile[] = [];
+        
+        let newPlacement = new SquidPlacement();
+        //the xPos and yPos of the selected tile will be the central tile the squid occupies,
+        //and by default squids will be placed vertically
+        const squidSize = this.selectedSquid.size;
+        for(let i = 0; i < squidSize; i++){
+          let newX = xPos; //vertical placement, so same x for all tiles
+          let halfSize = Math.round(squidSize/2); //distance from center to either end
+          let startingY = yPos - halfSize;
+          let newY = startingY + i;
 
+          if(this.getIsTileOccupied(newX, newY)){
+            alert("Squids cannot overlap!");
+            return;
+          }else if(newY > 10 || newY < 1){
+            alert("Squids cannot be placed outside the boundaries!");
+            return;
+          }
+          
+          let replacementTile = new Tile();
+          replacementTile.x = newX;
+          replacementTile.y = newY;
+          
+          newTiles.push(replacementTile);
+        }
+        newPlacement.squid = this.selectedSquid;
+        newPlacement.tiles = newTiles;
+        this.selectedSquidPlacement = newPlacement;
+
+        return;
+      }
       //if squid has already been placed, this squid is being selected for potential rotation
-
+      this.rotateSquid();
     }
   }
 
-  rotateSquidHorizontally(): void{
+  rotateSquid(): void{
     if(this.started){
       alert("Cannot rotate squids after the game has started.")
       return;
@@ -62,17 +96,58 @@ export class BoardComponent {
       return;
     }
 
-    let occupiedTiles: Tile[] = this.selectedSquidPlacement.tiles;
+    let placement = this.selectedSquidPlacement;
+    const tiles: Tile[] = placement.tiles;
     let newTiles: Tile[] = [];
+    const isVertical = this.getSquidPlacementIsVertical(placement);
 
-    let squidSize = this.selectedSquidPlacement.squid.size;
-    for(let i = 0; i < squidSize; i++){
-      for(let j = 0; j < squidSize; j++){
-        //translating clockwise (by 90 degrees)
-         = this.selectedXCoord 
+    const squidSize = this.selectedSquidPlacement.squid.size;
+    let halfSize = Math.round(squidSize/2); //distance from center to either end
+    const centralXPos = this.selectedSquidPlacement.tiles[halfSize].x;
+    const centralYPos = this.selectedSquidPlacement.tiles[halfSize].y;
+
+    if(isVertical){
+      for(let i = 0; i < squidSize; i++){
+        let startingX = centralXPos - halfSize;
+        let newX = startingX + i;
+        let newY = centralYPos; //newly horizontal placement, so same y for all tiles
+        
+        if(this.getIsTileOccupied(newX, newY)){
+          alert("Squids cannot overlap!");
+          return;
+        }else if(newX > 10 || newX < 1){
+          alert("Squids must remain within the boundaries!");
+          return;
+        }else{
+          let replacementTile: Tile = new Tile();
+          replacementTile.x = newX;
+          replacementTile.y = newY;
+          newTiles.push(replacementTile);
+        }
+      }
+    }else{
+      for(let i = 0; i < squidSize; i++){
+        let newX = centralXPos; //newly vertical placement, so same x for all tiles
+        let startingY = centralYPos - halfSize;
+        let newY = startingY + i;
+        
+        if(this.getIsTileOccupied(newX, newY)){
+          alert("Squids cannot overlap!");
+          return;
+        }else if(newY > 10 || newY < 1){
+          alert("Squids must remain within the boundaries!");
+          return;
+        }else{
+          let replacementTile: Tile = new Tile();
+          replacementTile.x = newX;
+          replacementTile.y = newY;
+          newTiles.push(replacementTile);
+        }
       }
     }
-    this.selectedSquidPlacement
+    //at this point, the placed squid has been rotated
+    //without exceeding boundaries or overlapping other squids
+    this.selectedSquidPlacement.tiles = newTiles;
   }
 
   getIsTileOccupied(xPos: number, yPos: number): boolean {
@@ -81,12 +156,26 @@ export class BoardComponent {
         if(tile.x == xPos && tile.y == yPos){
           return true;
         }
-      })
-    })
+      });
+    });
     return false;
   }
 
-  getSquidAtCoordIsVertical(xPos: number, yPos: number): void {
-    
+  getSquidPlacementIsVertical(placement: SquidPlacement): boolean | null { 
+    let firstY = placement.tiles[0].y;
+    let secondY = placement.tiles[1].y;
+
+    return secondY !== firstY;
+  }
+
+  getSquidPlacementAtCoord(xPos: number, yPos: number): SquidPlacement | null {
+      this.squidPlacements.forEach(placement => {
+        placement.tiles.forEach(tile => {
+          if(tile.x == xPos && tile.y == yPos){
+            return placement;
+          }
+        });
+      });
+      return null;
   }
 }
