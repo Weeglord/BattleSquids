@@ -13,11 +13,11 @@ export class TileComponent implements OnInit, OnDestroy {
   constructor(private tileServ:TileService) { }
 
   ngOnInit(): void {
-    this.tileServ.openTileWebSocket();
+    //this.tileServ.openTileWebSocket();
   }
 
   ngOnDestroy(): void {
-    this.tileServ.closeTileWebSocket();
+    //this.tileServ.closeTileWebSocket();
   }
 
   sendTile(): void {

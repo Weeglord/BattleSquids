@@ -9,8 +9,13 @@ import { InviteService } from '../services/invite.service';
 import { InviteStatusService } from '../services/inviteStatus.service';
 import { InviteTypeService } from '../services/inviteType.service';
 import { catchError } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
-import { Board } from '../models/board'
+import { of, Subject, throwError } from 'rxjs';
+import { Board } from '../models/board';
+import { Tile } from '../models/tile';
+import { BoardService } from '../services/board.service';
+import { TilestatusService } from '../services/tilestatus.service';
+import { SquidService } from '../services/squid.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-gamescreen',
@@ -25,16 +30,22 @@ export class GamescreenComponent implements OnInit {
   started = false;
   board1: Board;
   board2: Board;
+  initEvent: Subject<void> = new Subject<void>();
 
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
-  constructor(private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService) {
+  constructor(private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService, private boardserv: BoardService, private tilseStatServ: TilestatusService, private squidServ: SquidService, private gameServ: GameService) {
     this.fillGame();
     this.board1 = new Board();
     this.board2 = new Board();
    }
 
   ngOnInit(): void {
+  }
+
+  updateBoards()
+  {
+    this.initEvent.next();
   }
 
   async fillGame()
@@ -56,6 +67,57 @@ export class GamescreenComponent implements OnInit {
         this.fillGame();
       }, 2000);
     }
+  }
+
+  async createBoards()
+  {
+    if(this.game.player2 != null)
+    {
+      this.board1.owner = this.game.player1;
+      this.board2.owner = this.game.player2;
+
+      this.board1.gameId = this.game.id;
+      this.board2.gameId = this.game.id;
+      let arr1 = new Array<Array<Tile>>(10);
+      let arr2 = new Array<Array<Tile>>(10);
+
+      for(let i = 0; i < 10; i++)
+      {
+        arr1[i] = new Array<Tile>(10);
+        arr2[i] = new Array<Tile>(10);
+      }
+
+      let emptySquid = await this.squidServ.getSquidById(6).toPromise();
+      let hiddenTileStatus = await this.tilseStatServ.getTileStatusById(1).toPromise();
+
+      for(let i = 0; i < 10; i++)
+      {
+        for(let j = 0; j < 10; j++)
+        {
+          let tileToAdd = new Tile();
+          tileToAdd.calamari = emptySquid;
+          tileToAdd.status = hiddenTileStatus
+          tileToAdd.x = i;
+          tileToAdd.y = j;
+          arr1[i][j] = tileToAdd;
+          arr2[i][j] = tileToAdd;
+        }
+      }
+      this.board1.tiles = arr1;
+      this.board2.tiles = arr2;
+
+      await this.boardserv.addBoard(this.board1).toPromise();
+      await this.boardserv.addBoard(this.board2).toPromise();
+
+      this.game = await this.gameServ.getGameById(this.game.id).toPromise();
+      this.board1 = this.game.board1 as Board;
+      this.board2 = this.game.board2 as Board;
+      window.sessionStorage.setItem("game", JSON.stringify(this.game));
+
+    }
+
+    this.updateBoards();
+    
   }
 
   remove_non_ascii(str: string) {
@@ -114,6 +176,7 @@ export class GamescreenComponent implements OnInit {
   startGame()
   {
     this.started = true;
+    
   }
 
   readInvite(str: string)
@@ -125,6 +188,7 @@ export class GamescreenComponent implements OnInit {
         this.game.player2 = this.invite.receiver;
         alert("Invite Accepted!");
         this.inviteServ.closeInviteWebSocket();
+        this.createBoards();
         this.startGame();
       }
     }

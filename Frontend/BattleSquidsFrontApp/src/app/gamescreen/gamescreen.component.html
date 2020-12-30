@@ -1,7 +1,7 @@
-<app-board *ngIf="started" [board]="game.board1" [player]="game.player1">
+<app-board *ngIf="started" [board]="game.board1" [player]="game.player1" [initEvent]="initEvent.asObservable()">
 
 </app-board>
-<app-board *ngIf= "started" [board]="game.board2" [player]="game.player2">
+<app-board *ngIf= "started" [board]="game.board2" [player]="game.player2" [initEvent]="initEvent.asObservable()">
 
 </app-board>
 
