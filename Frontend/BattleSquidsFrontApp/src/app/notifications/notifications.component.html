@@ -1,13 +1,13 @@
 <h2>Your Invites</h2>
 <ng-container *ngIf="invites && invites !== undefined">
-    <ng-container *ngIf="invites.length > 0">
+    <ng-container *ngIf="checkAnswerableInvites()">
         <table id="inviteTable">
             <tr class="inviteHeader">
                 <th>From</th>
                 <th>Type</th>
-                <th></th>
+                <th>Respond</th>
             </tr>
-            <tr *ngFor="let invite of invites; index as i">
+            <tr class="inviteRow" *ngFor="let invite of invites; index as i">
                 <ng-container *ngIf="invite.status.id != 3">
                     <td class="inviteData">{{invite.sender.username}}</td>
                     <td class="inviteData">{{invite.type.name}}</td>
@@ -20,5 +20,6 @@
             </tr>
         </table>
     </ng-container>
+    <br>
 </ng-container>
 

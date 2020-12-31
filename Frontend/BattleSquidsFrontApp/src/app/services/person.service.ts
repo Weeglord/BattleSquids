@@ -47,6 +47,10 @@ export class PersonService {
     return JSON.parse(window.sessionStorage.user);
   }
 
+  setLoggedUser(user: Person): void {
+    window.sessionStorage.user = JSON.stringify(user);
+  }
+
   registerUser(newUser: Person): Observable<Person> {
     return this.http.post(this.usersUrl, newUser, {headers: this.regHeaders, withCredentials:true}).pipe(
       map(resp => resp as Person)
