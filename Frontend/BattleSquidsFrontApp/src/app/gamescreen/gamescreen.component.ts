@@ -115,13 +115,17 @@ export class GamescreenComponent implements OnInit {
 
   readyBoards(readyStatus: boolean)
   {
+    
     if(this.personServ.getLoggedUser().id == this.board1.owner.id)
     {
       this.boardComponent2.ready = readyStatus;
+      this.boardComponent1.enemyReady = readyStatus;
     }
     else{
       this.boardComponent1.ready = readyStatus;
+      this.boardComponent2.enemyReady = readyStatus;
     }
+   
   }
 
   async createBoards()
@@ -241,6 +245,7 @@ export class GamescreenComponent implements OnInit {
   {
     this.loading = false;
     this.started = true;
+    window.sessionStorage.setItem("start",new Date().toJSON());
     
   }
 

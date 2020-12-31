@@ -1,10 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Board } from '../models/board';
 import { Game } from '../models/game';
+import { MatchHistory } from '../models/matchhistory';
 import { Person } from '../models/person';
 import { Tile } from '../models/tile';
 import { GameService } from '../services/game.service';
+import { GamestatusService } from '../services/gamestatus.service';
+import { MatchhistoryService } from '../services/matchhistory.service';
 import { PersonService } from '../services/person.service';
 import { SquidService } from '../services/squid.service';
 import { TileService } from '../services/tile.service';
@@ -30,13 +34,15 @@ export class BoardComponent {
   lockout: boolean = false;
   enemySquids: number = 0;
   enemyReady: boolean = false;
+  enemiesHit: number = 0;
+  alliesHit: number = 0;
 
   @Output() readyEvent = new EventEmitter<boolean>();
 
 
   sideArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  constructor(private tileServ: TileService, private tileStatServ: TilestatusService, private personServ: PersonService, private squidServ: SquidService)
+  constructor(private router: Router, private tileServ: TileService, private tileStatServ: TilestatusService, private personServ: PersonService,private matchHistoryServ: MatchhistoryService, private squidServ: SquidService, private gameServ: GameService, private gameStatServ: GamestatusService)
   {
     //tileServ.openTileWebSocket(this, personServ.getLoggedUser().id);
     this.imagePaths = new Array<Array<string>>(10);
@@ -339,6 +345,11 @@ export class BoardComponent {
         }
         else{
           this.imagePaths[x-1][y-1] = "../../assets/tile_hit.png"
+          this.enemiesHit++;
+          if(this.enemiesHit >= 17)
+          {
+            this.win();
+          }
         }
         this.tileServ.sendTile(tile);
         if(this.personServ.getLoggedUser().id == this.game.player1.id && this.game.player2)
@@ -357,6 +368,43 @@ export class BoardComponent {
     
   }
 
+  async win()
+  {
+    let winHistory: MatchHistory = new MatchHistory();
+    winHistory.end = new Date();
+    winHistory.begin = new Date(window.sessionStorage.getItem("start") as string);
+    
+    winHistory.winner = this.personServ.getLoggedUser()
+
+    if(winHistory.winner.id == this.game.player1.id && this.game.player2)
+    {
+      winHistory.loser = this.game.player2;
+    }
+    else{
+      winHistory.loser = this.game.player1;
+    }
+
+    await this.matchHistoryServ.addMatchHistory(winHistory).toPromise();
+
+    this.game = await this.gameServ.getGameById(this.game.id).toPromise();
+    this.game.status = await this.gameStatServ.getGameStatusById(4).toPromise();
+    await this.gameServ.updateGame(this.game).toPromise();
+    alert("You Won!");
+    window.sessionStorage.clear();
+    this.personServ.logoutUser();
+    this.router.navigate([''])
+    this.tileServ.closeTileWebSocket();
+  }
+
+  lose()
+  {
+    alert("You Lose!");
+    window.sessionStorage.clear();
+    this.personServ.logoutUser();
+    this.router.navigate(['']);
+    this.tileServ.closeTileWebSocket();
+  }
+
   updateTile(tile: Tile)
   {
     if(this.board && tile.boardId == this.board.id)
@@ -364,10 +412,17 @@ export class BoardComponent {
       this.board.tiles[tile.x][tile.y] = tile;
       if(tile.status.id == 2)
       {
-        
         this.imagePaths[tile.x][tile.y] = this.imagePaths[tile.x][tile.y].substr(0,this.imagePaths[tile.x][tile.y].length-4) +"_inked.png";
         this.game.activePlayerId = this.personServ.getLoggedUser().id;
         window.sessionStorage.setItem("game", JSON.stringify(this.game));
+        if(tile.calamari.id != 6)
+        {
+          this.alliesHit++;
+          if(this.alliesHit >= 17)
+          {
+            this.lose();
+          }
+        }
       }
       else{
         this.enemySquids++;
