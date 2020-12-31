@@ -18,7 +18,7 @@
     <p>{{invitedPerson}} hello</p>
     </div>
     <p>Welcome to BattleSquids!</p>
-    <app-chat></app-chat>
+    <app-chat [game]="game"></app-chat>
     <p *ngIf="!invited">Please Enter the username of a player to invite</p>
     <input *ngIf="!invited" type="text" [(ngModel)] = "invitedUsername">
     <button *ngIf="!invited" (click)="sendInvite()">Submit</button>

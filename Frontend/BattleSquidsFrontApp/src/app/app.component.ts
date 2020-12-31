@@ -7,6 +7,7 @@ import { PersonService } from './services/person.service';
 import { Invite } from './models/invite';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,6 +25,7 @@ export class AppComponent {
     this.gameServ = gameServ;
     this.gameStatServ = gameStatServ;
     this.person = null;
+
   }
 
   setLogin() {

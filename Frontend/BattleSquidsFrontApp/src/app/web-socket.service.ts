@@ -13,8 +13,8 @@ export class WebSocketService {
 
   constructor(public chatservice: ChatService) { }
 
-  public openWebSocket(){
-    this.websocket= new WebSocket('ws://localhost:8080/BattleSquids/chataction');
+  public openWebSocket(personId: number){
+    this.websocket= new WebSocket('ws://localhost:8080/BattleSquids/chataction?persid='+personId);
 
     this.websocket.onopen = (event) => {
       console.log('Open: ',event)

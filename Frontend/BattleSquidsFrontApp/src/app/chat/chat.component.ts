@@ -40,7 +40,7 @@ this.player=JSON.parse(window.sessionStorage.user);
    // this.person=JSON.parse(window.sessionStorage.user);
     this.game=JSON.parse(window.sessionStorage.game);
    // console.log(this.game.id+ this.person.username);
-    this.webSocketService.openWebSocket();
+    this.webSocketService.openWebSocket(this.player?.id as number);
     //this.username=this.player?.username;
   
  

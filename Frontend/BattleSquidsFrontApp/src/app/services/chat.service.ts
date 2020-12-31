@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ChatComponent } from '../chat/chat.component';
 import { Chat } from '../models/chat';
 import { UrlService } from './url.service';
 
@@ -11,14 +12,12 @@ import { UrlService } from './url.service';
 export class ChatService {
   webSocket!: WebSocket;
   url : string;
+  chat: Chat[]=[];
   
   constructor(private http: HttpClient, private urlService: UrlService) {
     this.url = urlService.getUrl() + "/chat";
    }
 
-   public openChatWebSocket(){
-     
-   }
 
    getAllChat(): Observable<Chat[]>
    {
@@ -44,4 +43,28 @@ export class ChatService {
    {
      return this.http.delete(this.url + "/" + id).pipe();
    }
+
+  //  public openChatWebSocket(chat:ChatComponent,personId:number){
+  //    this.webSocket= new WebSocket('ws://localhost:8080/BattleSquids/chataction?persid='+personId);
+    
+  //    this.webSocket.onopen = (event) =>{
+  //      console.log('Open:',event);
+
+  //    }
+
+  //    this.webSocket.onmessage = (event) => {
+  //     const message=JSON.parse(event.data);
+  //     //this.chatmessage?.splice(0,0,message);
+  //     console.log("message "+message.id);
+  //     this.chat.splice(0,1,message);
+  //    // this.chat.push(message);
+  //     console.log(this.chat);
+  //     //msg=message.message;
+  //    }
+   
+   
+   
+  //   }
+
+   
 }

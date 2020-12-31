@@ -28,6 +28,7 @@ import { MatchHistory } from '../models/matchhistory';
   styleUrls: ['./gamescreen.component.css']
 })
 export class GamescreenComponent implements OnInit {
+
   game! : Game;
   invitedUsername: string = "";
   invite: Invite | null = null;
