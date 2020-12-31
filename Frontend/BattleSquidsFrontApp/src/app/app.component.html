@@ -8,7 +8,7 @@
         <app-notifications *ngIf="person && !game" (startGameEvent)="startGame($event)" ></app-notifications>
         <button *ngIf="person && !game" routerLink = 'gamescreen' (click)="createGame()" routerLinkActive="active">Create new Game</button>
         <br>
-        <button *ngIf="person" routerLink = 'matchhistory' routerLinkActive='active'>View Match History</button>
+        <button *ngIf="person && !game" routerLink = 'matchhistory' routerLinkActive='active'>View Match History</button>
     </div>
     <router-outlet></router-outlet>
 </div>
