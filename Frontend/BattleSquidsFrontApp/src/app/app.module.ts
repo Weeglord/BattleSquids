@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestconnectionComponent } from './testconnection/testconnection.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -27,7 +26,6 @@ import { LoadingComponent } from './loading/loading.component';
 @NgModule({
   declarations: [
     AppComponent,
-    TestconnectionComponent,
     HomeComponent,
     NavbarComponent,
     TileComponent,
@@ -38,7 +36,7 @@ import { LoadingComponent } from './loading/loading.component';
     GamescreenComponent,
     NotificationsComponent,
     MatchhistoryComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

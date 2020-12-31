@@ -8,7 +8,9 @@ import { Person } from '../models/person';
 })
 export class LoadingComponent implements OnInit {
   @Input() loading!: boolean;
-  @Input() opponent!: Person;
+  @Input() opponent!: Person | null;
+  @Input() isSender!: boolean;
+  images: string[] = ['../../assets/loading_sender.gif', '../../assets/loading_receiver.gif'];
 
   constructor() { this.loading = false;}
 

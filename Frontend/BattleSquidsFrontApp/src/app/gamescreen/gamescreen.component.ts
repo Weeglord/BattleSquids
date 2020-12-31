@@ -35,6 +35,7 @@ export class GamescreenComponent implements OnInit {
   initEvent: Subject<void> = new Subject<void>();
   loading!: boolean;
   opponent!: Person | null;
+  isSender!: boolean;
   @ViewChild('boardcomp1') boardComponent1!: BoardComponent;
   @ViewChild('boardcomp2') boardComponent2!: BoardComponent;
 
@@ -66,6 +67,9 @@ export class GamescreenComponent implements OnInit {
       this.game = await JSON.parse(json);
       if(this.game?.player2)
       {
+        this.isSender = false;
+        this.loading = true;
+        this.opponent = this.game.player1;
         this.invited = true;
         this.clientServ.openClientWebsocket(this, this.personServ.getLoggedUser().id);
       }
@@ -91,7 +95,6 @@ export class GamescreenComponent implements OnInit {
 
   async createBoards()
   {
-    this.loading = true;
     if(this.game.player2 != null)
     {
       this.board1.owner = this.game.player1;
@@ -215,7 +218,8 @@ export class GamescreenComponent implements OnInit {
       if(this.game != null && this.invite != null)
       {
         this.game.player2 = this.invite.receiver;
-        this.getOpponent();
+        this.opponent = this.game.player2;
+        this.isSender = true;
         this.loading = true;
         this.inviteServ.closeInviteWebSocket();
         this.clientServ.openClientWebsocket(this, this.personServ.getLoggedUser().id);
@@ -231,11 +235,4 @@ export class GamescreenComponent implements OnInit {
     console.log(str);
   }
   
-  getOpponent() {
-    if (this.game.player1 === this.personServ.getLoggedUser()) {
-      this.opponent = this.game.player2;
-    } else {
-      this.opponent = this.game.player1;
-    }
-  }
 }

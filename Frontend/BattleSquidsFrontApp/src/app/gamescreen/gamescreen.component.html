@@ -11,6 +11,6 @@
     <button *ngIf="!invited" (click)="sendInvite()">Submit</button>
     <button *ngIf="invited && !started" (click)="cancelInvite()" >Cancel Invite</button>
     <br>
-    <app-loading *ngIf="loading" [opponent]="opponent" [loading]="loading"></app-loading>
+    <app-loading *ngIf="loading" [opponent]="opponent" [loading]="loading" [isSender]="isSender"></app-loading>
 </div>
 
