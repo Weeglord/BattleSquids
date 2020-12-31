@@ -9,7 +9,7 @@ export class ClientService {
   constructor() { }
 
 
-  public openClientWebsocket(gameScreen: GamescreenComponent, personId: number)
+  public openClientWebsocket(gameScreen: any, personId: number)
   {
     this.webSocket = new WebSocket('ws://localhost:8080/BattleSquids/clientaction?persid=' + personId);
 
@@ -18,7 +18,7 @@ export class ClientService {
     };
 
     this.webSocket.onmessage = (event) => {
-      console.log("onmessage called");
+      //console.log("onmessage called");
       gameScreen.onMessage(event.data as string);
     };
 

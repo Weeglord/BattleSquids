@@ -10,8 +10,18 @@
             <td class="tile" *ngFor="let yPos of sideArr; let j=index">
                 <!-- {{board.tiles[i][j]}} -->
                 <!-- <Tile [tile]=board.tiles[i][j] /> -->
-                <img src="../../assets/tile_empty.png"(click)="inkTile(xPos,yPos)" >
+                <img [src]="imagePaths[xPos-1][yPos-1]" (click)="inkTile(xPos,yPos); placeSquid(xPos,yPos)" >
             </td> <!-- remainder of row will be 10 cells, each with a tile-->
         </tr>
     </table>
+    <button *ngIf="!ready && primary && !lockout" (click)="selectSquid(1)">Select CuttleFish</button>
+    <button *ngIf="!ready && primary && !lockout" (click)="selectSquid(2)">Select Vampire Squid</button>
+    <button *ngIf="!ready && primary && !lockout" (click)="selectSquid(3)">Select Humboldt Squid</button>
+    <button *ngIf="!ready && primary && !lockout" (click)="selectSquid(4)">Select Giant Squid</button>
+    <button *ngIf="!ready && primary && !lockout" (click)="selectSquid(5)">Select Kracken</button>
+
+    <br>
+    <button *ngIf="!ready && primary" (click)="changePlacementOrientation(false)">Horizontal Placement</button>
+    <button *ngIf="!ready && primary" (click)="changePlacementOrientation(true)">Vertical Placement</button>
+
 </div>

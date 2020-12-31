@@ -37,7 +37,7 @@ public class ClientWebSocketHandler extends TextWebSocketHandler {
 		@Override
 		protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 			String strMessage = message.getPayload();
-			System.out.println(strMessage);
+			//System.out.println(strMessage);
 			//=targetid appended to end of each message, scrub it and pass the message along
 			Integer target = null;
 			for(int i = strMessage.length()-1; i >= 0; i--)
@@ -50,7 +50,7 @@ public class ClientWebSocketHandler extends TextWebSocketHandler {
 					break;
 				}
 			}
-			System.out.println(websockets);
+			//System.out.println(websockets);
 			if(target != null && websockets.containsKey(target))
 			{
 				websockets.get(target).sendMessage(new TextMessage(strMessage));
