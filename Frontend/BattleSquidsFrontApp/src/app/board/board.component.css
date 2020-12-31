@@ -22,3 +22,11 @@
     margin: 0px 1px;
     padding: 0px 1px;
 }
+
+.sprite {
+
+}
+
+.rotatedSprite {
+    transform: rotate(270deg);
+}
