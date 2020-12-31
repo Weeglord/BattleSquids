@@ -10,7 +10,7 @@
             <td class="tile" *ngFor="let yPos of sideArr; let j=index">
                 <!-- {{board.tiles[i][j]}} -->
                 <!-- <Tile [tile]=board.tiles[i][j] /> -->
-                <img [src]="imagePaths[xPos-1][yPos-1]" (click)="inkTile(xPos,yPos); placeSquid(xPos,yPos)" >
+                <img [className]="getTileClass(xPos, yPos)" [src]="imagePaths[xPos-1][yPos-1]" (click)="inkTile(xPos,yPos); placeSquid(xPos,yPos)">
             </td> <!-- remainder of row will be 10 cells, each with a tile-->
         </tr>
     </table>

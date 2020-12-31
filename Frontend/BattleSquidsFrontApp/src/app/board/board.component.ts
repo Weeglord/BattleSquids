@@ -26,10 +26,13 @@ export class BoardComponent {
   squidSelect: number = -1;
   verticalPlacement: boolean = true
   imagePaths: string[][];
+  verticalTiles: boolean[][];
   placedSquids: boolean[] = [false, false, false, false, false];
   lockout: boolean = false;
   enemySquids: number = 0;
   enemyReady: boolean = false;
+  inkSound: string = '../../assets/inksound.wav';
+  hitSound: string = '../../assets/hitsound.wav';
 
   @Output() readyEvent = new EventEmitter<boolean>();
 
@@ -40,17 +43,18 @@ export class BoardComponent {
   {
     //tileServ.openTileWebSocket(this, personServ.getLoggedUser().id);
     this.imagePaths = new Array<Array<string>>(10);
+    this.verticalTiles = new Array<Array<boolean>>(10);
     for(let i = 0; i < 10; i++)
     {
-        
-        this.imagePaths[i] = new Array<string>(10);
+      this.imagePaths[i] = new Array<string>(10);
+      this.verticalTiles[i] = new Array<boolean>(10);
     }
     for(let i = 0; i < 10; i++)
     {
       for(let j = 0; j < 10; j++)
       {
-        
         this.imagePaths[i][j] = "../../assets/tile_empty.png";
+        this.verticalTiles[i][j] = false;
       }
     }
   }
@@ -261,6 +265,7 @@ export class BoardComponent {
       for(let i = realx, j = squidToPlace.size; i < realx + squidToPlace.size; i++, j--)
       {
         this.imagePaths[i][realy] = this.getAssetFromSquidId(squidToPlace.id,j);
+        this.verticalTiles[i][realy] = true;
       }
       
       this.lockout = false;
@@ -336,9 +341,11 @@ export class BoardComponent {
         if(tile.calamari.id == 6)
         {
           this.imagePaths[x-1][y-1] = this.imagePaths[x-1][y-1].substr(0,this.imagePaths[x-1][y-1].length-4) +"_inked.png";
+          this.playSound(this.inkSound);
         }
         else{
           this.imagePaths[x-1][y-1] = "../../assets/tile_hit.png"
+          this.playSound(this.hitSound);
         }
         this.tileServ.sendTile(tile);
         if(this.personServ.getLoggedUser().id == this.game.player1.id && this.game.player2)
@@ -366,6 +373,11 @@ export class BoardComponent {
       {
         
         this.imagePaths[tile.x][tile.y] = this.imagePaths[tile.x][tile.y].substr(0,this.imagePaths[tile.x][tile.y].length-4) +"_inked.png";
+        if (tile.calamari.id === 6) {
+          this.playSound(this.inkSound);
+        } else {
+          this.playSound(this.hitSound);
+        }
         this.game.activePlayerId = this.personServ.getLoggedUser().id;
         window.sessionStorage.setItem("game", JSON.stringify(this.game));
       }
@@ -381,4 +393,19 @@ export class BoardComponent {
     }
   }
 
+  playSound(link: string) {
+    let sound = new Audio();
+    sound.src = link;
+    sound.load();
+    sound.play();
+  }
+
+  getTileClass(xPos: number, yPos: number): string {
+    if (this.board?.tiles[xPos-1][yPos-1].calamari.id === 6) return 'sprite';
+    if (this.verticalTiles[xPos - 1][yPos - 1]) {
+      return 'rotatedSprite';
+    } else {
+      return 'sprite';
+    }
+  }
 }
