@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestconnectionComponent } from './testconnection/testconnection.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -22,11 +21,11 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { InviteService } from './services/invite.service';
 import { MatchhistoryComponent } from './matchhistory/matchhistory.component';
 import { MatchhistoryService } from './services/matchhistory.service';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestconnectionComponent,
     HomeComponent,
     NavbarComponent,
     TileComponent,
@@ -36,7 +35,8 @@ import { MatchhistoryService } from './services/matchhistory.service';
     BoardComponent,
     GamescreenComponent,
     NotificationsComponent,
-    MatchhistoryComponent
+    MatchhistoryComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

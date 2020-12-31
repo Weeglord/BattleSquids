@@ -4,6 +4,8 @@ import { Invite } from '../models/invite'
 import { PersonService } from '../services/person.service';
 import { InviteStatusService } from '../services/inviteStatus.service';
 import { Output, EventEmitter } from '@angular/core';
+import { Person } from '../models/person';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-notifications',
@@ -13,6 +15,7 @@ import { Output, EventEmitter } from '@angular/core';
 export class NotificationsComponent implements OnInit {
   invites!: Invite[];
   visible: Boolean = true;
+  opponent!: Person;
 
   constructor(private inviteServ: InviteService, private personServ: PersonService, private invStatServ: InviteStatusService) {
     this.inviteServ.getAllInvitesReceivedByUserWithId(this.personServ.getLoggedUser().id).subscribe(resp => this.invites = resp)
@@ -25,6 +28,7 @@ export class NotificationsComponent implements OnInit {
 
   async acceptInvite(i: number)
   {
+    this.opponent = this.invites[i].sender;
     this.invites[i].status = await this.invStatServ.getInviteStatusById(2).toPromise();
     await this.inviteServ.updateInvite(this.invites[i]).toPromise();
     this.visible = false;

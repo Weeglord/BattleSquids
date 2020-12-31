@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { GameService } from '../services/game.service';
 import { PersonService } from '../services/person.service';
 import { Game } from '../models/game';
@@ -33,6 +33,9 @@ export class GamescreenComponent implements OnInit {
   board1: Board;
   board2: Board;
   initEvent: Subject<void> = new Subject<void>();
+  loading!: boolean;
+  opponent!: Person | null;
+  isSender!: boolean;
   @ViewChild('boardcomp1') boardComponent1!: BoardComponent;
   @ViewChild('boardcomp2') boardComponent2!: BoardComponent;
 
@@ -64,6 +67,9 @@ export class GamescreenComponent implements OnInit {
       this.game = await JSON.parse(json);
       if(this.game?.player2)
       {
+        this.isSender = false;
+        this.loading = true;
+        this.opponent = this.game.player1;
         this.invited = true;
         this.clientServ.openClientWebsocket(this, this.personServ.getLoggedUser().id);
       }
@@ -178,7 +184,6 @@ export class GamescreenComponent implements OnInit {
         newInvite.type = await this.inviteTypeServ.getInviteTypeById(1).toPromise();
         newInvite.id = await this.inviteServ.addInvite(newInvite).toPromise();
         this.inviteServ.openInviteWebSocket(this.personServ.getLoggedUser().id, this)
-        alert("Invite Sent!");
         this.invited = true;
         this.invite = newInvite;
       }
@@ -201,6 +206,7 @@ export class GamescreenComponent implements OnInit {
 
   startGame()
   {
+    this.loading = false;
     this.started = true;
     
   }
@@ -212,7 +218,9 @@ export class GamescreenComponent implements OnInit {
       if(this.game != null && this.invite != null)
       {
         this.game.player2 = this.invite.receiver;
-        alert("Invite Accepted!");
+        this.opponent = this.game.player2;
+        this.isSender = true;
+        this.loading = true;
         this.inviteServ.closeInviteWebSocket();
         this.clientServ.openClientWebsocket(this, this.personServ.getLoggedUser().id);
         this.createBoards();
@@ -227,5 +235,4 @@ export class GamescreenComponent implements OnInit {
     console.log(str);
   }
   
-
 }

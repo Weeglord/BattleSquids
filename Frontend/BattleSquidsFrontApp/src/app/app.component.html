@@ -2,7 +2,7 @@
     <a href='home'>
         <img src="../../assets/battlesquids_banner.png" id="banner"/>
     </a>
-    <div id="compDiv" layer-align="center center">
+    <div id="compDiv">
         <br>
         <app-navbar (logInEvent)="setLogin()" (logOutEvent)="setLogout()"></app-navbar>
         <app-notifications *ngIf="person && !game" (startGameEvent)="startGame($event)" ></app-notifications>
