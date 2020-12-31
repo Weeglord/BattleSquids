@@ -8,7 +8,7 @@
                 <th>Respond</th>
             </tr>
             <tr class="inviteRow" *ngFor="let invite of invites; index as i">
-                <ng-container *ngIf="invite.status.id != 3">
+                <ng-container *ngIf="invite.status.id == 1">
                     <td class="inviteData">{{invite.sender.username}}</td>
                     <td class="inviteData">{{invite.type.name}}</td>
                     <td class="inviteData">
