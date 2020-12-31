@@ -393,6 +393,7 @@ export class BoardComponent {
     window.sessionStorage.clear();
     this.personServ.logoutUser();
     this.router.navigate([''])
+    this.tileServ.closeTileWebSocket();
   }
 
   lose()
@@ -401,6 +402,7 @@ export class BoardComponent {
     window.sessionStorage.clear();
     this.personServ.logoutUser();
     this.router.navigate(['']);
+    this.tileServ.closeTileWebSocket();
   }
 
   updateTile(tile: Tile)
