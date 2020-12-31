@@ -1,0 +1,22 @@
+#boardDiv {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+#boardTable {
+    border-collapse: collapse;
+    display: block;
+}
+
+.boardRow {
+    margin: 0px;
+    padding: 0px;
+}
+
+.tile {
+    margin: 0px 1px;
+    padding: 0px 1px;
+}

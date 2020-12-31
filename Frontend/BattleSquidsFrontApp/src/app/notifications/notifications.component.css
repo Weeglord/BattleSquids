@@ -1,11 +1,16 @@
 #inviteTable {
     width: 30%;
     border: 1px solid black;
-    text-align: center;
-    display: block;
+    padding: 1%;
+    overflow-y: auto;
+    border-collapse: collapse;
     margin: auto;
 }
 
-#inviteData {
-    width: 33%;
+.inviteRow {
+    border: 1px solid black;
+}
+
+.inviteData {
+    width: 10%;
 }
