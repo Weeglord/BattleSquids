@@ -40,4 +40,11 @@ export class NotificationsComponent implements OnInit {
     await this.inviteServ.updateInvite(this.invites[i]).toPromise();
     this.invites.splice(i,1);
   }
+
+  checkAnswerableInvites(): boolean {
+    for (let invite of this.invites) {
+      if (invite.status.id !== 3) return true;
+    }
+    return false;
+  }
 }

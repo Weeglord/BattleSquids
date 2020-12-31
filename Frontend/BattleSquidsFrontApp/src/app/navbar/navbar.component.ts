@@ -84,6 +84,9 @@ export class NavbarComponent implements OnInit, OnChanges {
             this.loggedUser = resp;
             this.regUser = '';
             this.regPass = '';
+            this.user = resp.username;
+            this.pass = resp.password;
+            this.personService.setLoggedUser(this.loggedUser);
             this.logIn();
             this.registration = !this.registration;
           } else {

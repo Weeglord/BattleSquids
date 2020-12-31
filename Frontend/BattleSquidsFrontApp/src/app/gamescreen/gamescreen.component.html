@@ -1,12 +1,14 @@
-<app-board *ngIf="started" [board]="game.board1" [player]="game.player1" #boardcomp1>
+<div id="gameDiv">
+    <app-board *ngIf="started" [board]="game.board1" [player]="game.player1" #boardcomp1>
 
-</app-board>
-<app-board *ngIf= "started" [board]="game.board2" [player]="game.player2" #boardcomp2>
+    </app-board>
+    <app-board *ngIf="started" [board]="game.board2" [player]="game.player2" #boardcomp2>
+    
+    </app-board>
+    
+    <p *ngIf="!invited">Please Enter the username of a player to invite</p>
+    <input *ngIf="!invited" type="text" [(ngModel)] = "invitedUsername">
+    <button *ngIf="!invited" (click)="sendInvite()">Submit</button>
+    <button *ngIf="invited && !started" (click)="cancelInvite()" >Cancel Invite</button>
+</div>
 
-</app-board>
-
-<p>Welcome to BattleSquids!</p>
-<p *ngIf="!invited">Please Enter the username of a player to invite</p>
-<input *ngIf="!invited" type="text" [(ngModel)] = "invitedUsername">
-<button *ngIf="!invited" (click)="sendInvite()">Submit</button>
-<button *ngIf="invited && !started" (click)="cancelInvite()" >Cancel Invite</button>
