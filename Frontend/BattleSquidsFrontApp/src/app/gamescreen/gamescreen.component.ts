@@ -241,7 +241,7 @@ export class GamescreenComponent implements OnInit {
   {
     this.loading = false;
     this.started = true;
-    window.sessionStorage.setItem("start",JSON.stringify(new Date()));
+    window.sessionStorage.setItem("start",new Date().toJSON());
     
   }
 
