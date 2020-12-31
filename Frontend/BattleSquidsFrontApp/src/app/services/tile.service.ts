@@ -50,7 +50,7 @@ export class TileService implements OnDestroy {
   }
 
   updateTile(tile: Tile): Observable<object> {
-    return this.http.put(this.url, tile).pipe();
+    return this.http.put(this.url + "/" + tile.id, tile).pipe();
   }
 
   deleteTile(tileId: number): Observable<object> {

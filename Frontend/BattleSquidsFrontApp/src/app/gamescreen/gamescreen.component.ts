@@ -30,6 +30,7 @@ export class GamescreenComponent implements OnInit {
   invite: Invite | null = null;
   invited = false;
   started = false;
+  sent = false;
   board1: Board;
   board2: Board;
   initEvent: Subject<void> = new Subject<void>();
@@ -78,7 +79,7 @@ export class GamescreenComponent implements OnInit {
 
   async onMessage(message: string)
   {
-    console.log(message);
+    //console.log(message);
     if(message == "loading done")
     {
       this.game = await this.gameServ.getGameById(this.game.id).toPromise();
@@ -181,6 +182,7 @@ export class GamescreenComponent implements OnInit {
         alert("Invite Sent!");
         this.invited = true;
         this.invite = newInvite;
+        this.sent = true;
       }
     }
     else{
