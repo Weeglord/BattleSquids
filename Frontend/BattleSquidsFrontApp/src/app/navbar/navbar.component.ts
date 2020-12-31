@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnChanges, OnInit, Output } from '@angular/cor
 import { Router } from '@angular/router'
 import { Person } from '../models/person'
 import { PersonService } from '../services/person.service'
+import { catchError } from 'rxjs/operators';
+import { of, Subject, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -41,13 +43,20 @@ export class NavbarComponent implements OnInit, OnChanges {
     console.log(this.user + ' ' + this.pass);
   }
   logIn() {
+    //let invitedPerson: Person | null = await this.personServ.getUserByUsername(this.invitedUsername).pipe(catchError(err => {console.log(err); return of(null)})).toPromise();
     console.log(this.user + ' ' + this.pass);
     if (this.user && this.pass) {
-      this.personService.loginUser(this.user, this.pass).subscribe(
+      this.personService.loginUser(this.user, this.pass).pipe(catchError(err => {console.log(err); return of(null)})).subscribe(
         resp => {
-          this.loggedUser = resp;
-          window.sessionStorage.user = JSON.stringify(this.loggedUser);
-          this.logInEvent.emit();
+          if(resp != null)
+          {
+            this.loggedUser = resp;
+            window.sessionStorage.user = JSON.stringify(this.loggedUser);
+            this.logInEvent.emit();
+          }
+          else{
+            alert("Invalid Credentials! Please try again!");
+          }
         }
       );
     }
