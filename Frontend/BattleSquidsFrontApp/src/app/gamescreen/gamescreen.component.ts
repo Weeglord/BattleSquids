@@ -38,6 +38,8 @@ export class GamescreenComponent implements OnInit {
   left = false;
   visibility: string = "visibility : visible";
   invitedPerson! : Person;
+  invitespectator : string="";
+  spectator!: Person;
   
   initEvent: Subject<void> = new Subject<void>();
   @ViewChild('boardcomp1') boardComponent1!: BoardComponent;
@@ -53,7 +55,37 @@ export class GamescreenComponent implements OnInit {
 
   ngOnInit(): void {
   }
+async invitefriend():Promise<void>
+{
 
+  this.spectator = await this.personServ.getUserByUsername(this.invitespectator).pipe(catchError(err => {console.log(err); return of(null)})).toPromise() as Person;
+  console.log(this.spectator);
+  if (this.spectator)
+  {
+    if (this.spectator == this.personServ.getLoggedUser())
+   {
+      alert("You cannot invite yourself!");
+    }
+    else
+    {
+      let newInvite = new Invite();
+      newInvite.sender = this.personServ.getLoggedUser();
+      newInvite.game = JSON.parse(window.sessionStorage.game);
+
+      newInvite.receiver = this.spectator;
+     newInvite.status = await this.inviteStatusServ.getInviteStatusById(1).toPromise();
+      newInvite.type = await this.inviteTypeServ.getInviteTypeById(2).toPromise();
+      newInvite.id = await this.inviteServ.addInvite(newInvite).toPromise();
+      this.inviteServ.openInviteWebSocket(this.personServ.getLoggedUser().id, this)
+      alert("Invite Sent!");
+      //this.invited = true;
+      //this.invite = newInvite;
+    }
+  }
+  else{
+    alert("No user " + this.invitedUsername + " found!");
+  }
+}
 
   async fillGame()
   {
@@ -83,7 +115,7 @@ export class GamescreenComponent implements OnInit {
  async leaveGame(){
     let loggedUser= JSON.parse(window.sessionStorage.user);
     let gamestatus=this.game.status;
-    gamestatus.id=2;
+    gamestatus.id=2;  
     let matchhistory: MatchHistory;
     this.game.status=gamestatus;
     this.gameServ.updateGame(this.game);
@@ -247,9 +279,12 @@ export class GamescreenComponent implements OnInit {
   readInvite(str: string)
   {
     if(str == "accepted")
+    console.log("accepted ");
     {
       if(this.game != null && this.invite != null)
       {
+        console.log(this.invite.type.name+" is the invite type"+ this.invite.type.name==="Spectator");
+        if(!(this.invite.type.name==="Spectator")){
         this.game.player2 = this.invite.receiver;
         alert("Invite Accepted!");
         this.inviteServ.closeInviteWebSocket();
@@ -259,7 +294,12 @@ export class GamescreenComponent implements OnInit {
         this.clientServ.openClientWebsocket(this, this.personServ.getLoggedUser().id);
         this.createBoards();
         //this.startGame();
+      }else{
+       // this.startGame();
+        console.log("spectator")
+     
       }
+    
     }
     else if(str == "rejected")
     {
@@ -270,4 +310,4 @@ export class GamescreenComponent implements OnInit {
   }
   
 
-}
+}}  

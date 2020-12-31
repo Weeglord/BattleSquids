@@ -24,6 +24,7 @@ import { InviteService } from './services/invite.service';
 import { ChatComponent } from './chat/chat.component';
 import { MatchhistoryComponent } from './matchhistory/matchhistory.component';
 import { MatchhistoryService } from './services/matchhistory.service';
+import { SpectatorComponent } from './spectator/spectator.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatchhistoryService } from './services/matchhistory.service';
     GamescreenComponent,
     NotificationsComponent,
     ChatComponent,
-    MatchhistoryComponent
+    MatchhistoryComponent,
+    SpectatorComponent
   ],
   imports: [
     BrowserModule,

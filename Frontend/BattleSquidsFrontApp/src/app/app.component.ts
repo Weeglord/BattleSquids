@@ -52,11 +52,22 @@ export class AppComponent {
 
   async startGame(invite: any)
   {
+    console.log(invite.type.name);
+    if(!(invite.type.name === "Spectator"))
+    {
     this.game = invite.game;
     this.game.player2 = this.personServ.getLoggedUser();
     await this.gameServ.updateGame(this.game).toPromise();
     window.sessionStorage.setItem("game", JSON.stringify(this.game));
     this.router.navigate(['gamescreen']);
     console.log("plyer 2"+this.game.player2);
+  }else if(invite.type.name ==="Spectator"){
+
+    console.log("spectatotrrrrr");
+    window.sessionStorage.setItem("game", JSON.stringify(this.game));
+    this.router.navigate(['gamescreen']);
+    
+
   }
+}
 }

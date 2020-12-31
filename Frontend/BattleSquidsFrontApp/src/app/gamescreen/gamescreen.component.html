@@ -7,6 +7,9 @@
 
 </app-board>
 <button *ngIf="started" (click)="leaveGame()"> Leave game</button>
+<br>
+<input *ngIf="started" type="text" [(ngModel)]="invitespectator" placeholder="Enter Username">
+<button *ngIf="started" (click)="invitefriend()">Invite friend to spectate</button>
 <div *ngIf="left" routerLink='home' routerLinkActive="active"></div>
 <p>{{invitedPerson}} hello</p>
 </div>
