@@ -397,8 +397,10 @@ export class BoardComponent {
     this.game.status = await this.gameStatServ.getGameStatusById(4).toPromise();
     await this.gameServ.updateGame(this.game).toPromise();
     alert("You Won!");
+    let person = window.sessionStorage.getItem("user");
     window.sessionStorage.clear();
-    this.personServ.logoutUser();
+    window.sessionStorage.setItem("user",person as string);
+    //this.personServ.logoutUser();
     this.router.navigate([''])
     this.tileServ.closeTileWebSocket();
   }
@@ -406,8 +408,10 @@ export class BoardComponent {
   lose()
   {
     alert("You Lose!");
+    let person = window.sessionStorage.getItem("user");
     window.sessionStorage.clear();
-    this.personServ.logoutUser();
+    window.sessionStorage.setItem("user",person as string);
+    //this.personServ.logoutUser();
     this.router.navigate(['']);
     this.tileServ.closeTileWebSocket();
   }
