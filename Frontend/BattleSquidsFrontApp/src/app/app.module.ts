@@ -22,6 +22,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { InviteService } from './services/invite.service';
 import { MatchhistoryComponent } from './matchhistory/matchhistory.component';
 import { MatchhistoryService } from './services/matchhistory.service';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatchhistoryService } from './services/matchhistory.service';
     BoardComponent,
     GamescreenComponent,
     NotificationsComponent,
-    MatchhistoryComponent
+    MatchhistoryComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
