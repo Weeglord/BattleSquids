@@ -42,13 +42,15 @@ export class NavbarComponent implements OnInit, OnChanges {
   }
   logIn() {
     console.log(this.user + ' ' + this.pass);
-    this.personService.loginUser(this.user, this.pass).subscribe(
-      resp => {
-        this.loggedUser = resp;
-        window.sessionStorage.user = JSON.stringify(this.loggedUser);
-        this.logInEvent.emit();
-      }
-    );
+    if (this.user && this.pass) {
+      this.personService.loginUser(this.user, this.pass).subscribe(
+        resp => {
+          this.loggedUser = resp;
+          window.sessionStorage.user = JSON.stringify(this.loggedUser);
+          this.logInEvent.emit();
+        }
+      );
+    }
   }
 
   logOut() {
@@ -104,4 +106,5 @@ export class NavbarComponent implements OnInit, OnChanges {
       this.isPassword = 'password';
     }
   }
+
 }
