@@ -333,7 +333,13 @@ export class BoardComponent {
       if (tile.status.id == 1)
       {
         tile.status = await this.tileStatServ.getTileStatusById(2).toPromise();
-        this.imagePaths[x-1][y-1] = this.imagePaths[x-1][y-1].substr(0,this.imagePaths[x-1][y-1].length-4) +"_inked.png";
+        if(tile.calamari.id == 6)
+        {
+          this.imagePaths[x-1][y-1] = this.imagePaths[x-1][y-1].substr(0,this.imagePaths[x-1][y-1].length-4) +"_inked.png";
+        }
+        else{
+          this.imagePaths[x-1][y-1] = "../../assets/tile_hit.png"
+        }
         this.tileServ.sendTile(tile);
         if(this.personServ.getLoggedUser().id == this.game.player1.id && this.game.player2)
         {
@@ -358,6 +364,7 @@ export class BoardComponent {
       this.board.tiles[tile.x][tile.y] = tile;
       if(tile.status.id == 2)
       {
+        
         this.imagePaths[tile.x][tile.y] = this.imagePaths[tile.x][tile.y].substr(0,this.imagePaths[tile.x][tile.y].length-4) +"_inked.png";
         this.game.activePlayerId = this.personServ.getLoggedUser().id;
         window.sessionStorage.setItem("game", JSON.stringify(this.game));
