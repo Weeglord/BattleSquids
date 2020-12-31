@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.Board;
+import com.revature.beans.Game;
 import com.revature.beans.Tile;
 import com.revature.data.BoardDAO;
 import com.revature.data.DAOFactory;
@@ -85,6 +87,37 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteBoard(Board b) {
 		dao.delete(b);
 
+	}
+
+	@Override
+	public Board getBoard1ByGameId(Integer id) {
+		Set<Board> all = dao.getAll();
+		Game game = DAOFactory.getGameDAO().getById(id);
+		for(Board board: all)
+		{
+			if(board.getGameId().equals(id) && board.getOwner().getId().equals(game.getPlayer1().getId()))
+			{
+				return getBoardById(board.getId());
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Board getBoard2ByGameId(Integer id) {
+		Set<Board> all = dao.getAll();
+		//System.out.println(all);
+		Game game = DAOFactory.getGameDAO().getById(id);
+		//System.out.println(game);
+		for(Board board: all)
+		{
+			if(board.getGameId().equals(id) && board.getOwner().getId().equals(game.getPlayer2().getId()))
+			{
+				//ystem.out.println("match " + board);
+				return getBoardById(board.getId());
+			}
+		}
+		return null;
 	}
 
 }

@@ -13,7 +13,7 @@
             <td *ngFor="let yPos of sideArr; let j=index">
                 <!-- {{board.tiles[i][j]}} -->
                 <!-- <Tile [tile]=board.tiles[i][j] /> -->
-                <img src="../../assets/tile_empty.png"/>
+                <img src="../../assets/tile_empty.png"(click)="inkTile(xPos,yPos)" >
             </td> <!-- remainder of row will be 10 cells, each with a tile-->
         </tr>
     </table>
