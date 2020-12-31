@@ -18,7 +18,7 @@ export class NotificationsComponent implements OnInit {
   opponent!: Person;
 
   constructor(private inviteServ: InviteService, private personServ: PersonService, private invStatServ: InviteStatusService) {
-    this.inviteServ.getAllInvitesReceivedByUserWithId(this.personServ.getLoggedUser().id).subscribe(resp => this.invites = resp)
+    this.inviteServ.getAllInvitesReceivedByUserWithId(this.personServ.getLoggedUser().id).subscribe(resp => this.invites = resp);
    }
 
   ngOnInit(): void {
@@ -46,9 +46,11 @@ export class NotificationsComponent implements OnInit {
   }
 
   checkAnswerableInvites(): boolean {
+    if (!this.invites || this.invites === undefined || this.invites.length === 0) return false;
     for (let invite of this.invites) {
-      if (invite.status.id !== 3) return true;
+      console.log(invite);
+      if (invite.status.id !== 1) return false;
     }
-    return false;
+    return true;
   }
 }
