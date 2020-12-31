@@ -50,24 +50,54 @@ public class TileWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String strMessage = message.getPayload();
-		System.out.println(strMessage);
+		System.out.println(websockets);
+		//System.out.println(strMessage);
 		ObjectMapper mapper = new ObjectMapper();
 		Tile t = mapper.readValue(strMessage, Tile.class);
 		tileServ.updateTile(t);
-		System.out.println(t);
+		//System.out.println(t);
 		
+		//we need to find the other person in the game, do so by going up the chain from tile
+		Board board = boardServ.getBoardById(t.getBoardId());
+		Game game = gameServ.getGameById(board.getGameId());
+		//if tile belongs to player 1 send message to player 2 or vice versa
+		
+		//we need to find the websocket matching this person, that way we can find the opponent
+		if(websockets.containsValue(session))
+		{
+			for(Integer key: websockets.keySet())
+			{
+				if(websockets.get(key).equals(session))
+				{
+					if(key.equals(game.getPlayer1().getId()))
+					{
+						websockets.get(game.getPlayer2().getId()).sendMessage(message);
+						return;
+					}
+					else
+					{
+						websockets.get(game.getPlayer1().getId()).sendMessage(message);
+						return;
+					}
+				}
+			}
+		}
+		
+		
+		/*
 		//we need to find the other person in the game, do so by going up the chain from tile
 		Board board = boardServ.getBoardById(t.getBoardId());
 		Game game = gameServ.getGameById(board.getGameId());
 		//if tile belongs to player 1 send message to player 2 or vice versa
 		if(board.getOwner().getId().equals(game.getPlayer1().getId()))
 		{
-			websockets.get(game.getPlayer2().getId()).sendMessage(message);
+			websockets.get(game.getPlayer1().getId()).sendMessage(message);
 		}
 		else if(board.getOwner().getId().equals(game.getPlayer2().getId()))
 		{
-			websockets.get(game.getPlayer1().getId()).sendMessage(message);
+			websockets.get(game.getPlayer2().getId()).sendMessage(message);
 		}
+		*/
 	}
 	
 	@Override

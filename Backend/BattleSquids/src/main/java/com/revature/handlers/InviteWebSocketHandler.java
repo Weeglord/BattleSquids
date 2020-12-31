@@ -16,7 +16,7 @@ public class InviteWebSocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println(session.getUri().getQuery());
+		//System.out.println(session.getUri().getQuery());
 		if (getQueryValue(session.getUri().getQuery(),"persid")!=null)
 		{
 			websockets.put(Integer.parseInt(getQueryValue(session.getUri().getQuery(),"persid")), session);
