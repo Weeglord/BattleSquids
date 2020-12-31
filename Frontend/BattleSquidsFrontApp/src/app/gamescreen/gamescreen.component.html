@@ -1,21 +1,27 @@
 
-<div attr.style="{{visibility}}">
-    <app-board *ngIf="started" [board]="game.board1" [player]="game.player1" [invitePerson]="invitedPerson">
+<div id="gameDiv">
+    <div attr.style="{{visibility}}" style="display: flex;">
+     
 
-</app-board>
-<app-board *ngIf= "started" [board]="game.board2" [player]="game.player2" [invitePerson]="invitedPerson">
-
-</app-board>
-<button *ngIf="started" (click)="leaveGame()"> Leave game</button>
-<br>
-<input *ngIf="started" type="text" [(ngModel)]="invitespectator" placeholder="Enter Username">
-<button *ngIf="started" (click)="invitefriend()">Invite friend to spectate</button>
-<div *ngIf="left" routerLink='home' routerLinkActive="active"></div>
-<p>{{invitedPerson}} hello</p>
+     <div>   <app-board *ngIf="started" [board]="game.board1" [player]="game.player1" [invitePerson]="invitedPerson" #boardcomp1>
+    
+    </app-board>
+    <app-board *ngIf= "started" [board]="game.board2" [player]="game.player2" [invitePerson]="invitedPerson" #boardcomp2>
+    
+    </app-board>
 </div>
-<p>Welcome to BattleSquids!</p>
-<p *ngIf="!invited">Please Enter the username of a player to invite</p>
-<input *ngIf="!invited" type="text" [(ngModel)] = "invitedUsername">
-<button *ngIf="!invited" (click)="sendInvite()">Submit</button>
-<button *ngIf="invited && !started" (click)="cancelInvite()" >Cancel Invite</button>
+    <button *ngIf="started" (click)="leaveGame()"> Leave game</button>
+    <br>
+    <input *ngIf="started" type="text" [(ngModel)]="invitespectator" placeholder="Enter Username">
+    <button *ngIf="started" (click)="invitefriend()">Invite friend to spectate</button>
+    <div *ngIf="left" routerLink='home' routerLinkActive="active"></div>
+    <p>{{invitedPerson}} hello</p>
+    </div>
+    <p>Welcome to BattleSquids!</p>
+    <app-chat></app-chat>
+    <p *ngIf="!invited">Please Enter the username of a player to invite</p>
+    <input *ngIf="!invited" type="text" [(ngModel)] = "invitedUsername">
+    <button *ngIf="!invited" (click)="sendInvite()">Submit</button>
+    <button *ngIf="invited && !started" (click)="cancelInvite()" >Cancel Invite</button>
+</div>
 

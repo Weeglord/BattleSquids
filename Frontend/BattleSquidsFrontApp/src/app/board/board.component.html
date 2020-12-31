@@ -1,16 +1,15 @@
-<div>
+<div id="boardDiv">
     <h2 *ngIf="player" >{{player.username}}'s Board:</h2>
     <h3></h3>
-    <app-chat [player]="player" [board]="board" [invitedusername]="invitePerson"></app-chat>
-
+  
     <table id="boardTable">
         <tr>
             <th></th> <!-- Empty cell in top-left corner-->
             <th *ngFor="let pos of sideArr;">{{pos}}</th> <!-- heading with numbers 1-10 for x-coordinates-->
         </tr>
-        <tr *ngFor="let xPos of sideArr; let i=index">
+        <tr class="boardRow" *ngFor="let xPos of sideArr; let i=index">
             <td>{{xPos}}</td> <!-- first cell on the left of each row gives y-coordinate (same as xPos here)-->
-            <td *ngFor="let yPos of sideArr; let j=index">
+            <td class="tile" *ngFor="let yPos of sideArr; let j=index">
                 <!-- {{board.tiles[i][j]}} -->
                 <!-- <Tile [tile]=board.tiles[i][j] /> -->
                 <img src="../../assets/tile_empty.png"(click)="inkTile(xPos,yPos)" >

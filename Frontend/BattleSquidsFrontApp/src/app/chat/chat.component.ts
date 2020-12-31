@@ -20,12 +20,12 @@ import { WebSocketService } from '../web-socket.service';
 })
 export class ChatComponent implements OnInit, OnDestroy{
   message!: string;
-  @Input() player!:Person | null;
+  player!:Person | null;
   @Input() game!:Game;
-  @Input() invitedusername! : Person |null;
+ // @Input() invitedusername! : Person |null;
   loggedUser! : Person;
   matchhistory!: MatchHistory;
-@Input() board!:Board | null;
+//@Input() board!:Board | null;
   chat!: Chat;
   username!:string | undefined;
   msg! : string;
@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
 
     //console.log(this.invitedusername+"is invited opponents");
-this.loggedUser=JSON.parse(window.sessionStorage.user);
+this.player=JSON.parse(window.sessionStorage.user);
 //console.log(this.loggedUser.username+"is the logged user"+ this.player.username+" and I am");
    // this.person=JSON.parse(window.sessionStorage.user);
     this.game=JSON.parse(window.sessionStorage.game);
@@ -56,7 +56,7 @@ this.loggedUser=JSON.parse(window.sessionStorage.user);
 
   sendmessage(){
     
-    console.log("this board"+this.board?.owner.username);
+    //console.log("this board"+this.board?.owner.username);
     console.log("sender"+this.player?.username);
     this.chat=new Chat();
     this.chat.message=this.message;

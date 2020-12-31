@@ -1,7 +1,7 @@
-<ng-container *ngIf="player; else display">
+<ng-container >
     <h3>{{username}}</h3>
 <div style="display: flex;">
- <div style="display: flex;"  *ngIf="player.username===loggedUser.username">  
+ <div style="display: flex;">  
     <textarea placeholder="Enter the msg" id="message" [(ngModel)]="message" name="message"></textarea>
     <button  type="button" id="button" (click)="sendmessage()">Send Message</button>
 </div>    
@@ -28,6 +28,4 @@
 
  
 </ng-container>
-<ng-template #display>
-    Sorry, no one here.
-</ng-template>
+

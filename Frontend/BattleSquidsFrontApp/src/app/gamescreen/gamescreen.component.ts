@@ -40,6 +40,7 @@ export class GamescreenComponent implements OnInit {
   invitedPerson! : Person;
   invitespectator : string="";
   spectator!: Person;
+  loggeduser!:Person;
   
   initEvent: Subject<void> = new Subject<void>();
   @ViewChild('boardcomp1') boardComponent1!: BoardComponent;
@@ -54,6 +55,7 @@ export class GamescreenComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.loggeduser=window.sessionStorage.user;
   }
 async invitefriend():Promise<void>
 {
