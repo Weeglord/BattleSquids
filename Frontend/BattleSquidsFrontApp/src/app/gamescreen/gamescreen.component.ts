@@ -18,6 +18,7 @@ import { SquidService } from '../services/squid.service';
 import { ThrowStmt } from '@angular/compiler';
 import { BoardComponent } from '../board/board.component';
 import { ClientService } from '../services/client.service';
+import { TileService } from '../services/tile.service';
 
 @Component({
   selector: 'app-gamescreen',
@@ -39,7 +40,7 @@ export class GamescreenComponent implements OnInit {
 
 
   //firt create an empty game, 1 player no boards. Once an invite is accepted boards will be filled
-  constructor(private clientServ: ClientService, private personServ: PersonService, private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService, private boardserv: BoardService, private tilseStatServ: TilestatusService, private squidServ: SquidService, private gameServ: GameService) {
+  constructor(private clientServ: ClientService, private personServ: PersonService,private tileServ: TileService , private inviteServ: InviteService, private inviteStatusServ: InviteStatusService, private inviteTypeServ: InviteTypeService, private boardserv: BoardService, private tilseStatServ: TilestatusService, private squidServ: SquidService, private gameServ: GameService) {
     this.fillGame();
     this.board1 = new Board();
     this.board2 = new Board();
@@ -77,14 +78,43 @@ export class GamescreenComponent implements OnInit {
     }
   }
 
+  async updateTile(tile: Tile)
+  {
+    if(tile.boardId == this.game.board1?.id)
+    {
+      this.boardComponent1.updateTile(tile);
+    }
+    else{
+      this.boardComponent2.updateTile(tile);
+    }
+  }
+
   async onMessage(message: string)
   {
     //console.log(message);
     if(message == "loading done")
     {
       this.game = await this.gameServ.getGameById(this.game.id).toPromise();
+      window.sessionStorage.setItem("game", JSON.stringify(this.game));
       this.startGame();
       this.clientServ.closeClientWebSocket();
+      this.tileServ.openTileWebSocket(this, this.personServ.getLoggedUser().id);
+      setTimeout(() => {
+        this.boardComponent1.initBoard(true);
+        this.boardComponent2.initBoard(false);
+        
+      }, 2000);
+    }
+  }
+
+  readyBoards(readyStatus: boolean)
+  {
+    if(this.personServ.getLoggedUser().id == this.board1.owner.id)
+    {
+      this.boardComponent2.ready = readyStatus;
+    }
+    else{
+      this.boardComponent1.ready = readyStatus;
     }
   }
 
@@ -137,6 +167,7 @@ export class GamescreenComponent implements OnInit {
     }
     this.startGame();
     this.clientServ.sendMessage("loading done=" + this.game.player2?.id);
+    this.tileServ.openTileWebSocket(this, this.personServ.getLoggedUser().id);
     setTimeout(() => {
       this.boardComponent1.initBoard(true);
       this.boardComponent2.initBoard(false);

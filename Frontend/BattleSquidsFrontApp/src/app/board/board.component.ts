@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Board } from '../models/board';
 import { Game } from '../models/game';
 import { Person } from '../models/person';
 import { Tile } from '../models/tile';
+import { GameService } from '../services/game.service';
 import { PersonService } from '../services/person.service';
 import { SquidService } from '../services/squid.service';
 import { TileService } from '../services/tile.service';
@@ -26,14 +27,18 @@ export class BoardComponent {
   verticalPlacement: boolean = true
   imagePaths: string[][];
   placedSquids: boolean[] = [false, false, false, false, false];
+  lockout: boolean = false;
+  enemySquids: number = 0;
+  enemyReady: boolean = false;
+
+  @Output() readyEvent = new EventEmitter<boolean>();
 
 
   sideArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(private tileServ: TileService, private tileStatServ: TilestatusService, private personServ: PersonService, private squidServ: SquidService)
   {
-    tileServ.openTileWebSocket(this, personServ.getLoggedUser().id);
-    console.log(JSON.parse(window.sessionStorage.getItem("game") as string));
+    //tileServ.openTileWebSocket(this, personServ.getLoggedUser().id);
     this.imagePaths = new Array<Array<string>>(10);
     for(let i = 0; i < 10; i++)
     {
@@ -46,22 +51,10 @@ export class BoardComponent {
       {
         
         this.imagePaths[i][j] = "../../assets/tile_empty.png";
-        //console.log(this.imagePaths[i][j]);
       }
     }
-    //console.log(this.imagePaths);
   }
-  /*
-  ngOnInit(): void
-  {
-    this.eventsSubscription = this.initEvent.subscribe(resp => {console.log("Event receiver"); this.initBoard()});
-    console.log(this.initEvent);
-  }
-
-  ngOnDestroy() {
-    this.eventsSubscription.unsubscribe()
-  }
-  */
+  
 
   async selectSquid(squidId: number)
   {
@@ -197,7 +190,7 @@ export class BoardComponent {
       console.log("board is null!");
       return;
     }
-
+    
     let squidToPlace = await this.squidServ.getSquidById(this.squidSelect).toPromise();
     let realx: number = x-1;
     let realy: number = y-1;
@@ -219,14 +212,13 @@ export class BoardComponent {
           return;
         }
       }
+      this.lockout = true;
 
       //place squid
       for(let i = realy; i > realy-squidToPlace.size; i--)
       {
         this.board.tiles[realx][i].calamari = squidToPlace;
-        console.log("trying to place");
         await this.tileServ.updateTile(this.board.tiles[realx][i]).toPromise();
-        console.log("trying to notify");
         this.tileServ.sendTile(this.board.tiles[realx][i]);
       }
 
@@ -235,6 +227,8 @@ export class BoardComponent {
       {
         this.imagePaths[realx][i] = this.getAssetFromSquidId(squidToPlace.id,j);
       }
+
+      this.lockout = false;
 
     }
     if(!this.verticalPlacement)
@@ -254,6 +248,7 @@ export class BoardComponent {
         }
       }
 
+      this.lockout = true;
       //place squid
       for(let i = realx; i < realx + squidToPlace.size; i++)
       {
@@ -267,6 +262,8 @@ export class BoardComponent {
       {
         this.imagePaths[i][realy] = this.getAssetFromSquidId(squidToPlace.id,j);
       }
+      
+      this.lockout = false;
 
     }
 
@@ -282,12 +279,12 @@ export class BoardComponent {
     }
 
     this.ready = true;
+    this.readyEvent.emit(true);
 
   }
 
   async initBoard(isBoard1: boolean)
   {
-    console.log("initializing board")
     this.game = JSON.parse(window.sessionStorage.getItem("game") as string);
     if(isBoard1)
     {
@@ -297,7 +294,6 @@ export class BoardComponent {
       this.board = this.game.board2;
     }
 
-    console.log(this.board?.owner.id);
     if(this.board?.owner.id == this.personServ.getLoggedUser().id)
     {
       this.primary = true;
@@ -306,7 +302,6 @@ export class BoardComponent {
       this.primary = false;
     }
 
-    console.log(this.board);
   }
 
   async inkTile(x: number,y: number)
@@ -315,10 +310,15 @@ export class BoardComponent {
     {
       return;
     }
+    if(!this.enemyReady)
+    {
+      alert("enemy not ready!")
+      return;
+    }
     let tile: Tile;
+    this.game = JSON.parse(window.sessionStorage.getItem("game") as string);
     if (this.board)
     {
-      console.log(this.board);
       tile = this.board.tiles[x-1][y-1];
       if (this.game.activePlayerId != this.personServ.getLoggedUser().id)
       {
@@ -333,8 +333,16 @@ export class BoardComponent {
       if (tile.status.id == 1)
       {
         tile.status = await this.tileStatServ.getTileStatusById(2).toPromise();
-        this.imagePaths[x][y] +="_inked";
+        this.imagePaths[x-1][y-1] = this.imagePaths[x-1][y-1].substr(0,this.imagePaths[x-1][y-1].length-4) +"_inked.png";
         this.tileServ.sendTile(tile);
+        if(this.personServ.getLoggedUser().id == this.game.player1.id && this.game.player2)
+        {
+          this.game.activePlayerId = this.game.player2.id;
+        }
+        else{
+          this.game.activePlayerId = this.game.player1.id;
+        }
+        window.sessionStorage.setItem("game", JSON.stringify(this.game));
       }
       else{
         alert("Tile has already been inked!");
@@ -345,9 +353,24 @@ export class BoardComponent {
 
   updateTile(tile: Tile)
   {
-    if(this.board)
+    if(this.board && tile.boardId == this.board.id)
     {
       this.board.tiles[tile.x][tile.y] = tile;
+      if(tile.status.id == 2)
+      {
+        this.imagePaths[tile.x][tile.y] = this.imagePaths[tile.x][tile.y].substr(0,this.imagePaths[tile.x][tile.y].length-4) +"_inked.png";
+        this.game.activePlayerId = this.personServ.getLoggedUser().id;
+        window.sessionStorage.setItem("game", JSON.stringify(this.game));
+      }
+      else{
+        this.enemySquids++;
+        console.log(this.board?.id + "recorded" + this.enemySquids +  "enemy squids");
+        if(this.enemySquids >= 17)
+        {
+          this.enemyReady = true;
+          alert("enemy is ready!");
+        }
+      }
     }
   }
 
