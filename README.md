@@ -1,22 +1,63 @@
 # BattleSquids
-Revature Project 2
 
-Team: Jason Zelonka, Do Yeun Kim, Muhammad Aown, Shaker Funkhouser
+## Project Description
 
-Ever wanted to play Battleship with your friends, but wished the game had more of a Cthulu-esque flavor? Well, welcome to BattleSquids! This is an evolution of Battleship where ships are squids that "ink" opposing squids.
+Ever wanted to play Battleship with your friends, but wished the game had more of a Cthulu-esque flavor? Well, welcome to BattleSquids! This is an evolution of Battleship where ships are squids that "ink" opposing squids.Player which will ink the opposing squids first, will win the game.
 
-Usage guide:
--Register an account, or log in to existing account
--Create a game by inviting a friend (by username), or accept an invite to a game
--Place your squids on your board (there are five types of varying sizes)
--When it's your turn, guess an enemy square to ink; if the tile is occupied by an enemy squid that tile will become utterly inked
--When all of the tiles occupied by your enemy's squids are inked, you win- unless your opponent inks all of your squids' tiles first
+## Technologies Used
 
-Technology Stack:
--AWS RDS server, with a PostgreSQL Engine
--Spring backend with Hibernate adapter and JDBC connection to db
--Spring MVC controllers
--Angular frontend
+* AWS RDS DB, with a PostgreSQL Engine
+* Spring backend with Hibernate adapter and JDBC connection to db
+* Spring MVC controllers
+* Angular frontend
 
-Permissions:
-You may not reproduce or monetize any portion of this codebase without express written consent by all creators. We've got $kin$ to peddle.
+## Testing
+
+* JUnit
+* Mockito
+
+## Features
+
+List of features ready:
+* Register account.
+* Login and logout of account.
+* Create game.
+* Invite other users to a game via username.
+* Reject or Accept the invite.
+* Placing the squids.
+* Take turns guessing the placement of opposing squid.
+* View your game history.
+
+Future development:
+* Chat for players in the game
+* Chat for spectators
+* Save progress when user leaves game 
+* Notify the opponent if other leaves the game
+* $kin$
+* Beat Fortnite
+
+## Getting Started
+   
+git clone https://github.com/Weeglord/BattleSquids
+
+### Backend:
+Use Maven update to build the project
+Run Tomcat 9 Server set to use localhost:8080
+
+### Frontend:
+npm install
+ng serve
+Navigate to http://localhost:4200 on web browser
+
+## Usage
+* As an end-user, register for an account if not registered; login if registered.
+* Create a game
+* Invite another user by username
+* Arrange squids
+* Set readiness
+* Take turn by clicking on a tile on the opposing board
+* Win by being the first player to ink all of opponent’s squids
+
+## Contributors
+
+Jason Zelonka (Repo owner), Do Yeun Kim, Muhammad Aown, and Shaker Funkhouser
