@@ -61,3 +61,6 @@ Navigate to http://localhost:4200 on web browser
 ## Contributors
 
 Jason Zelonka (Repo owner), Do Yeun Kim, Muhammad Aown, and Shaker Funkhouser
+
+## Licenses
+This project uses .gif loading icons from loading.io
